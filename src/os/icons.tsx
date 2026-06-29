@@ -346,6 +346,18 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function V86Icon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="5" width="26" height="18" rx="2" fill="#c8ccd0" stroke="#6f7378" />
+      <rect x="5" y="7" width="22" height="14" rx="1" fill="#0a0a0a" />
+      <text x="16" y="17" textAnchor="middle" fontFamily="monospace" fontSize="8" fill="#5aff6a">x86</text>
+      <rect x="11" y="23" width="10" height="3" fill="#9aa0a6" />
+      <rect x="8" y="26" width="16" height="2" rx="1" fill="#7a8086" />
+    </svg>
+  )
+}
+
 export function CodeIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

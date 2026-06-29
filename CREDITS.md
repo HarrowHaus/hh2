@@ -120,3 +120,5 @@ assets).
 
 ### Tier 3
 - **Monaco Editor (monaco-editor)** — https://github.com/microsoft/monaco-editor — **MIT**. The VS Code editor core powers the Code app (lazy-loaded own chunk; editor + JS/TS/JSON/CSS/HTML language workers bundled, no network). Microsoft name/logo not used.
+- **v86** — https://github.com/copy/v86 — **BSD-2-Clause**. x86 PC emulator (WASM) powering the "Virtual Machine" app (lazy-loaded own chunk). Engine `v86.wasm`, **SeaBIOS** and **VGABIOS** (both LGPL-3.0, shipped unmodified as standalone firmware blobs under `public/v86/`) are vendored locally so it runs fully offline.
+- **FreeDOS** — https://www.freedos.org — the boot floppy image (`public/v86/freedos722.img`) is the **freely redistributable** FreeDOS distribution (kernel GPL-2.0; bundled as an unmodified disk image, no proprietary content). v86 boots it to an `A:\>` prompt.

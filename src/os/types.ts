@@ -37,6 +37,7 @@ export type AppId =
   | 'keygen'
   | 'chess'
   | 'code'
+  | 'v86'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

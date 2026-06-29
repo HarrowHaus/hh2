@@ -1,0 +1,98 @@
+.recorder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-family: 'Tahoma', 'MS Sans Serif', sans-serif;
+  font-size: 11px;
+  padding: 6px;
+  gap: 4px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+/* ── Waveform display ───────────────────────────────────────── */
+.display {
+  border: 2px inset var(--border-shadow, #808080);
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+/* ── Position / Length row ─────────────────────────────────── */
+.info {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 2px 0;
+  flex-shrink: 0;
+}
+
+/* ── Status (no device) ────────────────────────────────────── */
+.status {
+  color: var(--wintext);
+  opacity: 0.6;
+  font-size: 10px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Transport row ─────────────────────────────────────────── */
+.transport {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+
+.btn {
+  width: 32px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  /* Classic XP raised button look */
+  background: var(--btn-face, #d4d0c8);
+  color: var(--btn-text, #000);
+  border-top: 2px solid var(--btn-hilight, #ffffff);
+  border-left: 2px solid var(--btn-hilight, #ffffff);
+  border-bottom: 2px solid var(--btn-shadow, #808080);
+  border-right: 2px solid var(--btn-shadow, #808080);
+  outline: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.btn:active:not(:disabled) {
+  border-top: 2px solid var(--btn-shadow, #808080);
+  border-left: 2px solid var(--btn-shadow, #808080);
+  border-bottom: 2px solid var(--btn-hilight, #ffffff);
+  border-right: 2px solid var(--btn-hilight, #ffffff);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Record button — red dot stays red regardless of theme */
+.recBtn {
+  color: #cc0000;
+}
+
+.recBtn:disabled {
+  color: #cc0000;
+  opacity: 0.4;
+}

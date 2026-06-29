@@ -1,0 +1,187 @@
+/* HexEditor — dark console hex viewer */
+.hex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--field, #0a0a0a);
+  color: var(--wintext, #d4d4d4);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+/* ── Header row ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 8px;
+  background: color-mix(in srgb, var(--accent, #5a5a8a) 18%, var(--field, #0a0a0a));
+  border-bottom: 1px solid color-mix(in srgb, var(--accent, #5a5a8a) 40%, transparent);
+  color: var(--accent, #8888cc);
+  font-weight: bold;
+  flex-shrink: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.offsetHeader {
+  min-width: 72px;
+  color: var(--accent, #8888cc);
+}
+
+.hexHeader {
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+
+.asciiHeader {
+  min-width: 128px;
+  border-left: 1px solid color-mix(in srgb, var(--accent, #5a5a8a) 30%, transparent);
+  padding-left: 8px;
+}
+
+/* ── Scrollable body ────────────────────────────────────── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+
+.body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: var(--field, #0a0a0a);
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent, #5a5a8a) 50%, var(--field, #0a0a0a));
+  border: 2px solid var(--field, #0a0a0a);
+}
+
+/* ── Row layout ─────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+.row:hover {
+  background: color-mix(in srgb, var(--wintext, #d4d4d4) 5%, transparent);
+}
+
+/* ── Offset column ──────────────────────────────────────── */
+.offset {
+  min-width: 72px;
+  color: var(--accent, #8888cc);
+  user-select: none;
+  opacity: 0.85;
+}
+
+/* ── Hex bytes ──────────────────────────────────────────── */
+.hexGroup {
+  display: inline-flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.gap {
+  display: inline-block;
+  width: 6px;
+  flex-shrink: 0;
+}
+
+.hexByte {
+  display: inline-block;
+  min-width: 20px;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 0 1px;
+  transition: background 80ms;
+}
+
+.hexByte:hover {
+  background: color-mix(in srgb, var(--accent, #5a5a8a) 30%, transparent);
+}
+
+.hexByte.selected {
+  background: var(--accent, #5a5a8a);
+  color: #fff;
+}
+
+.hexByte.empty {
+  color: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── ASCII gutter ───────────────────────────────────────── */
+.ascii {
+  min-width: 128px;
+  border-left: 1px solid color-mix(in srgb, var(--accent, #5a5a8a) 25%, transparent);
+  padding-left: 8px;
+  display: inline-flex;
+  gap: 0;
+}
+
+.asciiChar {
+  display: inline-block;
+  width: 8px;
+  cursor: pointer;
+  border-radius: 1px;
+  transition: background 80ms;
+}
+
+.asciiChar:hover {
+  background: color-mix(in srgb, var(--accent, #5a5a8a) 30%, transparent);
+}
+
+.asciiChar.selected {
+  background: var(--accent, #5a5a8a);
+  color: #fff;
+}
+
+/* ── Empty state ────────────────────────────────────────── */
+.empty {
+  padding: 12px 8px;
+  color: color-mix(in srgb, var(--wintext, #d4d4d4) 40%, transparent);
+  font-style: italic;
+}
+
+/* ── Status bar ─────────────────────────────────────────── */
+.statusBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-top: 1px solid color-mix(in srgb, var(--accent, #5a5a8a) 30%, transparent);
+  background: color-mix(in srgb, var(--accent, #5a5a8a) 10%, var(--field, #0a0a0a));
+  font-size: 11px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.fileName {
+  color: var(--wintext, #d4d4d4);
+  font-weight: bold;
+}
+
+.sep {
+  color: color-mix(in srgb, var(--wintext, #d4d4d4) 40%, transparent);
+}
+
+.byteCount {
+  color: color-mix(in srgb, var(--wintext, #d4d4d4) 75%, transparent);
+}
+
+.selInfo {
+  color: var(--accent, #8888cc);
+}

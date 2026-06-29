@@ -1,0 +1,203 @@
+/* CharMap — Windows XP Character Map, dark msstyles skin */
+
+.charmap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-family: 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  user-select: none;
+}
+
+/* ─── Toolbar ─── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px 4px;
+  border-bottom: 1px solid var(--winborder);
+  flex-shrink: 0;
+}
+
+.label {
+  color: var(--wintext);
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.select {
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  font-size: 11px;
+  padding: 1px 4px;
+  height: 20px;
+  min-width: 160px;
+  outline: none;
+  cursor: default;
+}
+
+.select:focus {
+  outline: 1px solid var(--accent);
+}
+
+/* ─── Glyph grid ─── */
+.grid {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--field);
+  border-bottom: 1px solid var(--winborder);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 2px;
+  outline: none;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--field);
+}
+
+.grid::-webkit-scrollbar {
+  width: 12px;
+}
+.grid::-webkit-scrollbar-track {
+  background: var(--winbody);
+  border-left: 1px solid var(--winborder);
+}
+.grid::-webkit-scrollbar-thumb {
+  background: #3a3a42;
+  border: 1px solid var(--winborder);
+}
+.grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ─── Cell ─── */
+.cell {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  cursor: default;
+  color: var(--wintext);
+  flex-shrink: 0;
+  transition: border-color 0.05s;
+}
+
+.cell:hover {
+  border-color: var(--winborder);
+  background: rgba(255, 255, 255, 0.07);
+  /* Enlarge on hover like real XP charmap */
+  position: relative;
+  z-index: 2;
+  transform: scale(1.6);
+  transform-origin: center;
+  box-shadow: 0 0 0 1px var(--winborder);
+  background: var(--winbody);
+}
+
+.cellSelected {
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+.cellSelected:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+/* ─── Status bar ─── */
+.statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+  background: var(--winbody);
+  border-bottom: 1px solid var(--winborder);
+  min-height: 18px;
+  flex-shrink: 0;
+}
+
+.statustext {
+  font-size: 11px;
+  color: var(--wintext);
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.codepoint {
+  font-size: 10px;
+  color: var(--accent);
+  font-family: 'Courier New', monospace;
+  margin-left: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Copy row ─── */
+.copyrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px 6px;
+  flex-shrink: 0;
+  background: var(--winbody);
+}
+
+.copyinput {
+  flex: 1;
+  height: 20px;
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  font-size: 12px;
+  padding: 0 4px;
+  outline: none;
+  font-family: inherit;
+}
+
+.copyinput:focus {
+  outline: 1px solid var(--accent);
+}
+
+.copyinput::placeholder {
+  color: rgba(220, 220, 224, 0.35);
+  font-size: 10px;
+}
+
+.copybtn {
+  height: 22px;
+  min-width: 56px;
+  background: linear-gradient(180deg, #3a3a42, #1c1c22);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: default;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.copybtn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #4a4a54, #26262e);
+  border-color: var(--accent);
+}
+
+.copybtn:active:not(:disabled) {
+  background: linear-gradient(180deg, #1c1c22, #3a3a42);
+}
+
+.copybtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

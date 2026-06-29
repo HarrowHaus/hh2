@@ -1,0 +1,135 @@
+/* Classic Windows XP Calculator — Standard view.
+   Uses the XP grey palette for chrome; var(--winbody)/var(--wintext)/var(--field)
+   for the outer shell so it integrates with whichever visual style is active. */
+
+.calc {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody, #ece9d8);
+  color: var(--wintext, #000);
+  padding: 8px;
+  gap: 4px;
+  user-select: none;
+  font-family: 'Tahoma', 'MS Sans Serif', sans-serif;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* ── Numeric display ──────────────────────────────────────── */
+.display {
+  background: var(--field, #fff);
+  border-top: 2px solid #7b7b7b;
+  border-left: 2px solid #7b7b7b;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  color: var(--wintext, #000);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+  padding: 2px 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-height: 26px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+/* ── Memory row ───────────────────────────────────────────── */
+.memRow {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+
+.memBtn {
+  flex: 1;
+  height: 20px;
+  font-family: inherit;
+  font-size: 11px;
+  background: #d4d0c8;
+  color: #000;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  cursor: pointer;
+  padding: 0;
+}
+.memBtn:active {
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+.memBtn:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+/* ── Button grid ──────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  flex: 1;
+}
+
+/* Base button */
+.btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  height: 100%;
+  min-height: 26px;
+  cursor: pointer;
+  padding: 0;
+  /* Raised bevel */
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #7b7b7b;
+  border-bottom: 2px solid #7b7b7b;
+  background: #d4d0c8;
+  color: #000;
+  transition: none;
+}
+.btn:active {
+  border-top: 2px solid #7b7b7b;
+  border-left: 2px solid #7b7b7b;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+.btn:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -3px;
+}
+
+/* Digit buttons — standard XP cream/grey */
+.num {
+  background: #d4d0c8;
+  color: #000;
+}
+
+/* Operator buttons — slightly darker / blue-tinted like XP */
+.op {
+  background: #bec0d0;
+  color: #000080;
+  font-size: 15px;
+}
+
+/* Action buttons (Backspace, CE, C, sqrt, %) */
+.action {
+  background: #d4d0c8;
+  color: #800000;
+}
+
+/* Equals — orange-ish accent, classic XP */
+.equals {
+  background: #d4d0c8;
+  color: #000;
+  font-size: 16px;
+}

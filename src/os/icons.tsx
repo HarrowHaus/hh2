@@ -135,6 +135,17 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Command Prompt icon: black console window with a prompt caret.
+export function TerminalIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="5" width="26" height="22" rx="1.5" fill="#0b0b0b" stroke="#5a5a5a" />
+      <rect x="3" y="5" width="26" height="4" fill="#222" stroke="#5a5a5a" />
+      <text x="7" y="22" fontFamily="Consolas, monospace" fontSize="11" fill="#d8d8d8">{'>_'}</text>
+    </svg>
+  )
+}
+
 export function VolumeIcon({ size = 16, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">

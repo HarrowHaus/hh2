@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -9,6 +9,7 @@ import { BitTorrent } from '../apps/BitTorrent/BitTorrent'
 import { Installer } from '../apps/Installer/Installer'
 import { Photoshop } from '../apps/Photoshop/Photoshop'
 import { FLStudio } from '../apps/FLStudio/FLStudio'
+import { Terminal } from '../apps/Terminal/Terminal'
 
 interface IconProps {
   size?: number
@@ -31,4 +32,5 @@ export const APPS: Record<AppId, AppEntry> = {
   installer: { Icon: SetupIcon, Component: Installer },
   photoshop: { Icon: PhotoshopIcon, Component: Photoshop },
   flstudio: { Icon: FLStudioIcon, Component: FLStudio },
+  terminal: { Icon: TerminalIcon, Component: Terminal },
 }

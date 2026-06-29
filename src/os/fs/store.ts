@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v5: + creative-software dioramas (Photoshop CS2, FL Studio) and their
-      // .psd/.flp documents. Bumping discards the old dev seed (pre-release).
-      version: 5,
+      // v6: + Command Prompt (cmd.exe in system32). Bumping discards the old
+      // dev seed (pre-release; no real user data yet).
+      version: 6,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

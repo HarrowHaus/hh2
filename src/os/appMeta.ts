@@ -20,4 +20,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   installer: { title: 'Setup', width: 460, height: 358, single: false, resizable: false },
   photoshop: { title: 'Adobe Photoshop', width: 720, height: 520, single: true, resizable: true },
   flstudio: { title: 'FL Studio', width: 700, height: 460, single: true, resizable: true },
+  terminal: { title: 'Command Prompt', width: 560, height: 360, single: false, resizable: true },
 }

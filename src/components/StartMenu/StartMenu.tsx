@@ -7,6 +7,7 @@ import {
   FolderIcon,
   NoteIcon,
   MusicIcon,
+  TerminalIcon,
 } from '../../os/icons'
 import styles from './StartMenu.module.css'
 
@@ -72,6 +73,12 @@ export function StartMenu() {
             <MusicIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
               <span className={styles.text}>foobar2000</span>
+            </span>
+          </button>
+          <button type="button" className={styles.item} onClick={() => openApp('terminal')}>
+            <TerminalIcon size={30} className={styles.itemIcon} />
+            <span className={styles.texts}>
+              <span className={styles.text}>Command Prompt</span>
             </span>
           </button>
           <div className={styles.spacer} />

@@ -10,6 +10,7 @@ export type AppId =
   | 'installer'
   | 'photoshop'
   | 'flstudio'
+  | 'terminal'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

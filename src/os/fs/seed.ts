@@ -39,6 +39,7 @@ function launcher(path: string, name: string, ts: number, app: FSNode['app']): F
 const FOLDERS: [string, string, number][] = [
   [C_DRIVE, 'Local Disk (C:)', A],
   [`${C_DRIVE}/WINDOWS`, 'WINDOWS', A],
+  [`${C_DRIVE}/WINDOWS/system32`, 'system32', A],
   [PF, 'Program Files', A],
   [`${PF}/foobar2000`, 'foobar2000', A],
   [`${PF}/Azureus`, 'Azureus', A],
@@ -373,6 +374,7 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/µTorrent`, 'µTorrent', A2, 'bt'),
   launcher(`${PF}/foobar2000/foobar2000.exe`, 'foobar2000.exe', A, 'foobar'),
   launcher(`${PF}/uTorrent/µTorrent.exe`, 'µTorrent.exe', A2, 'bt'),
+  launcher(`${C_DRIVE}/WINDOWS/system32/cmd.exe`, 'cmd.exe', A, 'terminal'),
 ]
 
 export function seedFS(): Record<string, FSNode> {

@@ -1,0 +1,62 @@
+/* Windows Picture and Fax Viewer — dark stage + the classic round-button
+   filmstrip toolbar. Stage is fixed neutral (an image viewer), toolbar borrows
+   tokens so it reads in every visual style. */
+.viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+}
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    repeating-conic-gradient(#2a2a2e 0% 25%, #232327 0% 50%) 50% / 22px 22px;
+  padding: 12px;
+}
+.imgwrap {
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.12s ease;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+.img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #fff;
+}
+.missing { color: var(--wintext); opacity: 0.7; font-size: 12px; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  background: color-mix(in srgb, var(--winbody) 86%, #888 14%);
+  border-top: 1px solid var(--winborder);
+}
+.rbtn {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: var(--wintext);
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--winbody) 60%, #fff 40%), var(--winbody));
+  border: 1px solid var(--winborder);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.rbtn:hover:not(:disabled) { filter: brightness(1.12); }
+.rbtn:active:not(:disabled) { filter: brightness(0.9); }
+.rbtn:disabled { opacity: 0.4; cursor: default; }
+.sep { width: 1px; height: 18px; background: var(--winborder); margin: 0 3px; }
+.count { margin-left: auto; font-size: 10px; color: var(--wintext); opacity: 0.7; font-variant-numeric: tabular-nums; }

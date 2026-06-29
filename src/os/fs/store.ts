@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v6: + Command Prompt (cmd.exe in system32). Bumping discards the old
-      // dev seed (pre-release; no real user data yet).
-      version: 6,
+      // v7: + Image Viewer artifacts (spek spectral, video-nasty poster, chaos
+      // sigil, demo cover). Bumping discards the old dev seed (pre-release).
+      version: 7,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

@@ -13,7 +13,7 @@ import { DESKTOP_PATH, listDir } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
 import type { FSNode } from '../../os/fs/types'
 import { APPS } from '../../os/apps'
-import { ComputerIcon, MonitorIcon, FolderIcon, NoteIcon, MusicIcon } from '../../os/icons'
+import { ComputerIcon, MonitorIcon, FolderIcon, NoteIcon, MusicIcon, ImageIcon } from '../../os/icons'
 import { Taskbar } from '../Taskbar/Taskbar'
 import { StartMenu } from '../StartMenu/StartMenu'
 import { Window } from '../Window/Window'
@@ -37,6 +37,7 @@ function iconFor(node: FSNode): FC<{ size?: number }> {
   if (node.app) return APPS[node.app].Icon
   if (node.type === 'folder') return FolderIcon
   if (node.kind === 'audio') return MusicIcon
+  if (node.kind === 'image') return ImageIcon
   return NoteIcon
 }
 

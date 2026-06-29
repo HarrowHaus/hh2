@@ -6,7 +6,7 @@ import type { FSNode } from './types'
 const KIND_APP: Partial<Record<FSNode['kind'], AppId>> = {
   text: 'notepad',
   audio: 'foobar',
-  // image: 'imageviewer',  // Phase 3 (image-viewer ticket)
+  image: 'imageviewer',
 }
 
 export interface OpenTarget {

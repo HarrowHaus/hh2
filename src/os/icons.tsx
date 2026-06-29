@@ -135,6 +135,18 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Image-file icon: a small photo with sky + hill, like the XP picture-file glyph.
+export function ImageIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="6" width="24" height="20" rx="1.5" fill="#fdfdfd" stroke="#8a8a8a" />
+      <rect x="6" y="8" width="20" height="16" fill="#8fc7e8" />
+      <circle cx="11" cy="13" r="2.4" fill="#ffe27a" />
+      <path d="M6 24 L13 16 L18 21 L22 17 L26 24 Z" fill="#4a9a55" />
+    </svg>
+  )
+}
+
 // Command Prompt icon: black console window with a prompt caret.
 export function TerminalIcon({ size = 30, style, className }: IconProps) {
   return (

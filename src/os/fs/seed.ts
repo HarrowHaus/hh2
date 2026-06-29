@@ -35,6 +35,11 @@ function text(path: string, name: string, ts: number, content: string): FSNode {
 function launcher(path: string, name: string, ts: number, app: FSNode['app']): FSNode {
   return { path, name, type: 'file', kind: 'exe', ts, app }
 }
+// Image files store an art id in `content`; the Image Viewer renders the
+// matching original SVG recreation (no lifted bitmaps, docs/04).
+function image(path: string, name: string, ts: number, artId: string): FSNode {
+  return { path, name, type: 'file', kind: 'image', ts, content: artId }
+}
 
 const FOLDERS: [string, string, number][] = [
   [C_DRIVE, 'Local Disk (C:)', A],
@@ -368,6 +373,15 @@ const CREATIVE: FSNode[] = [
   launcher(`${MUSIC}/untitled_3.flp`, 'untitled_3.flp', A2, 'flstudio'),
 ]
 
+// Image artifacts (manifest items 3, 4, 8). Original SVG recreations rendered by
+// the Image Viewer; fictional, period-flavored, inert.
+const IMAGES: FSNode[] = [
+  image(`${PICS}/moldmouth_demo_cover.png`, 'moldmouth_demo_cover.png', A, 'moldmouth-cover'),
+  image(`${PICS}/spek_spectral_FLAC.png`, 'spek_spectral_FLAC.png', B, 'spek-spectral'),
+  image(`${MOVIES}/Spectral Corridor (1986)/poster.jpg`, 'poster.jpg', B, 'spectral-poster'),
+  image(`${READING}/chaos_magick_sigil.bmp`, 'chaos_magick_sigil.bmp', B2, 'chaos-sigil'),
+]
+
 // Program launchers (.exe shortcuts) — opening one opens its app.
 const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/foobar2000`, 'foobar2000', A, 'foobar'),
@@ -383,6 +397,7 @@ export function seedFS(): Record<string, FSNode> {
     ...FILES,
     ...CODEC_FILES,
     ...CREATIVE,
+    ...IMAGES,
     ...LAUNCHERS,
   ]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))

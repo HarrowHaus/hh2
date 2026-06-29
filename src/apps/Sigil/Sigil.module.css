@@ -1,0 +1,159 @@
+/* Sigil Forge — dark occult aesthetic, XP inner-window content */
+
+.sigil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background: #0b0b0f;
+  color: #c8a8e8;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px 12px 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  user-select: none;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 2px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #d4a8f0;
+  text-shadow: 0 0 8px rgba(200, 120, 255, 0.7);
+}
+
+.sub {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #6a4880;
+  text-transform: uppercase;
+}
+
+/* ── Input row ── */
+.inputRow {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  background: #13101a;
+  border: 1px solid #3a2550;
+  border-radius: 2px;
+  color: #e0c8f8;
+  font-family: inherit;
+  font-size: 11px;
+  padding: 5px 8px;
+  outline: none;
+  caret-color: #b880ff;
+  transition: border-color 0.15s;
+}
+
+.input::placeholder {
+  color: #3d2858;
+  font-style: italic;
+}
+
+.input:focus {
+  border-color: #7040a0;
+  box-shadow: 0 0 0 2px rgba(120, 60, 180, 0.2);
+}
+
+/* ── Buttons ── */
+.btnRow {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.btn {
+  background: #1a1025;
+  border: 1px solid #5a3080;
+  border-radius: 2px;
+  color: #c8a0e8;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.12s, color 0.12s, box-shadow 0.12s;
+}
+
+.btn:hover:not(:disabled) {
+  background: #2a1840;
+  color: #e8c8ff;
+  box-shadow: 0 0 6px rgba(160, 80, 255, 0.35);
+}
+
+.btn:active:not(:disabled) {
+  background: #3a2055;
+}
+
+.btnDisabled,
+.btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ── Reduced letter set ── */
+.letterSet {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.letterLabel {
+  color: #5a4070;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.letterChars {
+  color: #b890d8;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+}
+
+/* ── Canvas ── */
+.canvasWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.canvas {
+  display: block;
+  /* subtle parchment/ritual frame */
+  border: 1px solid #2a1840;
+  box-shadow:
+    0 0 0 1px #1a0f28,
+    0 0 18px rgba(120, 60, 200, 0.3),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  image-rendering: pixelated;
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 6px;
+  font-size: 9px;
+  color: #3d2858;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}

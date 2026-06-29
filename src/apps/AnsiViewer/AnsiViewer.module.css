@@ -1,0 +1,74 @@
+/* AnsiViewer — artscene / CP437 / ANSI viewer
+   Always black-background DOS look, fixed regardless of OS theme. */
+
+.ansi {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #000;
+  color: #aaaaaa; /* VGA light grey default */
+  font-family: 'Lucida Console', 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+/* ── Toolbar / status bar ─────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 2px 6px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  gap: 8px;
+}
+
+.toolbarLeft {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.toolbarRight {
+  color: #55ffff; /* bright cyan — art-scene accent */
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Scrollable viewport ──────────────────────────────────────────── */
+.viewport {
+  flex: 1 1 0;
+  overflow: auto;
+  display: flex;
+  justify-content: center; /* center narrow art horizontally */
+  padding: 12px 16px;
+  background: #000;
+  box-sizing: border-box;
+}
+
+/* The rendering canvas — block of monospace text */
+.canvas {
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: #000;
+  color: #aaaaaa;
+  /* Snap to cell grid; allow horizontal scroll for wide art */
+  min-width: min-content;
+  tab-size: 8;
+  -moz-tab-size: 8;
+}
+
+/* Each ANSI-parsed line is its own div so we can guarantee newline rendering */
+.ansiLine {
+  display: block;
+  min-height: 1.2em; /* preserve blank lines */
+}

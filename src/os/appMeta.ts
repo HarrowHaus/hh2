@@ -23,4 +23,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   terminal: { title: 'Command Prompt', width: 560, height: 360, single: false, resizable: true },
   imageviewer: { title: 'Windows Picture and Fax Viewer', width: 560, height: 480, single: false, resizable: true },
   trivia: { title: 'trivia.exe', width: 480, height: 420, single: true, resizable: false },
+  minesweeper: { title: 'Minesweeper', width: 184, height: 268, single: true, resizable: false },
 }

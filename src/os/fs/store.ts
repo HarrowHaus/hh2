@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v8: + trivia.exe stub (Program Files + desktop shortcut). Bumping
-      // discards the old dev seed (pre-release; no real user data yet).
-      version: 8,
+      // v9: + GAMES\ + playable Minesweeper. Bumping discards the old dev seed
+      // (pre-release; no real user data yet).
+      version: 9,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

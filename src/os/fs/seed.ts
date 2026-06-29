@@ -61,6 +61,7 @@ const FOLDERS: [string, string, number][] = [
   [`${PF}/Emulators/SNES9x`, 'SNES9x', A],
   [`${PF}/Emulators/VisualBoyAdvance`, 'VisualBoyAdvance', A2],
   [`${PF}/trivia`, 'trivia', C],
+  [`${PF}/GAMES`, 'GAMES', A],
   [`${C_DRIVE}/CODECS`, 'CODECS', A],
   [`${C_DRIVE}/CODECS/do_not_open`, 'do_not_open', A2],
   [`${C_DRIVE}/weird`, 'weird', B2],
@@ -392,6 +393,8 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${C_DRIVE}/WINDOWS/system32/cmd.exe`, 'cmd.exe', A, 'terminal'),
   launcher(`${PF}/trivia/trivia.exe`, 'trivia.exe', C, 'trivia'),
   launcher(`${DESKTOP_PATH}/trivia.exe`, 'trivia.exe', C, 'trivia'),
+  launcher(`${PF}/GAMES/Minesweeper.exe`, 'Minesweeper.exe', A, 'minesweeper'),
+  launcher(`${DESKTOP_PATH}/Minesweeper`, 'Minesweeper', A, 'minesweeper'),
 ]
 
 export function seedFS(): Record<string, FSNode> {

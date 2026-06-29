@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -12,6 +12,7 @@ import { FLStudio } from '../apps/FLStudio/FLStudio'
 import { Terminal } from '../apps/Terminal/Terminal'
 import { ImageViewer } from '../apps/ImageViewer/ImageViewer'
 import { Trivia } from '../apps/Trivia/Trivia'
+import { Minesweeper } from '../apps/Minesweeper/Minesweeper'
 
 interface IconProps {
   size?: number
@@ -37,4 +38,5 @@ export const APPS: Record<AppId, AppEntry> = {
   terminal: { Icon: TerminalIcon, Component: Terminal },
   imageviewer: { Icon: ImageIcon, Component: ImageViewer },
   trivia: { Icon: TriviaIcon, Component: Trivia },
+  minesweeper: { Icon: MineIcon, Component: Minesweeper },
 }

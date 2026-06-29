@@ -13,6 +13,7 @@ export type AppId =
   | 'terminal'
   | 'imageviewer'
   | 'trivia'
+  | 'minesweeper'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

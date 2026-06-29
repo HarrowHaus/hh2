@@ -135,6 +135,21 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Minesweeper icon: the classic naval mine on a grey tile.
+export function MineIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#c0c0c0" stroke="#7a7a7a" />
+      <g stroke="#111" strokeWidth="2">
+        <line x1="16" y1="6" x2="16" y2="26" /><line x1="6" y1="16" x2="26" y2="16" />
+        <line x1="9" y1="9" x2="23" y2="23" /><line x1="23" y1="9" x2="9" y2="23" />
+      </g>
+      <circle cx="16" cy="16" r="6" fill="#111" />
+      <circle cx="14" cy="14" r="1.6" fill="#fff" />
+    </svg>
+  )
+}
+
 // trivia.exe icon: a game-show buzzer with a question mark.
 export function TriviaIcon({ size = 30, style, className }: IconProps) {
   return (

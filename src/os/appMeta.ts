@@ -17,4 +17,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   notepad: { title: 'Untitled - Notepad', width: 480, height: 360, single: false, resizable: true },
   foobar: { title: 'foobar2000', width: 660, height: 460, single: true, resizable: true },
   bt: { title: 'µTorrent', width: 640, height: 410, single: true, resizable: true },
+  installer: { title: 'Setup', width: 460, height: 358, single: false, resizable: false },
 }

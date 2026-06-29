@@ -312,6 +312,50 @@ const FILES: FSNode[] = [
   ),
 ]
 
+// CODECS\ — the junk-drawer of codec-pack "installers" (manifest item 1). Each
+// .exe is a prop that opens the fake-installer gag (app: 'installer'); none are
+// real executables. Real-era names = period flavor only (docs/03, docs/07-A).
+const CODECS = `${C_DRIVE}/CODECS`
+const DNO = `${CODECS}/do_not_open`
+const A04 = T('2004-08-22T23:14:00') // early codec-hell, pre-A
+const CODEC_FILES: FSNode[] = [
+  launcher(`${CODECS}/CCCP-2005-09-13.exe`, 'CCCP-2005-09-13.exe', A, 'installer'),
+  launcher(`${CODECS}/K-Lite_Mega_Codec_Pack_140.exe`, 'K-Lite_Mega_Codec_Pack_140.exe', A, 'installer'),
+  launcher(`${CODECS}/ffdshow_rev1853_20050307.exe`, 'ffdshow_rev1853_20050307.exe', A04, 'installer'),
+  launcher(`${CODECS}/DivX511Bundle.exe`, 'DivX511Bundle.exe', A04, 'installer'),
+  launcher(`${CODECS}/XviD-1.1.0-30122005.exe`, 'XviD-1.1.0-30122005.exe', A, 'installer'),
+  launcher(`${CODECS}/VSFilter_VobSub_2.39.exe`, 'VSFilter_VobSub_2.39.exe', A, 'installer'),
+  launcher(`${CODECS}/HaaliMediaSplitter.exe`, 'HaaliMediaSplitter.exe', A2, 'installer'),
+  launcher(`${CODECS}/ac3filter_1_51b.exe`, 'ac3filter_1_51b.exe', A04, 'installer'),
+  launcher(`${CODECS}/RealAlternative_151.exe`, 'RealAlternative_151.exe', A04, 'installer'),
+  launcher(`${CODECS}/NimoCodecPack_50.exe`, 'NimoCodecPack_50.exe', A04, 'installer'),
+  text(
+    `${CODECS}/read_me_first.txt`,
+    'read_me_first.txt',
+    A04,
+    [
+      'codec hell survival rules (learned the hard way):',
+      '',
+      '1. do NOT install two packs at once. pick CCCP or K-Lite, never both.',
+      '2. if it stops playing, it is ALWAYS a filter merit conflict. always.',
+      '3. uninstall everything, reboot, install ONE pack, test on a known-good avi.',
+      '4. ffdshow is doing the actual work. the rest is splitters and grief.',
+      '5. anything in do_not_open is in there for a reason. leave it.',
+    ].join('\n'),
+  ),
+  // do_not_open\ — the sketchier the name, the deeper it sits (depth-riot,
+  // docs/03). Props only: no real exe, no malware, no crack code. Opening one
+  // pops the same inert installer gag.
+  launcher(`${DNO}/DivX_Pro_FREE_crack.exe`, 'DivX_Pro_FREE_crack.exe', A2, 'installer'),
+  launcher(
+    `${DNO}/codec_megapack_2005_FINAL_no_virus.exe`,
+    'codec_megapack_2005_FINAL_no_virus.exe',
+    A2,
+    'installer',
+  ),
+  launcher(`${DNO}/KAZAA_codec_pack.exe`, 'KAZAA_codec_pack.exe', A2, 'installer'),
+]
+
 // Program launchers (.exe shortcuts) — opening one opens its app.
 const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/foobar2000`, 'foobar2000', A, 'foobar'),
@@ -321,6 +365,11 @@ const LAUNCHERS: FSNode[] = [
 ]
 
 export function seedFS(): Record<string, FSNode> {
-  const nodes: FSNode[] = [...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)), ...FILES, ...LAUNCHERS]
+  const nodes: FSNode[] = [
+    ...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)),
+    ...FILES,
+    ...CODEC_FILES,
+    ...LAUNCHERS,
+  ]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))
 }

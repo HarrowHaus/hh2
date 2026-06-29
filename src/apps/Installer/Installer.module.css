@@ -1,0 +1,164 @@
+/* Fake codec-pack setup wizard (NON-FUNCTIONAL prop). Classic InstallShield
+   layout — blue banner rail, content pane, footer button row — skinned from
+   tokens so it reads in every visual style. Nothing here installs anything. */
+.wiz {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Left banner rail */
+.rail {
+  width: 150px;
+  flex: 0 0 150px;
+  background: linear-gradient(160deg, #1b3a6b 0%, #2a5fa8 55%, #0d234a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--winborder);
+}
+.railArt {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.cd {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #f4f6f8 0 16%, transparent 17%),
+    conic-gradient(from 0deg, #8fd0ff, #c9a8ff, #9affc4, #ffd36e, #8fd0ff);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.cd::after {
+  content: '';
+  position: absolute;
+  inset: 44%;
+  border-radius: 50%;
+  background: #1b3a6b;
+}
+
+/* Content pane */
+.content {
+  flex: 1;
+  padding: 14px 16px;
+  overflow: auto;
+  min-width: 0;
+}
+.content p { margin: 0 0 9px; line-height: 1.5; }
+.h2 { font-size: 14px; font-weight: 700; margin: 0 0 12px; }
+.h3 { font-size: 12px; font-weight: 700; margin: 0 0 4px; }
+.dim { opacity: 0.7; }
+
+.license {
+  height: 116px;
+  overflow: auto;
+  white-space: pre-wrap;
+  border: 1px solid var(--winborder);
+  background: var(--field);
+  color: var(--wintext);
+  padding: 7px 8px;
+  font-size: 10.5px;
+  line-height: 1.45;
+  margin: 6px 0 9px;
+}
+.accept {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.bundles {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 6px;
+}
+.bundle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'check name' 'check blurb';
+  column-gap: 7px;
+  align-items: start;
+  padding: 3px 4px;
+  border-radius: 2px;
+}
+.bundle:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.bundle input { grid-area: check; margin-top: 1px; }
+.bundleName { grid-area: name; font-weight: 600; }
+.rec { font-weight: 400; opacity: 0.6; font-size: 10px; }
+.bundleBlurb { grid-area: blurb; opacity: 0.6; font-size: 10px; }
+
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 8px;
+}
+.progressBar {
+  flex: 1;
+  height: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  background: color-mix(in srgb, var(--winbody) 70%, #000 30%);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progressFill {
+  height: 100%;
+  background: linear-gradient(180deg, #4aa84a, #2f7d2f);
+  transition: width 0.09s linear;
+}
+.progressNum { font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; }
+.statusLine { opacity: 0.7; font-size: 10.5px; }
+
+.summary {
+  margin: 4px 0 10px;
+  padding-left: 18px;
+  line-height: 1.6;
+}
+.summary li { font-size: 11px; }
+.punch { font-weight: 700; opacity: 1 !important; margin-top: 4px; }
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-top: 1px solid var(--winborder);
+  background: color-mix(in srgb, var(--winbody) 88%, #888 12%);
+}
+.steps { display: flex; gap: 5px; }
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--wintext) 30%, transparent);
+}
+.dotOn { background: var(--accent); }
+.btns { display: flex; gap: 6px; }
+.btn {
+  min-width: 70px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--wintext);
+  background: color-mix(in srgb, var(--winbody) 78%, #888 22%);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { filter: brightness(1.08); }
+.btn:active:not(:disabled) { filter: brightness(0.94); }
+.btn:disabled { opacity: 0.45; cursor: default; }

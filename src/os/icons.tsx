@@ -93,6 +93,26 @@ export function MusicIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Generic "setup.exe" installer icon — a CD propped on an open carton, the way
+// every codec pack / shareware installer looked alike in the file list.
+export function SetupIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M3 20 L16 25 L29 20 L29 26 L16 31 L3 26 Z" fill="#d9c79a" stroke="#8a7642" />
+      <path d="M3 20 L16 15 L29 20 L16 25 Z" fill="#efe3bd" stroke="#8a7642" />
+      <circle cx="16" cy="12" r="8.5" fill="#cfd6dd" stroke="#6f7780" />
+      <circle cx="16" cy="12" r="8.5" fill="url(#cdg)" opacity="0.6" />
+      <circle cx="16" cy="12" r="2.4" fill="#fff" stroke="#6f7780" />
+      <circle cx="16" cy="12" r="0.8" fill="#9aa1a8" />
+      <defs>
+        <linearGradient id="cdg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#8fd0ff" /><stop offset="0.5" stopColor="#c9a8ff" /><stop offset="1" stopColor="#9affc4" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
 export function VolumeIcon({ size = 16, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">

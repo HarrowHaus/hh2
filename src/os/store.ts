@@ -232,8 +232,23 @@ export const useOS = create<OSState>()(
     }),
     {
       name: 'hmd.os',
+      version: 1,
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ visualStyle: state.visualStyle }),
+      // Persist durable session state: visual style + open windows (docs/02 #10).
+      // Transient flags (booted/loggedIn/startMenu/snapPreview/account) are not
+      // persisted — every load re-boots and re-logs-in, then windows restore.
+      partialize: (state) => ({
+        visualStyle: state.visualStyle,
+        windows: state.windows,
+        nextId: state.nextId,
+        nextZ: state.nextZ,
+      }),
+      // Drop any persisted window whose app no longer exists (defensive).
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<OSState>
+        const windows = (p.windows ?? []).filter((w) => w.appId in APP_META)
+        return { ...current, ...p, windows }
+      },
     },
   ),
 )

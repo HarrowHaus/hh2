@@ -56,6 +56,9 @@ export function Desktop() {
   const createTextFile = useFS((s) => s.createTextFile)
   const removeNode = useFS((s) => s.remove)
   const renameNode = useFS((s) => s.rename)
+  const clipboard = useFS((s) => s.clipboard)
+  const setClipboard = useFS((s) => s.setClipboard)
+  const paste = useFS((s) => s.paste)
 
   const openMenu = useMenu((s) => s.openMenu)
 
@@ -171,6 +174,8 @@ export function Desktop() {
       { label: 'Arrange Icons By', disabled: true },
       { label: 'Refresh' },
       { separator: true },
+      { label: 'Paste', disabled: !clipboard, onClick: () => paste(DESKTOP_PATH) },
+      { separator: true },
       { label: 'New Folder', onClick: () => setRenaming(createFolder(DESKTOP_PATH)) },
       { label: 'New Text Document', onClick: () => setRenaming(createTextFile(DESKTOP_PATH)) },
       { separator: true },
@@ -182,14 +187,29 @@ export function Desktop() {
   function iconMenu(e: MouseEvent, ic: DeskIcon) {
     e.preventDefault()
     e.stopPropagation()
-    setSelected(new Set([ic.id]))
+    // Keep an existing multi-selection if right-clicking inside it; else select one.
+    let sel = selected
+    if (!sel.has(ic.id)) {
+      sel = new Set([ic.id])
+      setSelected(sel)
+    }
+    const fsPaths = Array.from(sel).filter((id) => nodes[id]) // FS-backed icons only
     const items: MenuItem[] = [{ label: 'Open', onClick: ic.open }]
     if (ic.node) {
       items.push(
         { separator: true },
-        { label: 'Rename', onClick: () => setRenaming(ic.id) },
-        { label: 'Delete', onClick: () => removeNode(ic.node!.path) },
+        { label: 'Cut', onClick: () => setClipboard(fsPaths, 'cut') },
+        { label: 'Copy', onClick: () => setClipboard(fsPaths, 'copy') },
+        { separator: true },
       )
+      if (fsPaths.length === 1) items.push({ label: 'Rename', onClick: () => setRenaming(ic.id) })
+      items.push({
+        label: fsPaths.length > 1 ? `Delete ${fsPaths.length} items` : 'Delete',
+        onClick: () => {
+          fsPaths.forEach(removeNode)
+          setSelected(new Set())
+        },
+      })
     }
     items.push({ separator: true }, { label: 'Properties', onClick: () => openApp('display') })
     openMenu(e.clientX, e.clientY, items)
@@ -200,6 +220,7 @@ export function Desktop() {
       <div
         ref={surfaceRef}
         className={styles.surface}
+        data-drop-folder={DESKTOP_PATH}
         onPointerDown={onSurfacePointerDown}
         onContextMenu={desktopMenu}
       >

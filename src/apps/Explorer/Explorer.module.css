@@ -102,6 +102,26 @@
   background: #fff;
 }
 
+/* Cut items show ghosted until the paste lands (XP behavior). */
+.item.cut { opacity: 0.45; }
+
+.view:focus { outline: none; }
+
+/* Floating drag pill that follows the cursor during a move. pointer-events:none
+   so elementFromPoint still hits the drop target underneath. */
+.ghost {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 80%, #000 20%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
 .statusbar {
   border-top: 1px solid rgba(128, 128, 128, 0.35);
   padding: 2px 8px;

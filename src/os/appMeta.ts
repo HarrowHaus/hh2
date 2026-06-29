@@ -22,4 +22,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   flstudio: { title: 'FL Studio', width: 700, height: 460, single: true, resizable: true },
   terminal: { title: 'Command Prompt', width: 560, height: 360, single: false, resizable: true },
   imageviewer: { title: 'Windows Picture and Fax Viewer', width: 560, height: 480, single: false, resizable: true },
+  trivia: { title: 'trivia.exe', width: 480, height: 420, single: true, resizable: false },
 }

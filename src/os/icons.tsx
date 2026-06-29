@@ -135,6 +135,24 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// trivia.exe icon: a game-show buzzer with a question mark.
+export function TriviaIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <ellipse cx="16" cy="27" rx="11" ry="3" fill="#2a2a2e" />
+      <rect x="9" y="16" width="14" height="9" rx="2" fill="#3a3a40" stroke="#1c1c20" />
+      <circle cx="16" cy="13" r="9" fill="#c0181c" stroke="#7a0e10" />
+      <circle cx="16" cy="13" r="9" fill="url(#tg)" opacity="0.5" />
+      <defs>
+        <radialGradient id="tg" cx="0.4" cy="0.35" r="0.7">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.7" /><stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <text x="16" y="17" textAnchor="middle" fontFamily="Arial Black, sans-serif" fontSize="12" fontWeight="900" fill="#fff">?</text>
+    </svg>
+  )
+}
+
 // Image-file icon: a small photo with sky + hill, like the XP picture-file glyph.
 export function ImageIcon({ size = 30, style, className }: IconProps) {
   return (

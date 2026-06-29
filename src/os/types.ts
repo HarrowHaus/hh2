@@ -12,6 +12,7 @@ export type AppId =
   | 'flstudio'
   | 'terminal'
   | 'imageviewer'
+  | 'trivia'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

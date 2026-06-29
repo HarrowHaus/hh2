@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v7: + Image Viewer artifacts (spek spectral, video-nasty poster, chaos
-      // sigil, demo cover). Bumping discards the old dev seed (pre-release).
-      version: 7,
+      // v8: + trivia.exe stub (Program Files + desktop shortcut). Bumping
+      // discards the old dev seed (pre-release; no real user data yet).
+      version: 8,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

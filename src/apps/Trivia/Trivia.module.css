@@ -1,0 +1,111 @@
+/* trivia.exe lobby stub. Game-show dark with red buzzer accents; reads in every
+   visual style via tokens where it touches chrome. Inert internals (Phase 7). */
+.trivia {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, #2a1416 0%, #16161a 60%);
+  color: #ececec;
+  font-size: 12px;
+}
+.marquee {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid rgba(192, 24, 28, 0.5);
+}
+.logo {
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ffd24a;
+  text-shadow: 0 0 10px rgba(255, 180, 40, 0.4), 2px 2px 0 #c0181c;
+}
+.tag { font-size: 10px; opacity: 0.65; letter-spacing: 1px; }
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+}
+.host {
+  flex: 0 0 auto;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  line-height: 0;
+}
+.host:hover { filter: brightness(1.1); }
+.bubble {
+  position: relative;
+  background: #f3f0e8;
+  color: #1a1a1a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  flex: 1;
+}
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 18px;
+  border: 6px solid transparent;
+  border-right-color: #f3f0e8;
+}
+
+.lobby { flex: 1; display: flex; gap: 10px; padding: 0 14px; min-height: 0; }
+.players, .cats {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.panelHead {
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(192, 24, 28, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.empty { padding: 14px 8px; opacity: 0.55; font-size: 11px; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px; }
+.chip {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 11px;
+  background: rgba(255, 210, 74, 0.12);
+  border: 1px solid rgba(255, 210, 74, 0.35);
+  color: #ffe9a8;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ready {
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 8px 18px;
+  color: #fff;
+  background: radial-gradient(circle at 40% 30%, #e23b3f, #a0141a);
+  border: 2px solid #7a0e10;
+  border-radius: 22px;
+  box-shadow: 0 3px 0 #5e0a0c, 0 4px 8px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.ready:active { transform: translateY(2px); box-shadow: 0 1px 0 #5e0a0c; }
+.note { font-size: 10px; opacity: 0.6; }

@@ -549,6 +549,18 @@ const STRATA: FSNode[] = [
   ),
   asset(`${MYDOCS}/resume.pdf`, 'resume.pdf', C, 'pdf', `${import.meta.env.BASE_URL}files/resume.pdf`),
   text(
+    `${WORK}/scratch.js`,
+    'scratch.js',
+    C,
+    [
+      '// throwaway helpers. half of these never shipped.',
+      "const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-')",
+      '',
+      'export const labels = ["Dick Crush", "Couch Nap", "Shaking Dog", "Moldmouth"]',
+      'export const slugs = labels.map(slugify)',
+    ].join('\n'),
+  ),
+  text(
     `${WORK}/notes.md`,
     'notes.md',
     C,
@@ -654,6 +666,7 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${PF}/Accessories/Character Map.exe`, 'Character Map.exe', A, 'charmap'),
   launcher(`${PF}/Accessories/Sound Recorder.exe`, 'Sound Recorder.exe', A, 'recorder'),
   launcher(`${PF}/Accessories/Hex Editor.exe`, 'Hex Editor.exe', A2, 'hexedit'),
+  launcher(`${PF}/Accessories/Code.exe`, 'Code.exe', C, 'code'),
   launcher(`${PF}/AIM/aim.exe`, 'aim.exe', A, 'aim'),
   launcher(`${DESKTOP_PATH}/AOL Instant Messenger`, 'AOL Instant Messenger', A, 'aim'),
   launcher(`${PF}/mIRC/mirc.exe`, 'mirc.exe', A, 'mirc'),

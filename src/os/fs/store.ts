@@ -170,10 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v17: + Chess in GAMES. (v16: keygen/sigil + .nfo routing; v15: FreeCell/
+      // v18: + Code editor (Monaco) launcher + scratch.js. v17: + Chess. (v16: keygen/sigil + .nfo routing; v15: FreeCell/
       // Spider; v14: easter eggs; v13: Accessories/GAMES.) Bumping discards the
       // old dev seed (pre-release).
-      version: 17,
+      version: 18,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

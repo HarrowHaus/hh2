@@ -346,6 +346,16 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function CodeIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="24" rx="3" fill="#1e1e1e" stroke="#0a0a0a" />
+      <path d="M12 11 l-5 5 l5 5 M20 11 l5 5 l-5 5" fill="none" stroke="#4ea0e0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M17 9 l-2 14" stroke="#9aa0a6" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function ChessIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

@@ -1,0 +1,23 @@
+.code {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1e1e1e;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: #ccc;
+  background: #252526;
+  border-bottom: 1px solid #111;
+}
+.name { font-weight: 600; }
+.hint { margin-left: auto; opacity: 0.6; }
+.host {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}

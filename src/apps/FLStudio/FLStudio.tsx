@@ -1,4 +1,31 @@
+import { useEffect, useState } from 'react'
 import styles from './FLStudio.module.css'
+
+// FL Studio app (docs/08 Tier 2). If a real BassoonTracker build has been
+// vendored into public/bassoon/ (it is not on npm — drop its dist there), the
+// app becomes a REAL .mod/.xm tracker via an iframe; otherwise it falls back to
+// the FruityLoops step-sequencer diorama below. BassoonTracker = MIT (CREDITS).
+const BASSOON_URL = `${import.meta.env.BASE_URL}bassoon/index.html`
+
+export function FLStudio() {
+  // null = checking, false = not vendored (diorama), true = present (real tracker)
+  const [hasTracker, setHasTracker] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let alive = true
+    fetch(BASSOON_URL, { method: 'HEAD' })
+      .then((r) => alive && setHasTracker(r.ok))
+      .catch(() => alive && setHasTracker(false))
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  if (hasTracker) {
+    return <iframe className={styles.bassoon} src={BASSOON_URL} title="BassoonTracker" />
+  }
+  return <Diorama />
+}
 
 // FL Studio / FruityLoops diorama (manifest item 5). The channel-rack step
 // sequencer frozen on a pattern. NON-FUNCTIONAL: steps and transport are inert
@@ -25,7 +52,7 @@ const CHANNELS: Channel[] = [
   { name: 'Vox Chop',    steps: [o,o,X,o, o,o,o,o, o,o,X,o, o,o,o,o] },
 ]
 
-export function FLStudio() {
+function Diorama() {
   return (
     <div className={styles.fl}>
       <div className={styles.menubar}>

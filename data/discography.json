@@ -1,0 +1,51 @@
+{
+  "_comment": "Music-pillar catalog for THE HAND-ME-DOWN. The foobar2000 app + LABELS/ folder + DISCOGRAPHY view read from this. Per-band -> source mapping is UNRESOLVED: resolve at build by fetching the four Bandcamp pages below (also pull release art, embed IDs, track lists). Represent all names factually as real catalog entries; design around the scene's DIY aesthetic; do NOT generate new crude content. Exact spellings/diacritics preserved on purpose.",
+
+  "sources": [
+    { "id": "moldmouth",  "name": "Moldmouth",          "type": "band",  "url": "https://moldmouth.bandcamp.com" },
+    { "id": "dickcrush",  "name": "Dick Crush Records",  "type": "label", "url": "https://dickcrushrecords.bandcamp.com" },
+    { "id": "couchnap",   "name": "Couch Nap Records",   "type": "label", "url": "https://couchnaprecords.bandcamp.com", "url_note": "confirm exact slug at build" },
+    { "id": "shakingdog", "name": "Shaking Dog Tapes",   "type": "label", "url": "https://shakingdogtapes.bandcamp.com" }
+  ],
+
+  "bands": [
+    { "name": "Vulva Puncher" },
+    { "name": "bugXpunch" },
+    { "name": "The Blue Knites Öv Micrösöft" },
+    { "name": "SHUT THE FUCK UP" },
+    { "name": "Dead Snakes" },
+    { "name": "今、壮大な宇宙の鳥！" },
+    { "name": "Locker Fuck" },
+    { "name": "Right Here, Right Now" },
+    { "name": "Eat Shit" },
+    { "name": "Hung Eyes" },
+    { "name": "The Vomiting" },
+    { "name": "ƎNDƏR" },
+    { "name": "Cat Guts" },
+    { "name": "yd" },
+    { "name": "Baron Von Asshole And The Wizards Of Shit" },
+    { "name": "Cult of the Dead Cow" },
+    { "name": "Fork Chest" },
+    { "name": "Bill Gates" },
+    { "name": "Ridiculous Gordon" },
+    { "name": "Crack Shredder" },
+    { "name": "Bastard Cooker" },
+    { "name": "mom mincer" },
+    { "name": "sperg" },
+    { "name": "moldmouth" },
+    { "name": "White Room Violence" },
+    { "name": "Mouth Full Of Shit" },
+    { "name": "Soft Torture" },
+    { "name": "Project Sunshine" },
+    { "name": "Wet Jesus" },
+    { "name": "Coffee Shop Cop" }
+  ],
+
+  "_dedupe_note": "Source list had 32 lines; 'Dead Snakes' and 'Right Here, Right Now' appeared twice — collapsed to single entries here. 30 unique acts.",
+  "_build_tasks": [
+    "Fetch each source URL; map every band to its label(s) and fill a 'sources' array per band.",
+    "Pull release artwork (cover thumbs) for foobar2000 playlist rows + LABELS/ folder icons.",
+    "Capture Bandcamp embed/track IDs so the foobar2000 app can actually play tracks.",
+    "Flag any acts not found on the four sources for manual confirmation."
+  ]
+}

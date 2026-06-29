@@ -1,0 +1,43 @@
+/* themes.css — visual-style tokens for the Display Properties switcher.
+   Apply one class to <body>: theme-dark (default) | luna | classic.
+   All chrome colors/bitmaps should derive from these tokens so new styles drop in cleanly. */
+
+:root,
+body.theme-dark {                 /* bug.msstyles — dark scene-kid skin (DEFAULT) */
+  --title:#e6e6e6;
+  --winbody:#17171b; --wintext:#dcdce0; --winborder:#000;
+  --titlegrad:linear-gradient(180deg,#34343a,#101013);
+  --titleinact:linear-gradient(180deg,#26262b,#15151a);
+  --taskbar:linear-gradient(180deg,#2a2a30,#0e0e11 12%,#0e0e11 88%,#000);
+  --startbtn:linear-gradient(180deg,#8c1414,#4a0808); --starttext:#fff;
+  --menubg:#17171b; --menuside:#0d0d10; --menutext:#dcdce0;
+  --accent:#9a1414;
+  --wall:#0a0a0c;                 /* placeholder: band art / horror still */
+  --radius:7px; --field:#101014;
+}
+
+body.luna {                       /* Windows XP (Luna) — factory / family layer */
+  --title:#fff;
+  --winbody:#fff; --wintext:#111; --winborder:#0831d9;
+  --titlegrad:linear-gradient(180deg,#0058ee,#3f8cf3 9%,#0855dd 18%,#0855dd 78%,#003fc4 92%,#0831d9);
+  --titleinact:linear-gradient(180deg,#7aa5f0,#5b87e0 60%,#3f6fd6);
+  --taskbar:linear-gradient(180deg,#3168d5,#2257d8 8%,#1c4fd4 90%,#0f3bbb);
+  --startbtn:linear-gradient(180deg,#73b56a,#4e9a45 50%,#3c873c); --starttext:#fff;
+  --menubg:#fff; --menuside:#d3e5fa; --menutext:#111;
+  --accent:#2f6fd6;
+  --wall:linear-gradient(180deg,#3a73c4,#5b94d6 40%,#7aac4e 62%,#5a8f3a); /* Bliss-style */
+  --radius:8px; --field:#fff;
+}
+
+body.classic {                    /* Windows Classic — 9x grey + teal desktop */
+  --title:#fff;
+  --winbody:#d4d0c8; --wintext:#000; --winborder:#000;
+  --titlegrad:#000080; --titleinact:#808080;
+  --taskbar:#d4d0c8; --startbtn:#d4d0c8; --starttext:#000;
+  --menubg:#d4d0c8; --menuside:#d4d0c8; --menutext:#000;
+  --accent:#000080;
+  --wall:#008080;
+  --radius:0px; --field:#fff;
+}
+
+/* Add future visual styles as new body.<name> blocks overriding the same tokens. */

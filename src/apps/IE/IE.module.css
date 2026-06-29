@@ -10,7 +10,18 @@
 }
 .menubar { display: flex; gap: 12px; padding: 3px 8px; border-bottom: 1px solid var(--winborder); }
 .toolbar { display: flex; gap: 6px; padding: 4px 8px; border-bottom: 1px solid var(--winborder); }
-.tbtn { font-size: 11px; cursor: default; opacity: 0.85; }
+.tbtn {
+  font: inherit;
+  font-size: 11px;
+  cursor: default;
+  opacity: 0.85;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  padding: 1px 4px;
+}
+.tbtn:hover:not(:disabled) { border-color: var(--winborder); opacity: 1; }
+.tbtn:disabled { opacity: 0.4; }
 .address {
   display: flex;
   align-items: center;
@@ -21,14 +32,32 @@
 .addressbox {
   flex: 1;
   background: var(--field);
+  color: var(--wintext);
   border: 1px solid var(--winborder);
   padding: 2px 6px;
+  font-family: inherit;
   font-size: 11px;
+  min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.go { font-size: 11px; opacity: 0.8; }
+.addressbox:focus { outline: 1px solid var(--accent); }
+.go {
+  font: inherit;
+  font-size: 11px;
+  opacity: 0.85;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  cursor: default;
+  padding: 1px 6px;
+}
+.go:hover { border-color: var(--winborder); opacity: 1; }
+
+/* Content viewport hosts either an in-world page or the Old Net iframe. */
+.viewport { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.viewport > * { flex: 1; min-height: 0; }
 
 /* The page itself */
 .page {
@@ -74,7 +103,17 @@
 }
 .webringHead { color: #7fe0ff; font-weight: 700; margin-bottom: 6px; }
 .webringNav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.ringlink { color: #ff8a3a; font-size: 11px; text-decoration: underline; cursor: default; }
+.ringlink {
+  color: #ff8a3a;
+  font: inherit;
+  font-size: 11px;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.ringlink:hover { color: #ffd24a; }
 .webringFoot { font-size: 10px; color: #6a8a9a; margin-top: 6px; }
 
 .gbHead { text-align: center; font-size: 15px; color: #9aff9a; text-shadow: 0 0 6px rgba(60, 255, 60, 0.5); margin: 8px 0; }
@@ -117,3 +156,82 @@
   border: 1px solid #2f7d2f;
   letter-spacing: 2px;
 }
+
+/* ── Old Net (archive.org read-only) ─────────────────────────────────────── */
+.oldnet { display: flex; flex-direction: column; height: 100%; background: #000; }
+.oldnetBar {
+  font-size: 11px;
+  color: #ffd24a;
+  background: repeating-linear-gradient(45deg, #1a1400, #1a1400 8px, #2a2200 8px, #2a2200 16px);
+  border-bottom: 1px solid #ffd24a;
+  padding: 3px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Tahoma', sans-serif;
+}
+.oldnetFrame { flex: 1; width: 100%; border: 0; background: #fff; }
+
+/* ── Generic in-world page bits ──────────────────────────────────────────── */
+.plainIntro { font-size: 12px; line-height: 1.6; color: #c8c8c8; margin: 0 0 12px; }
+.plainNote { font-size: 11px; line-height: 1.5; color: #9aa; margin: 12px 0; font-style: italic; }
+.tradeHead { color: #7fe0ff; font-weight: 700; margin: 10px 0 6px; font-size: 12px; }
+.tradeList { margin: 0 0 8px; padding-left: 18px; font-size: 11px; line-height: 1.7; color: #d8d8d8; }
+.tradeList li { margin-bottom: 2px; }
+.banner2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #9aff9a;
+  text-shadow: 0 0 6px rgba(60, 255, 60, 0.4);
+  border: 1px dashed #3a6a3a;
+  padding: 6px;
+  margin-bottom: 12px;
+}
+
+/* ROTBOX */
+.rotbox { background: #060606; color: #c0c0c0; font-family: 'Courier New', monospace; }
+.asciiHead { color: #ff3a3a; font-size: 10px; line-height: 1.1; margin: 0 0 10px; white-space: pre; overflow-x: auto; }
+
+/* TAPE HISS / VAULT */
+.tapehiss { background: #0a0a10; }
+.vault { background: #07120a; }
+.nowplaying {
+  font-family: 'Courier New', monospace;
+  color: #2fff2f;
+  background: #000;
+  border: 1px solid #2f7d2f;
+  padding: 6px 8px;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+.linkList { list-style: none; margin: 0 0 8px; padding: 0; font-size: 12px; line-height: 1.9; }
+
+/* In-world hyperlink (button styled as an <a>) */
+.inlink {
+  color: #6ab8ff;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.inlink:hover { color: #aad8ff; }
+.inlink:visited { color: #b08aff; }
+
+/* Ring list */
+.ringMembers { max-width: 420px; margin: 0 auto; display: flex; flex-direction: column; gap: 6px; }
+.ringMember { font-size: 12px; color: #d8d8d8; display: flex; gap: 6px; align-items: baseline; }
+.ringNum { color: #7fe0ff; font-family: 'Courier New', monospace; }
+.ringBy { color: #888; font-size: 11px; }
+
+/* XP "cannot be displayed" error page (rendered for unknown URLs) */
+.errorPage { height: 100%; background: #fff; color: #000; overflow: auto; font-family: 'Tahoma', 'Verdana', sans-serif; }
+.errorInner { max-width: 460px; padding: 20px 24px; font-size: 12px; line-height: 1.5; }
+.errorTitle { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #000; }
+.errorInner p { margin: 0 0 10px; }
+.errorRule { border: none; border-top: 1px solid #aaa; margin: 12px 0; }
+.errorSmall { font-size: 11px; color: #333; }
+.errorSmall code { font-family: 'Courier New', monospace; color: #555; word-break: break-all; }
+.errorSmall .inlink { color: #00c; }

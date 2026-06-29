@@ -1,4 +1,10 @@
 # DECISIONS.md
 Log every non-obvious build decision here, newest first. Format: date · decision · why.
 
-- _(Phase 0)_ Base repo choice (winXP fork vs daedalOS fork): **TBD — record outcome + reasoning here before writing code.**
+- **2026-06-29 · Base repo = `ShizukuIchi/winXP` for XP chrome/feel; `DustinBrett/daedalOS` kept as the FS/WM parity reference. Rebuilt on the mandated modern stack (Vite + React + TS + Zustand + CSS-modules + theme-token custom properties) rather than forking either build wholesale.**
+  Why:
+  - **Aesthetic is locked to authentic XP chrome (CLAUDE.md Rule 4).** `winXP` is the most period-accurate XP recreation in the wild — its taskbar, two-panel Start menu, title bars and window controls already *are* the look we want. daedalOS's default shell is not XP; re-skinning its large Next.js 15 / React 19 / BrowserFS architecture (80+ deps) down to XP would mean fighting the grain of a complex codebase and risks trading function for looks — the inverse of Rule 1. So we deepen winXP toward daedalOS parity (the CLAUDE.md Phase-0 default), not the reverse.
+  - **daedalOS stays the parity reference** (docs/02). It is far deeper on virtual FS + window manager; we pull function toward it ticket-by-ticket and audit side-by-side, but we do not adopt its chrome.
+  - **Stack mismatch → rebuild, don't fork-as-is.** winXP is CRA + styled-components + JS + React 16, with no state lib and no TypeScript. The brief mandates Vite + React + TS + Zustand + CSS-modules + theme tokens (so all three visual styles derive from `tokens/themes.css` and future styles drop in). We therefore scaffold the mandated stack now and **port winXP's authentic chrome onto it in Phase 1** ("build XP chrome from the winXP base; only the skin is ours"), instead of inheriting CRA/styled-components.
+  - **Licensing — both MIT, compatible.** `ShizukuIchi/winXP`: MIT, © 2019 Shizuku Yang (LICENSE file present; `package.json` omits the field). `DustinBrett/daedalOS`: MIT. We keep XP-derived assets as **original recreations**, not lifted Microsoft bitmaps (docs/04), and will carry winXP's MIT attribution where its chrome/markup is ported.
+  - Note: winXP also bundles `webamp` — relevant later to the foobar2000 / music pillar, though our player is custom per docs/03.

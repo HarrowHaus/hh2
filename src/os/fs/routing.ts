@@ -15,6 +15,8 @@ export interface OpenTarget {
 }
 
 export function routeOpen(node: FSNode): OpenTarget | null {
+  // Explicit program launcher wins (e.g. a .exe shortcut).
+  if (node.app) return { appId: node.app, args: { path: node.path, title: node.name } }
   if (node.type === 'folder') {
     return { appId: 'explorer', args: { path: node.path, title: node.name } }
   }

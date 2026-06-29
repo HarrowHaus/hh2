@@ -15,4 +15,6 @@ export interface FSNode {
   ts: number
   /** Inline content for text files (placeholder layer; real content is Phase 3). */
   content?: string
+  /** Launchable program: opening this node opens this app (e.g. a .exe shortcut). */
+  app?: import('../types').AppId
 }

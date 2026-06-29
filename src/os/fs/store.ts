@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v2: Phase-3 content seed. Bumping discards the old dev seed (pre-release;
-      // no real user data yet) so the palimpsest content loads.
-      version: 2,
+      // v3: Phase-3 content seed + program launchers. Bumping discards the old
+      // dev seed (pre-release; no real user data yet) so new content loads.
+      version: 3,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

@@ -5,11 +5,13 @@ import { useMenu, type MenuItem } from '../../os/menu'
 import { ROOT, baseName, listDir, parentOf } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
 import type { FSNode } from '../../os/fs/types'
+import { APPS } from '../../os/apps'
 import { FolderIcon, NoteIcon, MusicIcon } from '../../os/icons'
 import type { AppProps } from '../../os/types'
 import styles from './Explorer.module.css'
 
 function iconFor(node: FSNode) {
+  if (node.app) return APPS[node.app].Icon
   if (node.type === 'folder') return FolderIcon
   if (node.kind === 'audio') return MusicIcon
   return NoteIcon

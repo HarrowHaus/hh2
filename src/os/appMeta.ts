@@ -16,4 +16,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   explorer: { title: 'Explorer', width: 580, height: 430, single: false, resizable: true },
   notepad: { title: 'Untitled - Notepad', width: 480, height: 360, single: false, resizable: true },
   foobar: { title: 'foobar2000', width: 660, height: 460, single: true, resizable: true },
+  bt: { title: 'µTorrent', width: 640, height: 410, single: true, resizable: true },
 }

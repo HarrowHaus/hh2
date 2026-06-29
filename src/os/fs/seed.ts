@@ -32,6 +32,9 @@ function folder(path: string, name: string, ts: number): FSNode {
 function text(path: string, name: string, ts: number, content: string): FSNode {
   return { path, name, type: 'file', kind: 'text', ts, content }
 }
+function launcher(path: string, name: string, ts: number, app: FSNode['app']): FSNode {
+  return { path, name, type: 'file', kind: 'exe', ts, app }
+}
 
 const FOLDERS: [string, string, number][] = [
   [C_DRIVE, 'Local Disk (C:)', A],
@@ -309,7 +312,15 @@ const FILES: FSNode[] = [
   ),
 ]
 
+// Program launchers (.exe shortcuts) — opening one opens its app.
+const LAUNCHERS: FSNode[] = [
+  launcher(`${DESKTOP_PATH}/foobar2000`, 'foobar2000', A, 'foobar'),
+  launcher(`${DESKTOP_PATH}/µTorrent`, 'µTorrent', A2, 'bt'),
+  launcher(`${PF}/foobar2000/foobar2000.exe`, 'foobar2000.exe', A, 'foobar'),
+  launcher(`${PF}/uTorrent/µTorrent.exe`, 'µTorrent.exe', A2, 'bt'),
+]
+
 export function seedFS(): Record<string, FSNode> {
-  const nodes: FSNode[] = [...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)), ...FILES]
+  const nodes: FSNode[] = [...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)), ...FILES, ...LAUNCHERS]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))
 }

@@ -1,10 +1,11 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
 import { Foobar } from '../apps/foobar/Foobar'
+import { BitTorrent } from '../apps/BitTorrent/BitTorrent'
 
 interface IconProps {
   size?: number
@@ -23,4 +24,5 @@ export const APPS: Record<AppId, AppEntry> = {
   explorer: { Icon: FolderIcon, Component: Explorer },
   notepad: { Icon: NoteIcon, Component: Notepad },
   foobar: { Icon: MusicIcon, Component: Foobar },
+  bt: { Icon: GlobeIcon, Component: BitTorrent },
 }

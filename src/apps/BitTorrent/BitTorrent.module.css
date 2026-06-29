@@ -1,0 +1,71 @@
+/* µTorrent-style diorama. NON-FUNCTIONAL: no trackers, no transfers, fictional
+   data only. Static (no animated speeds) — it's a museum piece, not a client. */
+.bt {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.toolbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+  background: color-mix(in srgb, var(--winbody) 86%, #888 14%);
+}
+.tbtn {
+  font-size: 11px;
+  padding: 2px 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--wintext);
+  cursor: default;
+}
+.tbtn:hover { border-color: rgba(128, 128, 128, 0.5); }
+.body { flex: 1; display: flex; min-height: 0; }
+.side {
+  width: 130px;
+  flex: 0 0 130px;
+  border-right: 1px solid rgba(128, 128, 128, 0.4);
+  padding: 6px;
+  font-size: 11px;
+}
+.cat { padding: 3px 5px; border-radius: 2px; cursor: default; }
+.cat:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.catActive { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+
+.list { flex: 1; overflow: auto; }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2.4fr) 56px minmax(64px, 1fr) 74px 46px 46px 42px;
+  gap: 6px;
+  padding: 3px 8px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+  align-items: center;
+}
+.head { position: sticky; top: 0; background: color-mix(in srgb, var(--winbody) 80%, #888 20%); font-weight: 700; }
+.col { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.bar {
+  position: relative;
+  height: 12px;
+  background: color-mix(in srgb, var(--winbody) 70%, #000 30%);
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.barfill { position: absolute; inset: 0; background: linear-gradient(180deg, #4aa84a, #2f7d2f); }
+.barfill.seed { background: linear-gradient(180deg, #5b8fd6, #2f5fa8); }
+.bartext { position: absolute; inset: 0; display: grid; place-items: center; font-size: 9px; color: #fff; text-shadow: 0 0 2px #000; }
+.ratioBad { color: #c0392b; font-weight: 700; }
+.statusbar {
+  border-top: 1px solid rgba(128, 128, 128, 0.4);
+  padding: 3px 8px;
+  font-size: 10px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+}

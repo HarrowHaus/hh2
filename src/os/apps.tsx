@@ -1,8 +1,9 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
+import { Notepad } from '../apps/Notepad/Notepad'
 
 interface IconProps {
   size?: number
@@ -19,4 +20,5 @@ export interface AppEntry {
 export const APPS: Record<AppId, AppEntry> = {
   display: { Icon: MonitorIcon, Component: DisplayProperties },
   explorer: { Icon: FolderIcon, Component: Explorer },
+  notepad: { Icon: NoteIcon, Component: Notepad },
 }

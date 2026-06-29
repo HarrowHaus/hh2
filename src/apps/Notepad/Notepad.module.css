@@ -1,0 +1,47 @@
+.notepad {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.menubar {
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+}
+.menubar button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  cursor: default;
+}
+.menubar button:hover:not(:disabled) { background: var(--menuselect); color: var(--menuseltext); }
+.menubar button:disabled { opacity: 0.4; }
+
+.area {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 6px 8px;
+  background: var(--field);
+  color: var(--wintext);
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre;
+  overflow: auto;
+}
+.statusbar {
+  border-top: 1px solid rgba(128, 128, 128, 0.35);
+  padding: 2px 8px;
+  font-size: 11px;
+  opacity: 0.8;
+  text-align: right;
+}

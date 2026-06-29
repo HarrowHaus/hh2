@@ -14,6 +14,7 @@ interface FSState {
 
   createFolder: (dir: string) => string
   createTextFile: (dir: string) => string
+  writeFile: (path: string, content: string) => void
   rename: (path: string, name: string) => void
   remove: (path: string) => void
   setDesktopPos: (path: string, pos: { x: number; y: number }) => void
@@ -42,6 +43,13 @@ export const useFS = create<FSState>()(
         })
         return path
       },
+
+      writeFile: (path, content) =>
+        set((s) => {
+          const node = s.nodes[path]
+          if (!node) return s
+          return { nodes: { ...s.nodes, [path]: { ...node, content, ts: Date.now() } } }
+        }),
 
       rename: (path, rawName) => {
         const name = rawName.trim()

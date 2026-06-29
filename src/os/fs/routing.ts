@@ -4,8 +4,8 @@ import type { FSNode } from './types'
 // open-with routing: which app opens a given node. Folders open in Explorer.
 // File kinds map to apps as those apps ship (Notepad/viewers/foobar = Phase 3).
 const KIND_APP: Partial<Record<FSNode['kind'], AppId>> = {
-  // text: 'notepad',   // Phase 3
-  // image: 'imageviewer',
+  text: 'notepad',
+  // image: 'imageviewer',  // Phase 3 (with content manifest)
 }
 
 export interface OpenTarget {

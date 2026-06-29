@@ -1,6 +1,6 @@
 import { useRef, type ChangeEvent } from 'react'
 import { useOS } from '../../os/store'
-import { VISUAL_STYLES, type VisualStyle } from '../../os/themes'
+import { PACK_LIST, type VisualStyle } from '../../os/themes'
 import type { AppProps } from '../../os/types'
 import styles from './DisplayProperties.module.css'
 
@@ -54,7 +54,7 @@ export function DisplayProperties({ winId }: AppProps) {
         <div className={styles.field}>
           <label htmlFor="winandbuttons">Windows and buttons:</label>
           <select id="winandbuttons" className={styles.select} value={visualStyle} onChange={onSelect}>
-            {Object.values(VISUAL_STYLES).map((s) => (
+            {PACK_LIST.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.label}
               </option>

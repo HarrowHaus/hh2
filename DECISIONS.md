@@ -1,6 +1,9 @@
 # DECISIONS.md
 Log every non-obvious build decision here, newest first. Format: date · decision · why.
 
+- **2026-06-29 · Theming engine refactored to pack/manifest-driven + `border-image`-ready (docs/02, docs/06).** The 3 styles were hard-coded as `body.theme-*` CSS blocks toggled by class; per the updated briefs they are now `ThemePack` manifests (`src/os/theme/packs.ts`, schema = docs/06) that the engine (`theme/engine.ts`) applies to `:root` at runtime. `tokens/themes.css` keeps only the dark values as the no-JS first-paint default + the variable contract. Chrome carries inert `border-image` hooks (window caption, control buttons, taskbar, Start — width 0 → no visual change) so a future pack (incl. a converted real `.msstyles`) lights up the 9-slice with zero engine/markup changes.
+  Why: makes the deferred real-`.msstyles` loader (docs/06, Phase 5) an additive module, not a rewrite. docs/06 + Phase 5 stay deferred — only the open architecture is built now. Verified: all 3 styles render identically to the hard-coded version; engine sets `data-theme` + custom props on `:root`.
+
 - **2026-06-29 · Base repo = `ShizukuIchi/winXP` for XP chrome/feel; `DustinBrett/daedalOS` kept as the FS/WM parity reference. Rebuilt on the mandated modern stack (Vite + React + TS + Zustand + CSS-modules + theme-token custom properties) rather than forking either build wholesale.**
   Why:
   - **Aesthetic is locked to authentic XP chrome (CLAUDE.md Rule 4).** `winXP` is the most period-accurate XP recreation in the wild — its taskbar, two-panel Start menu, title bars and window controls already *are* the look we want. daedalOS's default shell is not XP; re-skinning its large Next.js 15 / React 19 / BrowserFS architecture (80+ deps) down to XP would mean fighting the grain of a complex codebase and risks trading function for looks — the inverse of Rule 1. So we deepen winXP toward daedalOS parity (the CLAUDE.md Phase-0 default), not the reverse.

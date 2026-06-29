@@ -11,6 +11,10 @@
   background: var(--taskbar);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
   z-index: 4000;
+  /* border-image-ready: inert at width 0 until a pack ships a taskbar bitmap. */
+  border-style: solid;
+  border-width: var(--biw-taskbar-default, 0);
+  border-image: var(--bi-taskbar-default, none);
 }
 
 .start {
@@ -26,6 +30,9 @@
   font-size: 15px;
   color: var(--starttext);
   background: var(--startbtn);
+  border-style: solid;
+  border-width: var(--biw-start-normal, 0);
+  border-image: var(--bi-start-normal, none);
   border-top-right-radius: 9px;
   border-bottom-right-radius: 9px;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35),

@@ -25,10 +25,17 @@
   border-top-left-radius: calc(var(--radius) - 1px);
   border-top-right-radius: calc(var(--radius) - 1px);
   touch-action: none;
+  /* border-image-ready (docs/02): inert at width 0; a pack with a windowCaption
+     bitmap activates the 9-slice with zero engine/markup changes. */
+  border-style: solid;
+  border-width: var(--biw-windowCaption-active, 0);
+  border-image: var(--bi-windowCaption-active, none);
 }
 
 .window.inactive .titlebar {
   background: var(--titleinact);
+  border-width: var(--biw-windowCaption-inactive, 0);
+  border-image: var(--bi-windowCaption-inactive, none);
 }
 .window.inactive {
   box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.4);

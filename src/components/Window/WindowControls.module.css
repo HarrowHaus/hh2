@@ -19,6 +19,9 @@
   border-radius: 3px;
   background: var(--ctlface);
   cursor: pointer;
+  /* border-image-ready: a pack with button-part bitmaps overrides the solid
+     border with a 9-slice; inert (none) for our gradient packs. */
+  border-image: var(--bi-button-normal, none);
 }
 .btn:hover { filter: brightness(120%); }
 .btn:active { filter: brightness(90%); }

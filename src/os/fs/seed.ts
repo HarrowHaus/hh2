@@ -659,6 +659,9 @@ const LAUNCHERS: FSNode[] = [
   // Easter eggs (docs/08 Tier 1 — found, never announced)
   launcher(`${C_DRIVE}/WINDOWS/system32/bluescreen.exe`, 'bluescreen.exe', A, 'bsod'),
   launcher(`${C_DRIVE}/WINDOWS/system32/wupdate.exe`, 'wupdate.exe', C, 'winupdate'),
+  // Tier 2 — warez keygen prop (plays an original chiptune) + esoteric sigil tool
+  launcher(`${MYDOCS}/iso/DarkWave_Audio_Pro.keygen.exe`, 'DarkWave_Audio_Pro.keygen.exe', B2, 'keygen'),
+  launcher(`${READING}/sigilizer.exe`, 'sigilizer.exe', B2, 'sigil'),
 ]
 
 export function seedFS(): Record<string, FSNode> {

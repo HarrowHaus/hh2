@@ -30,6 +30,9 @@ export function routeOpen(node: FSNode): OpenTarget | null {
   const ext = node.name.toLowerCase().split('.').pop()
   if (ext === 'md') return { appId: 'markdown', args: { path: node.path, title: node.name } }
   if (ext === 'pdf') return { appId: 'pdf', args: { path: node.path, title: node.name } }
+  if (ext === 'nfo' || ext === 'ans' || ext === 'asc') {
+    return { appId: 'ansi', args: { path: node.path, title: node.name } }
+  }
   const appId = KIND_APP[node.kind]
   return appId ? { appId, args: { path: node.path, title: node.name } } : null
 }

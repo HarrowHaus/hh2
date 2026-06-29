@@ -43,4 +43,7 @@ export const APP_META: Record<AppId, AppMeta> = {
   winupdate: { title: 'Windows Update', width: 200, height: 130, single: true, resizable: false },
   freecell: { title: 'FreeCell', width: 660, height: 500, single: true, resizable: true },
   spider: { title: 'Spider Solitaire', width: 720, height: 520, single: true, resizable: true },
+  sigil: { title: 'Sigilizer', width: 384, height: 478, single: true, resizable: false },
+  ansi: { title: 'ACiDview', width: 600, height: 460, single: false, resizable: true },
+  keygen: { title: 'KeyMaker', width: 432, height: 372, single: false, resizable: false },
 }

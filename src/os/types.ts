@@ -32,6 +32,9 @@ export type AppId =
   | 'winupdate'
   | 'freecell'
   | 'spider'
+  | 'sigil'
+  | 'ansi'
+  | 'keygen'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

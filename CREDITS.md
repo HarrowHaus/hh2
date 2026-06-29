@@ -110,3 +110,7 @@ card faces, sprites, and screensaver art are original (no Microsoft/Google/Taito
 assets).
 
 - **oneko (desktop pet)** — concept inspired by https://github.com/adryd325/oneko.js (**MIT**) and the public-domain Neko sprite; our cat is an **original SVG** (no upstream code or sprite shipped).
+
+### Tier 2
+- **Sigil generator, ANSI/.nfo viewer, and the warez keygen are original code** (no third-party upstream). The keygen's chiptune is an **original Web Audio square-wave synth** (not chiptune3/libopenmpt). The ANSI viewer is an **original CP437/SGR renderer** (not ansilove.js). Scene group/product names and serials are invented; nothing is cracked. The Sigil generator is an original implementation of the public-domain Spare/Carroll method (no upstream code).
+- _Deferred Tier-2 items pending owner decisions:_ Webamp (skin), chiptune3 real-`.mod` player (AudioWorklet/wasm bundling), BassoonTracker (not on npm — needs the dist vendored). See the review notes.

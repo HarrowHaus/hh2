@@ -346,6 +346,39 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function SigilIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="2" y="2" width="28" height="28" rx="3" fill="#0a0612" stroke="#2a1f55" />
+      <circle cx="16" cy="16" r="10" fill="none" stroke="#8b7bff" strokeWidth="1" opacity="0.8" />
+      <path d="M10 21 L18 9 L22 20 L11 14 L21 13 Z" fill="none" stroke="#9affc4" strokeWidth="1.2" />
+      <circle cx="18" cy="9" r="1.4" fill="#ffd23f" />
+    </svg>
+  )
+}
+
+export function AnsiIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="24" rx="2" fill="#000" stroke="#444" />
+      <text x="6" y="13" fontFamily="monospace" fontSize="7" fill="#ff5555">▓▒░</text>
+      <text x="6" y="20" fontFamily="monospace" fontSize="7" fill="#55ff55">╔═╗</text>
+      <text x="6" y="27" fontFamily="monospace" fontSize="7" fill="#ffff55">█▄█</text>
+    </svg>
+  )
+}
+
+export function KeygenIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="2" y="2" width="28" height="28" rx="3" fill="#161033" stroke="#2a1f55" />
+      <circle cx="12" cy="14" r="5" fill="none" stroke="#9affc4" strokeWidth="2" />
+      <path d="M16 16 L25 25 M22 22 l3 0 M20 20 l0 3" stroke="#ffd23f" strokeWidth="2" fill="none" />
+      <circle cx="12" cy="14" r="1.6" fill="#161033" />
+    </svg>
+  )
+}
+
 export function FreeCellIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

@@ -170,10 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v15: + FreeCell + Spider Solitaire launchers in GAMES. (v14: easter-egg
-      // launchers; v13: Accessories + GAMES + resume.pdf + notes.md.) Bumping
-      // discards the old dev seed (pre-release).
-      version: 15,
+      // v16: + Tier-2 launchers — warez keygen (iso\) + sigilizer (reading\); .nfo
+      // now opens in the ANSI viewer. (v15: FreeCell/Spider; v14: easter eggs;
+      // v13: Accessories/GAMES.) Bumping discards the old dev seed (pre-release).
+      version: 16,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

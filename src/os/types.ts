@@ -28,6 +28,8 @@ export type AppId =
   | 'runner'
   | 'markdown'
   | 'pdf'
+  | 'bsod'
+  | 'winupdate'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

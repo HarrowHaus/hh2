@@ -654,6 +654,9 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${PF}/AIM/aim.exe`, 'aim.exe', A, 'aim'),
   launcher(`${DESKTOP_PATH}/AOL Instant Messenger`, 'AOL Instant Messenger', A, 'aim'),
   launcher(`${PF}/mIRC/mirc.exe`, 'mirc.exe', A, 'mirc'),
+  // Easter eggs (docs/08 Tier 1 — found, never announced)
+  launcher(`${C_DRIVE}/WINDOWS/system32/bluescreen.exe`, 'bluescreen.exe', A, 'bsod'),
+  launcher(`${C_DRIVE}/WINDOWS/system32/wupdate.exe`, 'wupdate.exe', C, 'winupdate'),
 ]
 
 export function seedFS(): Record<string, FSNode> {

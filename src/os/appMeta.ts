@@ -38,4 +38,7 @@ export const APP_META: Record<AppId, AppMeta> = {
   runner: { title: 'Crypt Runner', width: 632, height: 250, single: true, resizable: false },
   markdown: { title: 'Markdown', width: 560, height: 460, single: false, resizable: true },
   pdf: { title: 'Adobe Reader', width: 600, height: 560, single: false, resizable: true },
+  // Easter-egg full-screen overlays (portal over everything; window stays tiny).
+  bsod: { title: 'Windows', width: 200, height: 130, single: true, resizable: false },
+  winupdate: { title: 'Windows Update', width: 200, height: 130, single: true, resizable: false },
 }

@@ -1,0 +1,27 @@
+.update {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: #1f3b73;
+  color: #fff;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  cursor: none;
+}
+.spinner {
+  width: 46px;
+  height: 46px;
+  border: 5px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.headline { font-size: 22px; font-weight: 300; }
+.pct { font-size: 15px; opacity: 0.9; }
+.warn { font-size: 13px; opacity: 0.75; margin-top: 6px; }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

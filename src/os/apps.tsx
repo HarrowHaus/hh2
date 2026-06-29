@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -27,6 +27,8 @@ import { Breakout } from '../apps/Breakout/Breakout'
 import { Runner } from '../apps/Runner/Runner'
 import { Markdown } from '../apps/Markdown/Markdown'
 import { Pdf } from '../apps/Pdf/Pdf'
+import { Bsod } from '../apps/Bsod/Bsod'
+import { WinUpdate } from '../apps/WinUpdate/WinUpdate'
 
 interface IconProps {
   size?: number
@@ -67,4 +69,6 @@ export const APPS: Record<AppId, AppEntry> = {
   runner: { Icon: RunnerIcon, Component: Runner },
   markdown: { Icon: MarkdownIcon, Component: Markdown },
   pdf: { Icon: PdfIcon, Component: Pdf },
+  bsod: { Icon: BsodIcon, Component: Bsod },
+  winupdate: { Icon: UpdateIcon, Component: WinUpdate },
 }

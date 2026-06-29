@@ -346,6 +346,26 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function BsodIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="5" width="26" height="20" rx="2" fill="#0000aa" stroke="#000" />
+      <path d="M6 9 h10 M6 12 h14 M6 15 h8 M6 19 h16" stroke="#fff" strokeWidth="1.2" opacity="0.85" />
+      <rect x="12" y="25" width="8" height="3" fill="#9a9a9e" />
+    </svg>
+  )
+}
+
+export function UpdateIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <circle cx="16" cy="16" r="12" fill="#1f3b73" stroke="#0d234a" />
+      <path d="M16 8 A8 8 0 1 1 8 16" fill="none" stroke="#fff" strokeWidth="2.4" />
+      <path d="M16 4 l3 4 h-6 Z" fill="#fff" />
+    </svg>
+  )
+}
+
 export function VolumeIcon({ size = 16, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">

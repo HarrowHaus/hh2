@@ -93,7 +93,15 @@ SOFTWARE.
 
 ## Adopted third-party apps & libraries
 
-_None yet vendored. Entries are added here per-app as tiers land
-(`docs/08-app-roadmap.md`), each with upstream URL, license, and branding/name
-terms. GPL/AGPL/non-commercial/name-restricted components are flagged as
-decisions for the owner before adoption._
+Added per-app as tiers land (`docs/08-app-roadmap.md`). GPL/AGPL/non-commercial/
+name-restricted components are flagged as owner decisions before adoption.
+
+### Tier 1
+- **marked** — https://github.com/markedjs/marked — **MIT**. Markdown → HTML for the Markdown viewer.
+- **DOMPurify** — https://github.com/cure53/DOMPurify — **Apache-2.0 OR MPL-2.0** (dual; we use it under Apache-2.0). Sanitizes the Markdown viewer's HTML output.
+- **pdf.js (pdfjs-dist)** — https://github.com/mozilla/pdf.js — **Apache-2.0**. Renders the PDF viewer; pinned to 4.x for broad browser compatibility. Mozilla name/logo are not used.
+
+All three are permissive (no copyleft). The Calculator, Character Map, Sound
+Recorder, Hex Editor, Solitaire, Brick Breaker, and Crypt Runner are **original
+code** (no third-party upstream); card faces, sprites, and screensaver art are
+original (no Microsoft/Google/Taito assets).

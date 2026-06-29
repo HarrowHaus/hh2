@@ -100,6 +100,7 @@ name-restricted components are flagged as owner decisions before adoption.
 - **marked** — https://github.com/markedjs/marked — **MIT**. Markdown → HTML for the Markdown viewer.
 - **DOMPurify** — https://github.com/cure53/DOMPurify — **Apache-2.0 OR MPL-2.0** (dual; we use it under Apache-2.0). Sanitizes the Markdown viewer's HTML output.
 - **pdf.js (pdfjs-dist)** — https://github.com/mozilla/pdf.js — **Apache-2.0**. Renders the PDF viewer; pinned to 4.x for broad browser compatibility. Mozilla name/logo are not used.
+- **panzoom** — https://github.com/anvaka/panzoom — **MIT**. Drag-pan + wheel/pinch-zoom in the Image Viewer (Windows Picture and Fax Viewer).
 
 All three are permissive (no copyleft). The Calculator, Character Map, Sound
 Recorder, Hex Editor, Solitaire, Brick Breaker, Crypt Runner, the CRT/VHS

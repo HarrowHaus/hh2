@@ -35,6 +35,10 @@ function text(path: string, name: string, ts: number, content: string): FSNode {
 function launcher(path: string, name: string, ts: number, app: FSNode['app']): FSNode {
   return { path, name, type: 'file', kind: 'exe', ts, app }
 }
+// A real binary asset served from /public (e.g. a .pdf rendered by pdf.js).
+function asset(path: string, name: string, ts: number, kind: FSNode['kind'], url: string): FSNode {
+  return { path, name, type: 'file', kind, ts, url }
+}
 // Image files store an art id in `content`; the Image Viewer renders the
 // matching original SVG recreation (no lifted bitmaps, docs/04).
 function image(path: string, name: string, ts: number, artId: string): FSNode {
@@ -66,6 +70,7 @@ const FOLDERS: [string, string, number][] = [
   [`${PF}/Emulators/SNES9x`, 'SNES9x', A],
   [`${PF}/Emulators/VisualBoyAdvance`, 'VisualBoyAdvance', A2],
   [`${PF}/trivia`, 'trivia', C],
+  [`${PF}/Accessories`, 'Accessories', A],
   [`${PF}/GAMES`, 'GAMES', A],
   [`${C_DRIVE}/CODECS`, 'CODECS', A],
   [`${C_DRIVE}/CODECS/do_not_open`, 'do_not_open', A2],
@@ -542,22 +547,27 @@ const STRATA: FSNode[] = [
     C,
     ['Title: [project name]', 'Role: [role]', 'Year: 2023', 'Link: [url]', '', 'One line on what it was.'].join('\n'),
   ),
+  asset(`${MYDOCS}/resume.pdf`, 'resume.pdf', C, 'pdf', `${import.meta.env.BASE_URL}files/resume.pdf`),
   text(
-    `${MYDOCS}/resume.txt`,
-    'resume.txt',
+    `${WORK}/notes.md`,
+    'notes.md',
     C,
     [
-      '[NAME]',
-      '[role] — [city]',
+      '# WORK — running notes',
       '',
-      'EXPERIENCE',
-      '  [most recent role] ........ 20XX–now',
-      '  [the one before that] ..... 20XX–20XX',
+      'Live scratchpad. Real entries replace these.',
       '',
-      'SKILLS',
-      '  [fill in]',
+      '## In progress',
       '',
-      '(placeholder — the real résumé drops in here.)',
+      '- [ ] pull the label catalog into the site',
+      '- [ ] scan the old flyers, clean the xerox grain',
+      '- [x] rebuild the rig',
+      '',
+      '## Links',
+      '',
+      'See `CONTACT.txt` for the current addresses.',
+      '',
+      '> half of this machine is older than the work on it.',
     ].join('\n'),
   ),
   text(
@@ -631,6 +641,16 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/trivia.exe`, 'trivia.exe', C, 'trivia'),
   launcher(`${PF}/GAMES/Minesweeper.exe`, 'Minesweeper.exe', A, 'minesweeper'),
   launcher(`${DESKTOP_PATH}/Minesweeper`, 'Minesweeper', A, 'minesweeper'),
+  // GAMES (Tier 1 — docs/08)
+  launcher(`${PF}/GAMES/Solitaire.exe`, 'Solitaire.exe', A, 'solitaire'),
+  launcher(`${DESKTOP_PATH}/Solitaire`, 'Solitaire', A, 'solitaire'),
+  launcher(`${PF}/GAMES/Brick Breaker.exe`, 'Brick Breaker.exe', A2, 'breakout'),
+  launcher(`${PF}/GAMES/Crypt Runner.exe`, 'Crypt Runner.exe', C, 'runner'),
+  // Accessories (Tier 1 — docs/08)
+  launcher(`${PF}/Accessories/Calculator.exe`, 'Calculator.exe', A, 'calc'),
+  launcher(`${PF}/Accessories/Character Map.exe`, 'Character Map.exe', A, 'charmap'),
+  launcher(`${PF}/Accessories/Sound Recorder.exe`, 'Sound Recorder.exe', A, 'recorder'),
+  launcher(`${PF}/Accessories/Hex Editor.exe`, 'Hex Editor.exe', A2, 'hexedit'),
   launcher(`${PF}/AIM/aim.exe`, 'aim.exe', A, 'aim'),
   launcher(`${DESKTOP_PATH}/AOL Instant Messenger`, 'AOL Instant Messenger', A, 'aim'),
   launcher(`${PF}/mIRC/mirc.exe`, 'mirc.exe', A, 'mirc'),

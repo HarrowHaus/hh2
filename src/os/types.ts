@@ -19,6 +19,15 @@ export type AppId =
   | 'aim'
   | 'mirc'
   | 'ie'
+  | 'calc'
+  | 'charmap'
+  | 'recorder'
+  | 'hexedit'
+  | 'solitaire'
+  | 'breakout'
+  | 'runner'
+  | 'markdown'
+  | 'pdf'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

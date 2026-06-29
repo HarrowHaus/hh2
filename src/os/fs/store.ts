@@ -170,11 +170,11 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v12: + remaining docs/07 strata artifacts (invite tree, comp, XViD rip +
-      // .srt, P2P lists, .nfo, .ips/.ass veins, MySpace mock, bookmarks) and
-      // WORK/résumé/CONTACT/about placeholders; Dickcrush spelling fixed to the
-      // discography source of truth. Bumping discards the old dev seed.
-      version: 12,
+      // v13: Tier-1 app set (docs/08) — Accessories (Calculator/Character Map/
+      // Sound Recorder/Hex Editor), GAMES (Solitaire/Brick Breaker/Crypt Runner),
+      // a real resume.pdf (pdf.js) + a notes.md (markdown). Bumping discards the
+      // old dev seed (pre-release; no real user data yet).
+      version: 13,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

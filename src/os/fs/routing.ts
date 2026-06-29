@@ -7,6 +7,8 @@ const KIND_APP: Partial<Record<FSNode['kind'], AppId>> = {
   text: 'notepad',
   audio: 'foobar',
   image: 'imageviewer',
+  markdown: 'markdown',
+  pdf: 'pdf',
 }
 
 export interface OpenTarget {
@@ -24,6 +26,10 @@ export function routeOpen(node: FSNode): OpenTarget | null {
   if (node.type === 'folder') {
     return { appId: 'explorer', args: { path: node.path, title: node.name } }
   }
+  // Extension wins over generic kind (.md/.pdf may be stored as text/file kinds).
+  const ext = node.name.toLowerCase().split('.').pop()
+  if (ext === 'md') return { appId: 'markdown', args: { path: node.path, title: node.name } }
+  if (ext === 'pdf') return { appId: 'pdf', args: { path: node.path, title: node.name } }
   const appId = KIND_APP[node.kind]
   return appId ? { appId, args: { path: node.path, title: node.name } } : null
 }

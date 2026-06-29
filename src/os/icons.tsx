@@ -241,6 +241,111 @@ export function TerminalIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function CalcIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="6" y="3" width="20" height="26" rx="2" fill="#d8d8da" stroke="#6f6f72" />
+      <rect x="9" y="6" width="14" height="5" rx="1" fill="#9fc7a0" stroke="#4f6f50" />
+      <g fill="#4a4a4e">
+        <rect x="9" y="14" width="3" height="3" /><rect x="14" y="14" width="3" height="3" /><rect x="19" y="14" width="3" height="3" />
+        <rect x="9" y="19" width="3" height="3" /><rect x="14" y="19" width="3" height="3" /><rect x="19" y="19" width="3" height="3" />
+        <rect x="9" y="24" width="3" height="3" /><rect x="14" y="24" width="3" height="3" />
+      </g>
+      <rect x="19" y="24" width="3" height="3" fill="#c0392b" />
+    </svg>
+  )
+}
+
+export function CharMapIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="4" width="24" height="24" rx="2" fill="#fdfdfd" stroke="#7a7a7e" />
+      <path d="M4 12 H28 M4 20 H28 M12 4 V28 M20 4 V28" stroke="#c8c8cc" strokeWidth="1" />
+      <text x="8" y="11" fontSize="7" fontFamily="Times New Roman, serif" fill="#333">A</text>
+      <text x="16" y="19" fontSize="8" fontFamily="Times New Roman, serif" fontWeight="700" fill="#1c4fa0">ß</text>
+      <text x="22" y="27" fontSize="7" fontFamily="Times New Roman, serif" fill="#333">Ω</text>
+    </svg>
+  )
+}
+
+export function RecorderIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="9" width="26" height="14" rx="3" fill="#3a3a3e" stroke="#1c1c1e" />
+      <circle cx="10" cy="16" r="4" fill="#555" stroke="#222" /><circle cx="22" cy="16" r="4" fill="#555" stroke="#222" />
+      <circle cx="10" cy="16" r="1.4" fill="#9affc4" /><circle cx="22" cy="16" r="1.4" fill="#9affc4" />
+      <rect x="14" y="14" width="4" height="4" rx="1" fill="#c0392b" />
+    </svg>
+  )
+}
+
+export function HexIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="3" width="24" height="26" rx="2" fill="#101417" stroke="#2d6ca3" />
+      <text x="7" y="13" fontSize="6" fontFamily="monospace" fill="#5fd0a0">4F 2A</text>
+      <text x="7" y="20" fontSize="6" fontFamily="monospace" fill="#5fd0a0">B1 09</text>
+      <text x="7" y="27" fontSize="6" fontFamily="monospace" fill="#5fd0a0">7E FF</text>
+    </svg>
+  )
+}
+
+export function SolitaireIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="7" width="15" height="20" rx="2" fill="#fff" stroke="#888" transform="rotate(-10 11 17)" />
+      <rect x="11" y="6" width="15" height="20" rx="2" fill="#fff" stroke="#888" />
+      <text x="13.5" y="14" fontSize="7" fontWeight="700" fill="#c0392b">A</text>
+      <path d="M18 17 l3 5 h-6 Z" fill="#c0392b" transform="rotate(180 18 19.5)" />
+    </svg>
+  )
+}
+
+export function BreakoutIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#0b0e14" stroke="#444" />
+      <rect x="5" y="6" width="6" height="3" fill="#e23b2e" /><rect x="12" y="6" width="6" height="3" fill="#f2c12e" /><rect x="19" y="6" width="6" height="3" fill="#3aaa3a" />
+      <rect x="5" y="10" width="6" height="3" fill="#2a7de1" /><rect x="12" y="10" width="6" height="3" fill="#e23b2e" /><rect x="19" y="10" width="6" height="3" fill="#f2c12e" />
+      <circle cx="16" cy="20" r="1.8" fill="#fff" />
+      <rect x="11" y="25" width="10" height="2.5" rx="1" fill="#ccc" />
+    </svg>
+  )
+}
+
+export function RunnerIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#1a1430" stroke="#444" />
+      <path d="M11 22 q0 -8 5 -8 q5 0 5 8 l-2 -2 -1.5 2 -1.5 -2 -1.5 2 -1.5 -2 Z" fill="#e8e8f0" />
+      <circle cx="14.5" cy="18" r="1.1" fill="#1a1430" /><circle cx="17.5" cy="18" r="1.1" fill="#1a1430" />
+      <rect x="5" y="24" width="22" height="2" fill="#3a2f5a" />
+    </svg>
+  )
+}
+
+export function MarkdownIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M7 3 H22 L26 7 V29 H7 Z" fill="#fdfdfd" stroke="#8a8a8a" />
+      <path d="M22 3 V7 H26 Z" fill="#cfcfcf" stroke="#8a8a8a" />
+      <text x="10" y="17" fontSize="8" fontWeight="700" fontFamily="monospace" fill="#1c4fa0">M↓</text>
+      <path d="M10 21 H22 M10 24 H19" stroke="#888" strokeWidth="1.2" />
+    </svg>
+  )
+}
+
+export function PdfIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M7 3 H22 L26 7 V29 H7 Z" fill="#fdfdfd" stroke="#8a8a8a" />
+      <path d="M22 3 V7 H26 Z" fill="#cfcfcf" stroke="#8a8a8a" />
+      <rect x="6" y="17" width="20" height="8" rx="1" fill="#c0392b" />
+      <text x="16" y="23.5" textAnchor="middle" fontSize="6" fontWeight="700" fontFamily="Arial, sans-serif" fill="#fff">PDF</text>
+    </svg>
+  )
+}
+
 export function VolumeIcon({ size = 16, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">

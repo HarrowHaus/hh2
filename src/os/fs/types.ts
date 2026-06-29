@@ -2,7 +2,7 @@
 // directory listings are derived by parent path. Kept flat so persistence and
 // path ops stay trivial.
 
-export type FSKind = 'folder' | 'text' | 'image' | 'audio' | 'exe' | 'file'
+export type FSKind = 'folder' | 'text' | 'image' | 'audio' | 'exe' | 'file' | 'markdown' | 'pdf'
 
 export interface FSNode {
   /** Full path. '/' is the root (My Computer). */
@@ -19,4 +19,6 @@ export interface FSNode {
   app?: import('../types').AppId
   /** A locked folder: opening it denies access instead of listing contents. */
   locked?: boolean
+  /** Static asset URL for real binary files (e.g. a .pdf served from /public). */
+  url?: string
 }

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -18,6 +18,15 @@ import { RecycleBin } from '../apps/RecycleBin/RecycleBin'
 import { AIM } from '../apps/AIM/AIM'
 import { Mirc } from '../apps/Mirc/Mirc'
 import { IE } from '../apps/IE/IE'
+import { Calculator } from '../apps/Calculator/Calculator'
+import { CharMap } from '../apps/CharMap/CharMap'
+import { SoundRecorder } from '../apps/SoundRecorder/SoundRecorder'
+import { HexEditor } from '../apps/HexEditor/HexEditor'
+import { Solitaire } from '../apps/Solitaire/Solitaire'
+import { Breakout } from '../apps/Breakout/Breakout'
+import { Runner } from '../apps/Runner/Runner'
+import { Markdown } from '../apps/Markdown/Markdown'
+import { Pdf } from '../apps/Pdf/Pdf'
 
 interface IconProps {
   size?: number
@@ -49,4 +58,13 @@ export const APPS: Record<AppId, AppEntry> = {
   aim: { Icon: AimIcon, Component: AIM },
   mirc: { Icon: MircIcon, Component: Mirc },
   ie: { Icon: IeIcon, Component: IE },
+  calc: { Icon: CalcIcon, Component: Calculator },
+  charmap: { Icon: CharMapIcon, Component: CharMap },
+  recorder: { Icon: RecorderIcon, Component: SoundRecorder },
+  hexedit: { Icon: HexIcon, Component: HexEditor },
+  solitaire: { Icon: SolitaireIcon, Component: Solitaire },
+  breakout: { Icon: BreakoutIcon, Component: Breakout },
+  runner: { Icon: RunnerIcon, Component: Runner },
+  markdown: { Icon: MarkdownIcon, Component: Markdown },
+  pdf: { Icon: PdfIcon, Component: Pdf },
 }

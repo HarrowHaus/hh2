@@ -346,6 +346,32 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function FreeCellIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="24" rx="2" fill="#1f7a3a" stroke="#0d3f20" />
+      <rect x="5" y="6" width="5" height="7" rx="1" fill="#fff" stroke="#888" />
+      <rect x="11" y="6" width="5" height="7" rx="1" fill="#fff" stroke="#888" />
+      <rect x="17" y="6" width="5" height="7" rx="1" fill="#fff" stroke="#888" />
+      <rect x="23" y="6" width="4.5" height="7" rx="1" fill="#fff" stroke="#888" />
+      <text x="6.6" y="12" fontSize="5" fontWeight="700" fill="#c0392b">A</text>
+      <text x="19" y="12" fontSize="5" fontWeight="700" fill="#111">K</text>
+    </svg>
+  )
+}
+
+export function SpiderIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="24" rx="2" fill="#143a6b" stroke="#0a2245" />
+      <rect x="6" y="8" width="7" height="10" rx="1" fill="#fff" stroke="#888" />
+      <rect x="11" y="11" width="7" height="10" rx="1" fill="#fff" stroke="#888" />
+      <rect x="16" y="14" width="7" height="10" rx="1" fill="#fff" stroke="#888" />
+      <text x="17.5" y="22" fontSize="8" fontWeight="700" fill="#111">♠</text>
+    </svg>
+  )
+}
+
 export function BsodIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

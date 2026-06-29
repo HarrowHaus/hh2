@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -29,6 +29,8 @@ import { Markdown } from '../apps/Markdown/Markdown'
 import { Pdf } from '../apps/Pdf/Pdf'
 import { Bsod } from '../apps/Bsod/Bsod'
 import { WinUpdate } from '../apps/WinUpdate/WinUpdate'
+import { FreeCell } from '../apps/FreeCell/FreeCell'
+import { Spider } from '../apps/Spider/Spider'
 
 interface IconProps {
   size?: number
@@ -71,4 +73,6 @@ export const APPS: Record<AppId, AppEntry> = {
   pdf: { Icon: PdfIcon, Component: Pdf },
   bsod: { Icon: BsodIcon, Component: Bsod },
   winupdate: { Icon: UpdateIcon, Component: WinUpdate },
+  freecell: { Icon: FreeCellIcon, Component: FreeCell },
+  spider: { Icon: SpiderIcon, Component: Spider },
 }

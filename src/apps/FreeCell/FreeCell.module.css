@@ -1,0 +1,168 @@
+.freecell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #2e7d32;
+  background: radial-gradient(circle at 50% 0%, #3a9442 0%, #1d6b2a 70%, #155020 100%);
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: #fff;
+  overflow: auto;
+  user-select: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.18);
+  flex: 0 0 auto;
+}
+
+.button {
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  padding: 3px 12px;
+  border: 1px solid #6a6a6a;
+  border-radius: 3px;
+  background: linear-gradient(#fdfdfd, #d6d6d6);
+  color: #000;
+  cursor: pointer;
+}
+.button:active {
+  background: linear-gradient(#cfcfcf, #e8e8e8);
+}
+
+.moves {
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.won {
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff200;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px;
+  flex: 0 0 auto;
+}
+
+.freeGroup,
+.foundGroup {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---- Slots (free cells, foundations, empty cascades) ---- */
+.slot {
+  width: 46px;
+  height: 64px;
+  border: 1px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slotGlyph {
+  font-size: 26px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ---- Cards ---- */
+.card {
+  position: absolute;
+  inset: 0;
+  width: 46px;
+  height: 64px;
+  background: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.cascadeCard {
+  position: absolute;
+  left: 0;
+  width: 46px;
+  height: 64px;
+  background: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.red {
+  color: #c81414;
+}
+.black {
+  color: #111;
+}
+
+.corner {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  font-family: 'Times New Roman', Georgia, serif;
+}
+
+.pip {
+  position: absolute;
+  bottom: 3px;
+  right: 4px;
+  font-size: 20px;
+  line-height: 1;
+}
+.pip.red {
+  color: #c81414;
+}
+.pip.black {
+  color: #111;
+}
+
+.selected {
+  outline: 3px solid #ffd400;
+  outline-offset: -1px;
+  box-shadow: 0 0 8px rgba(255, 212, 0, 0.8);
+  z-index: 50;
+}
+
+/* ---- Tableau ---- */
+.tableau {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 4px 10px 20px;
+  flex: 1 1 auto;
+}
+
+.cascade {
+  position: relative;
+  width: 46px;
+  /* tall enough for a full descending 13+ card column */
+  min-height: 360px;
+}
+
+.cascadeEmpty {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

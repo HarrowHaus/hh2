@@ -170,10 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v14: + Tier-1 easter-egg launchers (bluescreen.exe BSOD, wupdate.exe fake
-      // Windows Update) under system32. (v13: Accessories + GAMES + resume.pdf +
-      // notes.md.) Bumping discards the old dev seed (pre-release).
-      version: 14,
+      // v15: + FreeCell + Spider Solitaire launchers in GAMES. (v14: easter-egg
+      // launchers; v13: Accessories + GAMES + resume.pdf + notes.md.) Bumping
+      // discards the old dev seed (pre-release).
+      version: 15,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

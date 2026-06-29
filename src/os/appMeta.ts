@@ -41,4 +41,6 @@ export const APP_META: Record<AppId, AppMeta> = {
   // Easter-egg full-screen overlays (portal over everything; window stays tiny).
   bsod: { title: 'Windows', width: 200, height: 130, single: true, resizable: false },
   winupdate: { title: 'Windows Update', width: 200, height: 130, single: true, resizable: false },
+  freecell: { title: 'FreeCell', width: 660, height: 500, single: true, resizable: true },
+  spider: { title: 'Spider Solitaire', width: 720, height: 520, single: true, resizable: true },
 }

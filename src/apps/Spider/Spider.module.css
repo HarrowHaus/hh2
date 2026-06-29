@@ -1,0 +1,239 @@
+.spider {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: Tahoma, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  color: #fff;
+  background: #1f6b34;
+  overflow: hidden;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  background: linear-gradient(#3a7d4f, #2a6b3c);
+  border-bottom: 1px solid #134d24;
+  flex: 0 0 auto;
+}
+
+.button {
+  font-family: inherit;
+  font-size: 11px;
+  padding: 3px 12px;
+  border: 1px solid #0d4a1f;
+  border-radius: 3px;
+  background: linear-gradient(#fafff0, #d6e7c8);
+  color: #103a1a;
+  cursor: pointer;
+}
+
+.button:active {
+  background: linear-gradient(#d6e7c8, #fafff0);
+}
+
+.difficulty {
+  display: flex;
+  gap: 2px;
+}
+
+.diffBtn {
+  font-family: inherit;
+  font-size: 11px;
+  padding: 3px 8px;
+  border: 1px solid #0d4a1f;
+  background: #2a6b3c;
+  color: #e8f5e0;
+  cursor: pointer;
+}
+
+.diffBtn:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.diffBtn:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.diffActive {
+  background: #f4d03f;
+  color: #2a2000;
+  font-weight: bold;
+}
+
+.status {
+  margin-left: auto;
+  font-weight: bold;
+  color: #f4f9ee;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Table / board ─────────────────────────────────────────────────── */
+
+.table {
+  position: relative;
+  flex: 1 1 auto;
+  background:
+    radial-gradient(ellipse at top, #2c7f44, #1c5e30 70%, #134d24);
+  overflow: auto;
+  padding: 10px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  min-width: 720px;
+}
+
+.column {
+  position: relative;
+  min-height: 96px;
+}
+
+.slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────── */
+
+.card {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.faceCard {
+  background: #fff;
+  border: 1px solid #555;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.red {
+  color: #c0102a;
+}
+
+.black {
+  color: #101010;
+}
+
+.selected {
+  outline: 2px solid #f4d03f;
+  outline-offset: -1px;
+  box-shadow: 0 0 8px rgba(244, 208, 63, 0.9);
+}
+
+.corner {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.pip {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.back {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #5a2a6b 0,
+      #5a2a6b 4px,
+      #7a3a8b 4px,
+      #7a3a8b 8px
+    );
+  border: 1px solid #2a1030;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Footer / stock ────────────────────────────────────────────────── */
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+  padding-top: 8px;
+  min-width: 720px;
+}
+
+.stock {
+  position: relative;
+  width: 110px;
+  height: 88px;
+  cursor: default;
+}
+
+.stockReady {
+  cursor: pointer;
+}
+
+.stockCard {
+  position: absolute;
+  top: 0;
+  width: 64px;
+  height: 88px;
+  border-radius: 5px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #5a2a6b 0,
+      #5a2a6b 4px,
+      #7a3a8b 4px,
+      #7a3a8b 8px
+    );
+  border: 1px solid #2a1030;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.stockReady .stockCard {
+  border-color: #f4d03f;
+}
+
+/* ── Win overlay ───────────────────────────────────────────────────── */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 10;
+}
+
+.overlayBox {
+  background: linear-gradient(#fafff0, #d6e7c8);
+  border: 2px solid #0d4a1f;
+  border-radius: 6px;
+  padding: 20px 28px;
+  text-align: center;
+  color: #103a1a;
+}
+
+.overlayTitle {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}

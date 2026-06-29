@@ -29,7 +29,7 @@ He grew up; the downloading got *serious* and curated. The golden age.
 - **Music (deepest vein):** **OiNK's Pink Palace** → R.I.P. memorial (raided 2007, the formative trauma) → **what.cd** with the lossless-encoding IRC interview quiz + ratio economy. Artifacts: a perfectly-logged FLAC folder (EAC `.log`/`.cue`), FLAC-vs-V0-vs-320 holy-war `.txt`, **Spek** spectral screenshots to catch transcodes, an invite-tree `.txt`.
 - **Film (horror + trash cinephilia):** **Cinemageddon** (grindhouse/trash/video-nasties — the church), **The Horror Charnel**, **PassThePopcorn**. Taste: giallo (the GIALLO.css lineage), Fulci/Argento, Asian-extreme, SOV horror, Something Weird. Artifacts: fictional XViD `MOVIES/` rips (CD1/CD2), subscene `.srt` hunts, MPC, a video-nasty poster wall.
 - **Cataloging religion:** Metal Archives, RateYourMusic, Discogs, Last.fm scrobble identity.
-- **Extreme-music identity (he RAN labels):** tape-trading (**Shaking Dog Tapes** = literally this), a distro folder, a MySpace band-page mock (~2005–08 bleeding from Stratum A), demo trades; his own label cruft (Dick Crush / Couch Nap / Moldmouth) seeded in.
+- **Extreme-music identity (he RAN labels):** tape-trading (**Shaking Dog Tapes** = literally this), a distro folder, a MySpace band-page mock (~2005–08 bleeding from Stratum A), demo trades; his own label cruft (**Dickcrush Records** / Couch Nap Records / Moldmouth) seeded in.
 
 ## STRATUM C — now (2026): "kind of normal, still all of it"
 Current portfolio/work (`WORK/`, résumé, about — placeholders) sits *inside* the rebuilt rig. The juxtaposition is the point.
@@ -43,6 +43,14 @@ Current portfolio/work (`WORK/`, résumé, about — placeholders) sits *inside*
 - **Anime/fansub (background only):** a few `[Bracket]`-tagged fictional torrents in the BT prop, a stray `.ass` karaoke sub, the reason CCCP exists — light touch, don't over-build.
 
 ---
+
+## MUSIC TIMELINE (the catalog itself walks the eras)
+The self-hosted catalog (docs/03) is a chronological seam — sorting the library (and the planted files) by date moves through his music history:
+- **Bludgeoned in the Basement** — teenage band, pre-2012 (**Stratum A**); predates the labels.
+- **Dickcrush Records** founded **2012**; **Shaking Dog Tapes** founded **2013** [confirm] — the label era, alongside **DEATHWILLENSUE** (~2012) and **In The Year of the Plague** (~2012) (**Stratum B**).
+- **Moldmouth** — band, formed **2020** (**Stratum C** modern).
+- **Couch Nap Records** founded **2025** (**Stratum C**, current).
+Reflect these founding/release years in the **planted file timestamps** so "sort by date" in Explorer/foobar walks teenage → label era → now. (Years live in `data/discography.json`; tracks/albums arrive via the ingest manifest.)
 
 ## PLANTING NOTES FOR THE BUILD
 - Tag each artifact's file timestamp to its stratum so "sort by date" walks the eras.

@@ -27,13 +27,14 @@ The era's lived reality: torrenting fansubbed anime and DivX movies at brutal sp
 
 **Full niche-culture artifact set + planting-by-era → see `docs/07-period-strata.md`** (private trackers, P2P, AIM/mIRC, emulation, esoteric/textfiles veins; AIM is a mainstay, anime/JRPG are background only). Everything there obeys the same non-functional/fictional/no-malware guardrails.
 
-## The music pillar (first-class)
-A foobar2000 (heavily customized power-user dark layout — Columns UI-style: playlist grid + album-art panel + spectrum/peak meters) playing the real catalog in `data/discography.json`:
-- **Moldmouth** (band) · **Dick Crush Records** · **Couch Nap Records** · **Shaking Dog Tapes** (labels).
-- Build tasks: fetch the four Bandcamp pages → map each band to its label(s), pull cover art, capture embed/track IDs for real playback. A `LABELS/` folder + `DISCOGRAPHY` view read the same data.
-- Represent names factually; design around the DIY/noise/xerox aesthetic; generate no new crude content.
-- The player keeps playing across the desktop (ambient "always something on").
-- **BUILD STATUS (2026-06-29):** foobar2000 ships as the dark Columns-UI shell over the real catalog, **embed-READY but with playback STUBBED** — Bandcamp blocks automated fetches (403), so cover art + embed/track IDs are unresolved. Real audio drops in once the **owner supplies Bandcamp embed IDs** (fill `bandcampAlbumId`/`bandcampTrackId`/`art` in `src/apps/foobar/catalog.ts`; the player's `load()` is the single seam). No fake audio until then. (Also flagged as `TODO(playback)` in `src/apps/foobar/Foobar.tsx`.)
+## The music pillar (first-class) — full self-hosted R2 catalog
+The whole discography is **self-hosted on Cloudflare R2** and played with real HTML5 `<audio>` (NOT Bandcamp embeds — Bandcamp 403s bots). The **volume is the point**: every label × band × album × track, not a curated sample. foobar2000 is a real **media-library UI** (foobar Album List / Columns UI style): a browsable **tree by label → band → year/album**, plus playlist, now-playing, transport, and a **real Web Audio spectrum** (AnalyserNode on the `<audio>` element). It must scale to hundreds of tracks. The player keeps playing across the desktop (ambient "always something on").
+
+**Two-file data model** (foobar reads + joins both):
+- `data/discography.json` — hand-authored **metadata spine**: labels → bands → albums, founding years, relationships. Source of truth for facts.
+- `data/audio-manifest.json` — **generated bulk**: every track `{ title, artist, album, label, year, art (R2 url), src (R2 url) }`. Stubbed empty until ingest runs; foobar shows a ready/empty state and plays **no fake audio** until real `src`s exist.
+
+**Ingest (how the catalog is populated):** `scripts/ingest-music.mjs` (`npm run ingest`) walks the owner's **own organized music folder**, reads ID3/Vorbis tags, uploads audio + embedded art to R2 via wrangler (Cache-Control: `public, max-age=31536000, immutable`), and emits `audio-manifest.json`. Do NOT scrape Bandcamp. Keep an optional "view on Bandcamp" link per release. Represent names factually; design around the DIY/noise/xerox aesthetic; generate no new crude content. A `LABELS/` folder + `DISCOGRAPHY` view read the same spine.
 
 ## Leak-and-hide system (found, never announced)
 Staged by depth: boot/BIOS strings flavored; switchable "other-side" wallpapers; lived-in file names + a `do_not_open/`; a `normal_person.exe` in the recycle bin (the maturation gag, shown not told); hidden terminal commands (`discog`, `horror`, `metal`, `weird`, `whoami`); in-voice-but-functional error dialogs; a locked `\weird\` folder seeding the deferred conspiracy layer; a guestbook + webring.

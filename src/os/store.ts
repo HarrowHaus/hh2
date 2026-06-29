@@ -19,6 +19,16 @@ interface OSState {
   visualStyle: VisualStyle
   setVisualStyle: (style: VisualStyle) => void
 
+  /** CRT/VHS post-process overlay (Display Properties → Effects). Persisted. */
+  crt: boolean
+  setCrt: (on: boolean) => void
+  /** oneko desktop pet on/off. Persisted. */
+  neko: boolean
+  setNeko: (on: boolean) => void
+  /** Selected screen saver id (Display Properties → Screen Saver), or 'none'. */
+  screensaver: string
+  setScreensaver: (id: string) => void
+
   booted: boolean
   setBooted: (booted: boolean) => void
 
@@ -73,6 +83,13 @@ export const useOS = create<OSState>()(
     (set, get) => ({
       visualStyle: DEFAULT_VISUAL_STYLE,
       setVisualStyle: (visualStyle) => set({ visualStyle }),
+
+      crt: false,
+      setCrt: (crt) => set({ crt }),
+      neko: false,
+      setNeko: (neko) => set({ neko }),
+      screensaver: 'none',
+      setScreensaver: (screensaver) => set({ screensaver }),
 
       booted: false,
       setBooted: (booted) => set({ booted }),
@@ -239,6 +256,9 @@ export const useOS = create<OSState>()(
       // persisted — every load re-boots and re-logs-in, then windows restore.
       partialize: (state) => ({
         visualStyle: state.visualStyle,
+        crt: state.crt,
+        neko: state.neko,
+        screensaver: state.screensaver,
         windows: state.windows,
         nextId: state.nextId,
         nextZ: state.nextZ,

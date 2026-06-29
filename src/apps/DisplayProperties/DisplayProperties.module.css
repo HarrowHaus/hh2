@@ -31,12 +31,34 @@
   opacity: 0.75;
   cursor: default;
 }
+.tab { cursor: pointer; }
 .tab.active {
   opacity: 1;
   background: var(--winbody);
   margin-bottom: -1px;
   padding-bottom: 5px;
 }
+
+/* Screen Saver tab */
+.saverPreview {
+  flex: 1;
+  min-height: 150px;
+  border: 2px inset rgba(0, 0, 0, 0.4);
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+.saverCanvas { width: 100%; height: 100%; display: block; }
+.effects {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid var(--winborder);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+.effectsHead { font-weight: 700; font-size: 11px; margin-bottom: 2px; }
+.check { display: flex; align-items: center; gap: 6px; font-size: 11px; }
 
 .panel {
   flex: 1;

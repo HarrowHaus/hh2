@@ -1,0 +1,44 @@
+.neko {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 50000;
+  pointer-events: none;
+  will-change: transform;
+}
+.neko svg { display: block; overflow: visible; }
+
+/* gentle run bob + tail/leg motion only while chasing */
+.neko[data-state='run'] svg { animation: bob 0.28s steps(2) infinite; }
+@keyframes bob {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+  100% { transform: translateY(0); }
+}
+.neko[data-state='run'] .legF { animation: legf 0.28s steps(2) infinite; }
+.neko[data-state='run'] .legB { animation: legb 0.28s steps(2) infinite; }
+@keyframes legf { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes legb { 0%,100% { transform: translateY(-2px); } 50% { transform: translateY(0); } }
+.legF, .legB { transform-box: fill-box; transform-origin: top; }
+.tail { animation: sway 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: bottom right; }
+@keyframes sway { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(8deg); } }
+
+/* sleeping: eyes shut, a little z */
+.neko[data-state='sleep'] .eye { transform: scaleY(0.18); transform-box: fill-box; transform-origin: center; }
+.zzz {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  font-size: 9px;
+  color: #cfcfd6;
+  opacity: 0;
+  font-family: 'Comic Sans MS', cursive;
+}
+.neko[data-state='sleep'] .zzz { opacity: 0.9; animation: floatz 2.4s ease-in-out infinite; }
+@keyframes floatz { 0% { opacity: 0; transform: translateY(2px); } 50% { opacity: 0.9; } 100% { opacity: 0; transform: translateY(-6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .neko svg, .legF, .legB, .tail, .zzz { animation: none; }
+}

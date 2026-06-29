@@ -18,6 +18,9 @@ import { Taskbar } from '../Taskbar/Taskbar'
 import { StartMenu } from '../StartMenu/StartMenu'
 import { Window } from '../Window/Window'
 import { ContextMenu } from '../ContextMenu/ContextMenu'
+import { CrtOverlay } from '../CrtOverlay/CrtOverlay'
+import { Oneko } from '../Oneko/Oneko'
+import { ScreenSaver } from '../ScreenSaver/ScreenSaver'
 import styles from './Desktop.module.css'
 
 const ICON_W = 76
@@ -59,6 +62,9 @@ export function Desktop() {
   const clipboard = useFS((s) => s.clipboard)
   const setClipboard = useFS((s) => s.setClipboard)
   const paste = useFS((s) => s.paste)
+
+  const crt = useOS((s) => s.crt)
+  const neko = useOS((s) => s.neko)
 
   const openMenu = useMenu((s) => s.openMenu)
 
@@ -284,6 +290,9 @@ export function Desktop() {
       {startMenuOpen && <StartMenu />}
       <Taskbar />
       <ContextMenu />
+      {neko && <Oneko />}
+      <ScreenSaver />
+      {crt && <CrtOverlay />}
     </main>
   )
 }

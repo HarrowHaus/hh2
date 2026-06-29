@@ -116,4 +116,7 @@ assets).
 - **chess.js** — https://github.com/jhlywa/chess.js — **BSD-2-Clause**. Chess rules/move-generation for the Chess app.
 - **Stockfish** — https://github.com/nmrugg/stockfish.js (engine: https://stockfishchess.org) — **GPL-3.0**. ⚠️ Copyleft. Shipped **isolated** as a separate single-threaded-lite Web Worker under `public/stockfish/` (loaded at runtime, never bundled into our MIT app code); the GPL text ships at `/stockfish/COPYING.txt` and the entire project source is public, satisfying GPL source-availability. The built-in minimax is the fallback when the engine can't load.
 - **BassoonTracker** — https://github.com/steffest/BassoonTracker — **MIT**. The "FL Studio" app loads it from `public/bassoon/` via an iframe seam **if the dist is vendored there** (not on npm; not yet bundled — replace its sample disks with free/original audio before shipping).
-- _Deferred Tier-2 items pending owner decisions:_ Webamp (skin — going gray-area classic per owner), chiptune3 real-`.mod` player (AudioWorklet/wasm bundling — in progress). See the review notes.
+- _Deferred Tier-2 items:_ Webamp + butterchurn (webamp won't apply a skin in our host — integration issue, not the skin) and chiptune3 real-`.mod` player (AudioWorklet/wasm) — deferred per owner; the keygen covers chiptune.
+
+### Tier 3
+- **Monaco Editor (monaco-editor)** — https://github.com/microsoft/monaco-editor — **MIT**. The VS Code editor core powers the Code app (lazy-loaded own chunk; editor + JS/TS/JSON/CSS/HTML language workers bundled, no network). Microsoft name/logo not used.

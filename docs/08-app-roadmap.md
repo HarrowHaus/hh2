@@ -1,5 +1,11 @@
 # 08 · APP ROADMAP (adoption catalog + license ledger)
 
+## BUILD STATUS (live)
+- **Tier 1 — DONE** (deployed): Calculator, Character Map, Sound Recorder, Hex Editor, Solitaire, FreeCell, Spider, Brick Breaker, Crypt Runner, Markdown viewer, PDF viewer (pdf.js), panzoom Image Viewer, CRT/VHS overlay, oneko, screen savers, BSOD + fake Windows Update.
+- **Tier 2 — mostly DONE** (deployed): Sigil generator, ANSI/`.nfo` viewer, Warez keygen (original Web-Audio chiptune), Chess + isolated Stockfish, BassoonTracker iframe seam.
+  - **Deferred (owner call):** **Webamp** — original `.wsz` skin built + valid (browser-decodable BMPs, std zip, correct `initialSkin` API) but webamp renders its built-in fallback in our React/Vite host regardless of skin; it's a webamp integration issue (skin not honored / sprites not painting), not the skin. Revisit later. **chiptune3** real `.mod` player (AudioWorklet/wasm bundling) and **butterchurn** (rides with Webamp) deferred too — the keygen already covers chiptune.
+- **Tier 3 — IN PROGRESS.** Per owner rulings: BUILD/ADOPT = DOOM+Freedoom, EmulatorJS (isolated, no ROMs), js-dos, v86, OpenTyrian, Ruffle, TIC-80, Monaco; replace the proxied browser with a curated webring + read-only archive.org "Old Net" mode. SKIP = Quake3, Vim.js, TinyMCE, codecbox, BoxedWine, proxied browser, Space Cadet Pinball (not turnkey — needs MS data). ClassiCube still a content DECISION (pulls Minecraft assets at runtime).
+
 The full app roster we're adopting, organized by the four build tiers. Every
 third-party component is verified against its **own upstream repo** (not
 daedalOS's glue) and carries its license + any name/content terms. Build in

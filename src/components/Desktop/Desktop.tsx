@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { useOS } from '../../os/store'
 import { useFS } from '../../os/fs/store'
+import { useKeyboard } from '../../os/useKeyboard'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { DESKTOP_PATH, listDir } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
@@ -38,6 +39,7 @@ function iconFor(node: FSNode): FC<{ size?: number }> {
 }
 
 export function Desktop() {
+  useKeyboard()
   const windows = useOS((s) => s.windows)
   const startMenuOpen = useOS((s) => s.startMenuOpen)
   const closeStartMenu = useOS((s) => s.closeStartMenu)

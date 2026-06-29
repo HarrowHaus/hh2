@@ -35,6 +35,13 @@ body {
   display: flex;
 }
 
+/* Visible keyboard focus (a11y floor, docs/02 #9, #12). Mouse users don't see
+   it thanks to :focus-visible. */
+:focus-visible {
+  outline: 1px dotted var(--accent);
+  outline-offset: 2px;
+}
+
 /* Reduced-motion: kill transitions/animations OS-wide (docs/02 #1, #12). */
 @media (prefers-reduced-motion: reduce) {
   *,

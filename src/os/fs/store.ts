@@ -170,11 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v13: Tier-1 app set (docs/08) — Accessories (Calculator/Character Map/
-      // Sound Recorder/Hex Editor), GAMES (Solitaire/Brick Breaker/Crypt Runner),
-      // a real resume.pdf (pdf.js) + a notes.md (markdown). Bumping discards the
-      // old dev seed (pre-release; no real user data yet).
-      version: 13,
+      // v14: + Tier-1 easter-egg launchers (bluescreen.exe BSOD, wupdate.exe fake
+      // Windows Update) under system32. (v13: Accessories + GAMES + resume.pdf +
+      // notes.md.) Bumping discards the old dev seed (pre-release).
+      version: 14,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

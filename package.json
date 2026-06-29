@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "ingest": "node scripts/ingest-music.mjs",
     "typecheck": "tsc -b --noEmit",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=hh2"
   },

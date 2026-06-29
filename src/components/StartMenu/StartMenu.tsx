@@ -68,7 +68,7 @@ export function StartMenu() {
               <span className={styles.text}>Notepad</span>
             </span>
           </button>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
+          <button type="button" className={styles.item} onClick={() => openApp('foobar')}>
             <MusicIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
               <span className={styles.text}>foobar2000</span>

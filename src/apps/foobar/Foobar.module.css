@@ -1,0 +1,125 @@
+/* foobar2000 — Columns UI-style dark layout. Reads tokens so it sits in any
+   visual style, but leans dark (it's the scene-kid's player). */
+
+.fb {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #0c0c0f;
+  color: #cfcfd4;
+  font-size: 11px;
+}
+:global(body) .fb { /* keep dark even under Luna/Classic — foobar is its own skin */
+  background: #0c0c0f;
+}
+
+.menubar {
+  display: flex;
+  gap: 12px;
+  padding: 3px 8px;
+  background: #16161a;
+  border-bottom: 1px solid #000;
+}
+.menubar span { opacity: 0.8; }
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  background: linear-gradient(180deg, #1b1b20, #121215);
+  border-bottom: 1px solid #000;
+}
+.tbtn {
+  width: 24px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  background: #26262c;
+  color: #d8d8dc;
+  border: 1px solid #000;
+  border-radius: 2px;
+  font-size: 10px;
+  cursor: pointer;
+}
+.tbtn:hover { background: #33333a; }
+.seek {
+  flex: 1;
+  height: 6px;
+  background: #000;
+  border: 1px solid #2a2a30;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.seekfill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--accent); }
+.time { font-variant-numeric: tabular-nums; opacity: 0.85; min-width: 78px; text-align: right; }
+
+.body { flex: 1; display: flex; min-height: 0; }
+
+.side {
+  width: 150px;
+  flex: 0 0 150px;
+  background: #101014;
+  border-right: 1px solid #000;
+  padding: 6px;
+  overflow: auto;
+}
+.sideHead { opacity: 0.6; text-transform: uppercase; font-size: 9px; letter-spacing: 1px; margin: 2px 0 6px; }
+.source { display: flex; align-items: center; gap: 6px; padding: 3px 4px; border-radius: 2px; cursor: default; }
+.source:hover { background: #1d1d22; }
+
+.center { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+.playlist { flex: 1; overflow: auto; }
+.row {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr 54px;
+  gap: 6px;
+  padding: 3px 8px;
+  cursor: default;
+  border-bottom: 1px solid #131318;
+}
+.rowHead { position: sticky; top: 0; background: #16161a; color: #8a8a92; font-size: 10px; }
+.row:not(.rowHead):hover { background: #1a1a20; }
+.rowActive { background: color-mix(in srgb, var(--accent) 45%, #1a1a20) !important; color: #fff; }
+.col { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.colNum { opacity: 0.5; text-align: right; }
+.colDur { text-align: right; opacity: 0.7; font-variant-numeric: tabular-nums; }
+
+.artPanel {
+  width: 180px;
+  flex: 0 0 180px;
+  background: #0a0a0d;
+  border-left: 1px solid #000;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.art {
+  width: 100%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 50% 45%, #1a1a20, #050507);
+  border: 1px solid #000;
+  display: grid;
+  place-items: center;
+  color: #2f2f37;
+}
+.np { font-size: 11px; }
+.npArtist { font-weight: 700; color: #e6e6ea; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.npTitle { opacity: 0.7; }
+
+/* idle spectrum — flat bars; NO animation (no audio yet, so no fake motion) */
+.spectrum { display: flex; align-items: flex-end; gap: 2px; height: 40px; margin-top: auto; }
+.spectrum i { flex: 1; background: linear-gradient(180deg, var(--accent), #222); opacity: 0.5; }
+
+.statusbar {
+  background: #16161a;
+  border-top: 1px solid #000;
+  padding: 3px 8px;
+  font-size: 10px;
+  color: #9a9aa2;
+  display: flex;
+  justify-content: space-between;
+}

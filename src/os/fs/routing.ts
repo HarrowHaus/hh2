@@ -5,7 +5,8 @@ import type { FSNode } from './types'
 // File kinds map to apps as those apps ship (Notepad/viewers/foobar = Phase 3).
 const KIND_APP: Partial<Record<FSNode['kind'], AppId>> = {
   text: 'notepad',
-  // image: 'imageviewer',  // Phase 3 (with content manifest)
+  audio: 'foobar',
+  // image: 'imageviewer',  // Phase 3 (image-viewer ticket)
 }
 
 export interface OpenTarget {

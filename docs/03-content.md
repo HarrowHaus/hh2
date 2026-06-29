@@ -33,6 +33,7 @@ A foobar2000 (heavily customized power-user dark layout — Columns UI-style: pl
 - Build tasks: fetch the four Bandcamp pages → map each band to its label(s), pull cover art, capture embed/track IDs for real playback. A `LABELS/` folder + `DISCOGRAPHY` view read the same data.
 - Represent names factually; design around the DIY/noise/xerox aesthetic; generate no new crude content.
 - The player keeps playing across the desktop (ambient "always something on").
+- **BUILD STATUS (2026-06-29):** foobar2000 ships as the dark Columns-UI shell over the real catalog, **embed-READY but with playback STUBBED** — Bandcamp blocks automated fetches (403), so cover art + embed/track IDs are unresolved. Real audio drops in once the **owner supplies Bandcamp embed IDs** (fill `bandcampAlbumId`/`bandcampTrackId`/`art` in `src/apps/foobar/catalog.ts`; the player's `load()` is the single seam). No fake audio until then. (Also flagged as `TODO(playback)` in `src/apps/foobar/Foobar.tsx`.)
 
 ## Leak-and-hide system (found, never announced)
 Staged by depth: boot/BIOS strings flavored; switchable "other-side" wallpapers; lived-in file names + a `do_not_open/`; a `normal_person.exe` in the recycle bin (the maturation gag, shown not told); hidden terminal commands (`discog`, `horror`, `metal`, `weird`, `whoami`); in-voice-but-functional error dialogs; a locked `\weird\` folder seeding the deferred conspiracy layer; a guestbook + webring.

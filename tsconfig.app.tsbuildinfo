@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/Boot/Boot.tsx","./src/components/Desktop/Desktop.tsx","./src/components/Taskbar/Taskbar.tsx","./src/components/Taskbar/useClock.ts","./src/os/store.ts","./src/os/themes.ts","./src/os/useVisualStyle.ts"],"version":"5.9.3"}

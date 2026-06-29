@@ -1,0 +1,64 @@
+/* Boot/POST surface. Themed per visual style via tokens; deliberately spare.
+   Authentic boot/logon art is a Phase 1 ticket — this is the bootable seam. */
+
+.screen {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: #000;
+  color: #cfcfd4;
+  cursor: pointer;
+}
+
+.brand {
+  font-family: 'Trebuchet MS', Tahoma, sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #eaeaee;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+/* XP-style segmented marquee loader. */
+.bar {
+  width: 150px;
+  height: 13px;
+  border: 1px solid #2a2a30;
+  border-radius: 3px;
+  padding: 2px;
+  display: flex;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.bar i {
+  width: 11px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.25;
+  animation: pulse 1.1s linear infinite;
+}
+
+.bar i:nth-child(2) { animation-delay: 0.13s; }
+.bar i:nth-child(3) { animation-delay: 0.26s; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.25; }
+  40% { opacity: 1; }
+}
+
+.hint {
+  position: absolute;
+  bottom: 18px;
+  font-size: 10px;
+  color: #4a4a52;
+  letter-spacing: 0.5px;
+}

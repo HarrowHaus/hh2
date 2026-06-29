@@ -1,0 +1,20 @@
+/* The desktop surface: token-driven wallpaper filling the viewport, taskbar
+   pinned to the bottom. Icons + window layer arrive in Phase 2. */
+
+.desktop {
+  position: relative;
+  flex: 1;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--wall);
+  background-size: cover;
+  background-position: center;
+}
+
+.surface {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}

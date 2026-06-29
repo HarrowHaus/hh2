@@ -12,7 +12,11 @@ body.theme-dark {                 /* bug.msstyles — dark scene-kid skin (DEFAU
   --startbtn:linear-gradient(180deg,#8c1414,#4a0808); --starttext:#fff;
   --menubg:#17171b; --menuside:#0d0d10; --menutext:#dcdce0;
   --accent:#9a1414;
-  --wall:#0a0a0c;                 /* placeholder: band art / horror still */
+  /* placeholder wallpaper (real band art / horror still lands in Phase 1):
+     a grim charcoal field with depth + a faint blood-red cast so the bare
+     desktop reads as a desktop, not a black void. */
+  --wall:radial-gradient(120% 90% at 50% 18%,#1b1b22 0%,#101015 38%,#08080b 72%,#040406 100%),
+         radial-gradient(80% 60% at 78% 108%,rgba(122,18,18,.20),transparent 60%);
   --radius:7px; --field:#101014;
 }
 

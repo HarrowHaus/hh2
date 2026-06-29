@@ -40,6 +40,11 @@ function launcher(path: string, name: string, ts: number, app: FSNode['app']): F
 function image(path: string, name: string, ts: number, artId: string): FSNode {
   return { path, name, type: 'file', kind: 'image', ts, content: artId }
 }
+// Inert artifact files (.avi/.ips/.ass) — named props with no associated app;
+// they sit in the disk as texture (docs/07), opening does nothing.
+function blob(path: string, name: string, ts: number): FSNode {
+  return { path, name, type: 'file', kind: 'file', ts }
+}
 
 const FOLDERS: [string, string, number][] = [
   [C_DRIVE, 'Local Disk (C:)', A],
@@ -75,11 +80,16 @@ const FOLDERS: [string, string, number][] = [
   [MUSIC, 'My Music', A],
   [`${MUSIC}/LABELS`, 'LABELS', A],
   [`${MUSIC}/LABELS/Moldmouth`, 'Moldmouth', A],
-  [`${MUSIC}/LABELS/Dick Crush Records`, 'Dick Crush Records', A],
+  [`${MUSIC}/LABELS/Dickcrush Records`, 'Dickcrush Records', A],
   [`${MUSIC}/LABELS/Couch Nap Records`, 'Couch Nap Records', A],
   [`${MUSIC}/LABELS/Shaking Dog Tapes`, 'Shaking Dog Tapes', A],
   [`${MUSIC}/rips`, 'rips', A],
   [`${MUSIC}/rips/Moldmouth - Demo (2005)`, 'Moldmouth - Demo (2005)', A],
+  [`${MUSIC}/comps`, 'comps', A],
+  [`${MYDOCS}/bands`, 'bands', B],
+  [`${MYDOCS}/iso`, 'iso', B2],
+  [`${MYDOCS}/anime`, 'anime', A2],
+  [`${PF}/Emulators/VisualBoyAdvance/patches`, 'patches', A2],
   [PICS, 'My Pictures', A],
   [MOVIES, 'MOVIES', B],
   [`${MOVIES}/Spectral Corridor (1986)`, 'Spectral Corridor (1986)', B],
@@ -375,6 +385,197 @@ const CREATIVE: FSNode[] = [
   launcher(`${MUSIC}/untitled_3.flp`, 'untitled_3.flp', A2, 'flstudio'),
 ]
 
+// Remaining docs/07 strata artifacts + WORK/résumé/about placeholders (manifest
+// items 3,4,7,9,10). Curated to fill the named gaps — signal over volume.
+// Fictional, in-voice, non-narrating; real names = period flavor; nothing inert
+// here facilitates anything.
+const STRATA: FSNode[] = [
+  // Music vein (B): the what.cd invite tree; a burned comp tracklist (A).
+  text(
+    `${MUSIC}/whatcd_invite_tree.txt`,
+    'whatcd_invite_tree.txt',
+    B,
+    [
+      'invite tree — KEEP OFFLINE',
+      '',
+      '  me  <-  grimwax  <-  [redacted]  <-  an OiNK refugee',
+      '  i invited:',
+      '    - tapehiss_kelly   (ratio police, sorry kelly)',
+      '    - DialUpDoom        (still seeding, good lad)',
+      '',
+      'you are responsible for who you bring in. one bad ratio',
+      'and it climbs back up the tree to you.',
+    ].join('\n'),
+  ),
+  text(
+    `${MUSIC}/comps/Basement Comp Vol 3 (2005).txt`,
+    'Basement Comp Vol 3 (2005).txt',
+    A,
+    [
+      'BASEMENT NOISE COMP — VOL 3 (2005)',
+      'burned 40 on TDK CD-Rs. traded every one.',
+      '',
+      '01. Dead Snakes - untitled',
+      '02. Hung Eyes - side b',
+      '03. Moldmouth - demo edit',
+      '04. Cat Guts - (live, tape source)',
+      '05. Locker Fuck - rehearsal room',
+      '',
+      'dubbing quality varies. that is the point.',
+    ].join('\n'),
+  ),
+  // Film vein (B): the fictional XViD rip + a fan-timed .srt note.
+  blob(`${MOVIES}/Spectral Corridor (1986)/Spectral.Corridor.1986.PAL.XViD.CD1.avi`, 'Spectral.Corridor.1986.PAL.XViD.CD1.avi', B),
+  blob(`${MOVIES}/Spectral Corridor (1986)/Spectral.Corridor.1986.PAL.XViD.CD2.avi`, 'Spectral.Corridor.1986.PAL.XViD.CD2.avi', B),
+  text(
+    `${MOVIES}/Spectral Corridor (1986)/Spectral.Corridor.1986.srt`,
+    'Spectral.Corridor.1986.srt',
+    B,
+    [
+      '1',
+      '00:00:12,000 --> 00:00:15,500',
+      '[no official subs exist — these are fan-timed]',
+      '',
+      '2',
+      '00:47:08,000 --> 00:47:11,000',
+      '- the corridor again?',
+      '- it was always the corridor.',
+      '',
+      '# timed off the PAL VHS. reel change at 47:10 throws CD2 out of',
+      '# sync — shift it -2.3s and it lines up. you are welcome.',
+    ].join('\n'),
+  ),
+  // P2P (A): WinMX share list + Soulseek wishlist.
+  text(
+    `${MYDOCS}/winmx_shared/shared_list.txt`,
+    'shared_list.txt',
+    A,
+    [
+      'sharing (do not leech and run):',
+      '  \\metal\\           217 files',
+      '  \\noise\\            88 files',
+      '  \\tapes_to_rip\\     do NOT download, these are not done',
+      '',
+      'WinMX hangs if you queue more than 5. it just does. accept it.',
+    ].join('\n'),
+  ),
+  text(
+    `${MYDOCS}/soulseek_dl/slsk_wishlist.txt`,
+    'slsk_wishlist.txt',
+    A2,
+    [
+      'slsk wishlist (the unfindable):',
+      '  - that Dead Snakes live set, basement, 2004',
+      "  - anything Hung Eyes that isn't the split",
+      '  - the comp with the hidden track',
+      '',
+      'soulseek finds it eventually. soulseek always finds it.',
+    ].join('\n'),
+  ),
+  // Warez ritual (V): .nfo ASCII art, INVENTED group. The nfo is the art.
+  text(
+    `${MYDOCS}/iso/snes_preservation.nfo`,
+    'snes_preservation.nfo',
+    B2,
+    [
+      ' ._________________________________________________.',
+      ' |   T A P E W O R M   ::  preservation division   |',
+      " |_________________________________________________|",
+      '     .-.    .-.    .-.',
+      '    ( S )--( N )--( ES )    presents',
+      "     '-'    '-'    '-'",
+      '   -----------------------------------------------',
+      '    release : invented_collection (NTSC)',
+      '    group   : TAPEWORM   (greetz to the basement)',
+      '    notes   : for preservation only. buy the carts.',
+      '   -----------------------------------------------',
+      '    the nfo is the art. the rom is just the excuse.',
+    ].join('\n'),
+  ),
+  // Background veins, light touch (docs/07): one JRPG .ips patch, one stray .ass.
+  blob(`${PF}/Emulators/VisualBoyAdvance/patches/sword_quest_eng_v1.ips`, 'sword_quest_eng_v1.ips', A2),
+  text(
+    `${MYDOCS}/anime/[StaticVoid]_op_karaoke.ass`,
+    '[StaticVoid]_op_karaoke.ass',
+    A2,
+    [
+      '[Script Info]',
+      'Title: op karaoke (fan-timed)',
+      '; one episode somebody never finished timing.',
+      '; left it in the folder for ten years anyway.',
+    ].join('\n'),
+  ),
+  // MySpace band mock (B).
+  text(
+    `${MYDOCS}/bands/dickcrush_myspace.txt`,
+    'dickcrush_myspace.txt',
+    B,
+    [
+      'DICKCRUSH — myspace.com/[private]',
+      '',
+      '  top 8 is political and you know it.',
+      '  profile song autoplays. non-negotiable.',
+      '  comments: 412    plays: 9,031',
+      '',
+      '  "add us, we add back. we trade tapes, not follows."',
+    ].join('\n'),
+  ),
+  // Forums / Flash detritus (A) — names as period flavor, no real URLs.
+  text(
+    `${MYDOCS}/bookmarks.txt`,
+    'bookmarks.txt',
+    A2,
+    [
+      'favorites dump (before the bookmarks file corrupts again):',
+      '',
+      '  Something Awful — the comedy goldmine, login expired',
+      '  4chan /x/ and /mu/ — do not read /x/ at 3am',
+      '  Newgrounds — everything is flash and everything is loud',
+      '  Homestar Runner — strongbad_email.exe',
+      '  YTMND — youre the man now dog',
+    ].join('\n'),
+  ),
+  // WORK / résumé / about placeholders (C).
+  text(
+    `${WORK}/project-03.txt`,
+    'project-03.txt',
+    C,
+    ['Title: [project name]', 'Role: [role]', 'Year: 2023', 'Link: [url]', '', 'One line on what it was.'].join('\n'),
+  ),
+  text(
+    `${MYDOCS}/resume.txt`,
+    'resume.txt',
+    C,
+    [
+      '[NAME]',
+      '[role] — [city]',
+      '',
+      'EXPERIENCE',
+      '  [most recent role] ........ 20XX–now',
+      '  [the one before that] ..... 20XX–20XX',
+      '',
+      'SKILLS',
+      '  [fill in]',
+      '',
+      '(placeholder — the real résumé drops in here.)',
+    ].join('\n'),
+  ),
+  text(
+    `${MYDOCS}/CONTACT.txt`,
+    'CONTACT.txt',
+    C,
+    [
+      'CONTACT',
+      '',
+      '  email ...... [your-address-here]',
+      '  bandcamp ... moldmouth.bandcamp.com',
+      '  label ...... couchnaprecords.bandcamp.com',
+      '',
+      '  (the old AIM handle still works, if you know it.)',
+    ].join('\n'),
+  ),
+]
+
 // Image artifacts (manifest items 3, 4, 8). Original SVG recreations rendered by
 // the Image Viewer; fictional, period-flavored, inert.
 const IMAGES: FSNode[] = [
@@ -439,6 +640,7 @@ export function seedFS(): Record<string, FSNode> {
   const nodes: FSNode[] = [
     ...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)),
     ...FILES,
+    ...STRATA,
     ...CODEC_FILES,
     ...CREATIVE,
     ...IMAGES,

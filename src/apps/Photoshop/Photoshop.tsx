@@ -32,7 +32,7 @@ function artFor(file: string): Art {
   }
   return {
     doc: 'dickcrush_show_flyer.psd',
-    title: 'DICK CRUSH',
+    title: 'DICKCRUSH',
     sub: 'fri · the basement · $5 · all ages',
     layers: ['headliner type', 'copier grime', 'photocopy 3x', 'border tape', 'Background'],
   }

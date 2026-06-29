@@ -99,9 +99,11 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v11: + static AIM / mIRC / Internet Explorer (guestbook + webring) props
-      // and their launchers. Bumping discards the old dev seed (pre-release).
-      version: 11,
+      // v12: + remaining docs/07 strata artifacts (invite tree, comp, XViD rip +
+      // .srt, P2P lists, .nfo, .ips/.ass veins, MySpace mock, bookmarks) and
+      // WORK/résumé/CONTACT/about placeholders; Dickcrush spelling fixed to the
+      // discography source of truth. Bumping discards the old dev seed.
+      version: 12,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

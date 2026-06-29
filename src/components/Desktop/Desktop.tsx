@@ -22,7 +22,17 @@ export function Desktop() {
   const startMenuOpen = useOS((s) => s.startMenuOpen)
   const closeStartMenu = useOS((s) => s.closeStartMenu)
   const openApp = useOS((s) => s.openApp)
+  const snapPreview = useOS((s) => s.snapPreview)
   const [ctx, setCtx] = useState<Ctx | null>(null)
+
+  const snapStyle =
+    snapPreview === 'max'
+      ? { inset: 0 }
+      : snapPreview === 'left'
+        ? { left: 0, top: 0, width: '50%', height: '100%' }
+        : snapPreview === 'right'
+          ? { left: '50%', top: 0, width: '50%', height: '100%' }
+          : null
 
   const onSurfacePointerDown = (e: ReactPointerEvent) => {
     if (e.target !== e.currentTarget) return
@@ -57,6 +67,8 @@ export function Desktop() {
             </button>
           ))}
         </div>
+
+        {snapStyle && <div className={styles.snapPreview} style={snapStyle} />}
 
         {windows.map((w) => (
           <Window key={w.id} win={w} />

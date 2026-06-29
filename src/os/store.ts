@@ -1,8 +1,16 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { DEFAULT_VISUAL_STYLE, type VisualStyle } from './themes'
-import type { AppId, WindowInstance } from './types'
+import type { AppId, Geometry, SnapZone, WindowInstance } from './types'
 import { APP_META } from './appMeta'
+
+const TASKBAR_H = 30
+export const MIN_W = 200
+export const MIN_H = 130
+
+function surfaceSize() {
+  return { w: window.innerWidth, h: window.innerHeight - TASKBAR_H }
+}
 
 // Core OS state. Window-manager logic is ported from the winXP reducer
 // (add/del/focus/minimize/maximize + z-order) onto a typed Zustand store.
@@ -27,12 +35,21 @@ interface OSState {
   nextId: number
   nextZ: number
 
+  /** Transient drag-snap preview (not persisted). */
+  snapPreview: SnapZone
+  setSnapPreview: (zone: SnapZone) => void
+
   openApp: (appId: AppId) => void
   closeWindow: (id: number) => void
   focusWindow: (id: number) => void
   minimizeWindow: (id: number) => void
   toggleMaximize: (id: number) => void
   moveWindow: (id: number, x: number, y: number) => void
+  resizeWindow: (id: number, geo: Geometry) => void
+  /** Half/maximize tile a window, remembering pre-snap geometry. */
+  snapWindow: (id: number, zone: SnapZone) => void
+  /** Restore a snapped/maximized window to floating geometry (for drag-off). */
+  restoreWindow: (id: number, x: number, y: number) => void
   /** Taskbar button: minimize if focused, else focus/restore. */
   taskbarClick: (id: number) => void
 }
@@ -72,6 +89,9 @@ export const useOS = create<OSState>()(
       nextId: 0,
       nextZ: 1,
 
+      snapPreview: null,
+      setSnapPreview: (zone) => set((s) => (s.snapPreview === zone ? s : { snapPreview: zone })),
+
       openApp: (appId) =>
         set((s) => {
           const meta = APP_META[appId]
@@ -99,6 +119,8 @@ export const useOS = create<OSState>()(
             z: s.nextZ,
             minimized: false,
             maximized: false,
+            snapped: null,
+            prev: null,
           }
           return {
             startMenuOpen: false,
@@ -129,14 +151,69 @@ export const useOS = create<OSState>()(
       toggleMaximize: (id) =>
         set((s) => ({
           nextZ: s.nextZ + 1,
-          windows: s.windows.map((w) =>
-            w.id === id ? { ...w, maximized: !w.maximized, minimized: false, z: s.nextZ } : w,
-          ),
+          windows: s.windows.map((w) => {
+            if (w.id !== id) return w
+            // Remember floating geometry so restore returns to it.
+            const prev = w.maximized ? w.prev : { x: w.x, y: w.y, width: w.width, height: w.height }
+            return { ...w, maximized: !w.maximized, snapped: null, minimized: false, z: s.nextZ, prev }
+          }),
         })),
 
       moveWindow: (id, x, y) =>
         set((s) => ({
           windows: s.windows.map((w) => (w.id === id ? { ...w, x, y } : w)),
+        })),
+
+      resizeWindow: (id, geo) =>
+        set((s) => ({
+          // Any manual resize makes the window floating again.
+          windows: s.windows.map((w) =>
+            w.id === id ? { ...w, ...geo, maximized: false, snapped: null, prev: null } : w,
+          ),
+        })),
+
+      snapWindow: (id, zone) =>
+        set((s) => {
+          if (!zone) return s
+          const { w: W, h: H } = surfaceSize()
+          return {
+            snapPreview: null,
+            nextZ: s.nextZ + 1,
+            windows: s.windows.map((w) => {
+              if (w.id !== id) return w
+              const prev =
+                w.maximized || w.snapped
+                  ? w.prev
+                  : { x: w.x, y: w.y, width: w.width, height: w.height }
+              if (zone === 'max') {
+                return { ...w, maximized: true, snapped: null, minimized: false, z: s.nextZ, prev }
+              }
+              const half = Math.round(W / 2)
+              const geo =
+                zone === 'left'
+                  ? { x: 0, y: 0, width: half, height: H }
+                  : { x: W - half, y: 0, width: half, height: H }
+              return { ...w, ...geo, maximized: false, snapped: zone, minimized: false, z: s.nextZ, prev }
+            }),
+          }
+        }),
+
+      restoreWindow: (id, x, y) =>
+        set((s) => ({
+          windows: s.windows.map((w) => {
+            if (w.id !== id) return w
+            const size = w.prev ?? { width: w.width, height: w.height, x, y }
+            return {
+              ...w,
+              x,
+              y,
+              width: size.width,
+              height: size.height,
+              maximized: false,
+              snapped: null,
+              prev: null,
+            }
+          }),
         })),
 
       taskbarClick: (id) => {

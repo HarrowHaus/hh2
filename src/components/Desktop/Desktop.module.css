@@ -19,6 +19,17 @@
   overflow: hidden;
 }
 
+/* drag-snap preview ghost */
+.snapPreview {
+  position: absolute;
+  z-index: 3500;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  border: 2px solid color-mix(in srgb, var(--accent) 80%, #fff 20%);
+  border-radius: 4px;
+  transition: all 0.08s ease;
+}
+
 /* desktop icons */
 .icons {
   position: absolute;

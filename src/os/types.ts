@@ -8,6 +8,15 @@ export interface AppProps {
   winId: number
 }
 
+export interface Geometry {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export type SnapZone = 'left' | 'right' | 'max' | null
+
 export interface WindowInstance {
   id: number
   appId: AppId
@@ -19,4 +28,8 @@ export interface WindowInstance {
   z: number
   minimized: boolean
   maximized: boolean
+  /** Half-screen tile, or null. Mutually exclusive-ish with maximized. */
+  snapped: 'left' | 'right' | null
+  /** Pre-snap/maximize geometry, restored when un-snapped. */
+  prev: Geometry | null
 }

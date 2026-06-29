@@ -1,5 +1,5 @@
-/* The desktop surface: token-driven wallpaper filling the viewport, taskbar
-   pinned to the bottom. Icons + window layer arrive in Phase 2. */
+/* The desktop surface: token-driven wallpaper, icon layer, window layer, then
+   the taskbar pinned to the bottom. */
 
 .desktop {
   position: relative;
@@ -18,3 +18,52 @@
   position: relative;
   overflow: hidden;
 }
+
+/* desktop icons */
+.icons {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.deskicon {
+  width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 2px;
+  border: 1px dotted transparent;
+  background: none;
+  cursor: default;
+  color: #fff;
+  font-size: 11px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+.deskicon:hover { background: rgba(60, 110, 200, 0.25); border-color: rgba(255, 255, 255, 0.3); }
+.deskicon:focus-visible { outline: 1px dotted #fff; }
+.deskicon .label { text-align: center; line-height: 1.2; }
+
+/* right-click context menu */
+.ctx {
+  position: absolute;
+  min-width: 150px;
+  padding: 2px;
+  background: var(--menubg);
+  color: var(--menutext);
+  border: 1px solid var(--winborder);
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  font-size: 11px;
+  z-index: 5000;
+}
+.ctxItem {
+  padding: 4px 22px;
+  border-radius: 2px;
+  cursor: default;
+}
+.ctxItem:hover { background: var(--menuselect); color: var(--menuseltext); }
+.ctxItem.disabled { opacity: 0.4; }
+.ctxItem.disabled:hover { background: none; color: var(--menutext); }
+.ctxSep { height: 1px; margin: 3px 4px; background: rgba(128, 128, 128, 0.4); }

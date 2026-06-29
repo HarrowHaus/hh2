@@ -11,7 +11,12 @@ body.theme-dark {                 /* bug.msstyles — dark scene-kid skin (DEFAU
   --taskbar:linear-gradient(180deg,#2a2a30,#0e0e11 12%,#0e0e11 88%,#000);
   --startbtn:linear-gradient(180deg,#8c1414,#4a0808); --starttext:#fff;
   --menubg:#17171b; --menuside:#0d0d10; --menutext:#dcdce0;
+  --menuhead:linear-gradient(180deg,#2a2a31,#161619); --menuheadtext:#fff;
+  --menuselect:#9a1414; --menuseltext:#fff;
   --accent:#9a1414;
+  /* window-control buttons (min/max/close) + tray text */
+  --ctlface:linear-gradient(180deg,#43434c,#1c1c22); --ctlclose:linear-gradient(180deg,#bf352e,#5e0f0b);
+  --ctlglyph:#ededed; --ctlborder:#000; --traytext:#e6e6e6;
   /* placeholder wallpaper (real band art / horror still lands in Phase 1):
      a grim charcoal field with depth + a faint blood-red cast so the bare
      desktop reads as a desktop, not a black void. */
@@ -28,7 +33,12 @@ body.luna {                       /* Windows XP (Luna) — factory / family laye
   --taskbar:linear-gradient(180deg,#3168d5,#2257d8 8%,#1c4fd4 90%,#0f3bbb);
   --startbtn:linear-gradient(180deg,#73b56a,#4e9a45 50%,#3c873c); --starttext:#fff;
   --menubg:#fff; --menuside:#d3e5fa; --menutext:#111;
+  --menuhead:linear-gradient(180deg,#1868ce,#1164cf 33%,#2476dc 60%,#4791eb 100%); --menuheadtext:#fff;
+  --menuselect:#2f71cd; --menuseltext:#fff;
   --accent:#2f6fd6;
+  --ctlface:radial-gradient(circle at 90% 90%,#0054e9 0%,#2263d5 55%,#4479e4 70%,#a3bbec 90%,#fff 100%);
+  --ctlclose:radial-gradient(circle at 90% 90%,#cc4600 0%,#dc6527 55%,#cd7546 70%,#ffccb2 90%,#fff 100%);
+  --ctlglyph:#fff; --ctlborder:#fff; --traytext:#fff;
   --wall:linear-gradient(180deg,#3a73c4,#5b94d6 40%,#7aac4e 62%,#5a8f3a); /* Bliss-style */
   --radius:8px; --field:#fff;
 }
@@ -39,7 +49,11 @@ body.classic {                    /* Windows Classic — 9x grey + teal desktop 
   --titlegrad:#000080; --titleinact:#808080;
   --taskbar:#d4d0c8; --startbtn:#d4d0c8; --starttext:#000;
   --menubg:#d4d0c8; --menuside:#d4d0c8; --menutext:#000;
+  --menuhead:#000080; --menuheadtext:#fff;
+  --menuselect:#000080; --menuseltext:#fff;
   --accent:#000080;
+  --ctlface:#d4d0c8; --ctlclose:#d4d0c8;
+  --ctlglyph:#000; --ctlborder:#808080; --traytext:#000;
   --wall:#008080;
   --radius:0px; --field:#fff;
 }

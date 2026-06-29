@@ -1,0 +1,140 @@
+/* Display Properties → Appearance. Standard XP property-sheet layout, skinned
+   from tokens so it reads correctly in every visual style. */
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 6px 8px 8px;
+  font-size: 11px;
+  background: var(--winbody);
+  color: var(--wintext);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding-left: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.tab {
+  padding: 3px 9px 4px;
+  border: 1px solid var(--winborder);
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background: color-mix(in srgb, var(--winbody) 82%, #000 6%);
+  color: var(--wintext);
+  font-size: 11px;
+  opacity: 0.75;
+  cursor: default;
+}
+.tab.active {
+  opacity: 1;
+  background: var(--winbody);
+  margin-bottom: -1px;
+  padding-bottom: 5px;
+}
+
+.panel {
+  flex: 1;
+  border: 1px solid var(--winborder);
+  border-radius: 0 4px 4px 4px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--winbody);
+}
+
+/* Preview monitor */
+.preview {
+  flex: 1;
+  border: 2px inset rgba(0, 0, 0, 0.4);
+  background: var(--wall);
+  background-size: cover;
+  position: relative;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 150px;
+}
+
+.miniwin {
+  width: 78%;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--winborder);
+  padding: 2px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.miniwin.second { width: 64%; align-self: flex-end; opacity: 0.95; }
+
+.minibar {
+  height: 17px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--title);
+  background: var(--titlegrad);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+.miniwin.second .minibar { background: var(--titleinact); }
+
+.minibody {
+  background: var(--winbody);
+  color: var(--wintext);
+  padding: 7px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.minibtn {
+  font-size: 10px;
+  padding: 2px 8px;
+  color: var(--wintext);
+  background: color-mix(in srgb, var(--winbody) 80%, #888 20%);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.field label {
+  font-size: 11px;
+}
+.select {
+  font-size: 11px;
+  padding: 3px 4px;
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 10px;
+}
+.button {
+  min-width: 72px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--wintext);
+  background: color-mix(in srgb, var(--winbody) 78%, #888 22%);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.button:hover { filter: brightness(1.08); }
+.button:active { filter: brightness(0.94); }

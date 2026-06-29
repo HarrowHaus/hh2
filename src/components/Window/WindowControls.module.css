@@ -1,0 +1,88 @@
+/* Ported from winXP HeaderButtons: same 22px rounded buttons + glyph geometry,
+   but colors come from theme tokens (--ctlface/--ctlclose/--ctlglyph) so the
+   dark skin recolors them and Luna keeps the authentic blue/orange. */
+
+.controls {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  margin-right: 1px;
+}
+
+.btn {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin-left: 1px;
+  padding: 0;
+  border: 1px solid var(--ctlborder);
+  border-radius: 3px;
+  background: var(--ctlface);
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(120%); }
+.btn:active { filter: brightness(90%); }
+
+.close { background: var(--ctlclose); }
+
+/* minimize: short bar near the bottom */
+.min::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 13px;
+  height: 3px;
+  width: 8px;
+  background: var(--ctlglyph);
+}
+
+/* maximize: framed square */
+.max::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  height: 12px;
+  width: 12px;
+  box-shadow: inset 0 3px var(--ctlglyph), inset 0 0 0 1px var(--ctlglyph);
+}
+
+/* restore (when maximized): two offset squares */
+.restore::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  height: 8px;
+  width: 8px;
+  box-shadow: inset 0 2px var(--ctlglyph), inset 0 0 0 1px var(--ctlglyph);
+}
+.restore::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  height: 8px;
+  width: 8px;
+  box-shadow: inset 0 2px var(--ctlglyph), inset 0 0 0 1px var(--ctlglyph);
+  background: var(--ctlface);
+}
+
+/* close: an X */
+.close::before,
+.close::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  height: 16px;
+  width: 2px;
+  background: var(--ctlglyph);
+}
+.close::before { transform: rotate(45deg); }
+.close::after { transform: rotate(-45deg); }
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

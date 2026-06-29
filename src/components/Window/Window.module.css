@@ -1,0 +1,62 @@
+/* Ported from winXP Windows/index.js: 3px colored frame, ~26px gradient title
+   strip with icon + title + controls, body below. Colors are theme tokens. */
+
+.window {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  background: var(--winborder);
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  flex: 0 0 26px;
+  height: 26px;
+  padding: 0 1px 0 4px;
+  background: var(--titlegrad);
+  color: var(--title);
+  border-top-left-radius: calc(var(--radius) - 1px);
+  border-top-right-radius: calc(var(--radius) - 1px);
+  touch-action: none;
+}
+
+.window.inactive .titlebar {
+  background: var(--titleinact);
+}
+.window.inactive {
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.icon {
+  flex: 0 0 auto;
+  margin-right: 4px;
+}
+
+.title {
+  flex: 1;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.body {
+  flex: 1;
+  position: relative;
+  background: var(--winbody);
+  color: var(--wintext);
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-top: none;
+}

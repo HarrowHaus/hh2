@@ -1,6 +1,7 @@
 import { useOS } from './os/store'
 import { useVisualStyle } from './os/useVisualStyle'
 import { Boot } from './components/Boot/Boot'
+import { Logon } from './components/Logon/Logon'
 import { Desktop } from './components/Desktop/Desktop'
 
 export function App() {
@@ -8,6 +9,9 @@ export function App() {
   useVisualStyle()
 
   const booted = useOS((s) => s.booted)
+  const loggedIn = useOS((s) => s.loggedIn)
 
-  return booted ? <Desktop /> : <Boot />
+  if (!booted) return <Boot />
+  if (!loggedIn) return <Logon />
+  return <Desktop />
 }

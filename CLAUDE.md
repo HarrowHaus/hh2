@@ -50,13 +50,14 @@ See `docs/05-phases.md` for the 4 phases as tickets with acceptance checklists.
 - **Phase-0 decision (log in `DECISIONS.md`):** deepen winXP toward daedalOS parity, vs. fork daedalOS and re-skin to XP. Default: the former, for fidelity. Verify repo health + license before committing.
 - Stack: React + TypeScript, Zustand for OS/window state, **CSS modules + custom-property theme tokens** (`tokens/themes.css`) for the visual-style engine, IndexedDB/OPFS for FS persistence, deploy to Cloudflare Pages / Vercel.
 
-## The theming engine = msstyles, replicated
-Implement Display Properties → Appearance as the real style switcher. Ship 3 visual styles from `tokens/themes.css`: **bug.msstyles (dark, default)**, **Luna Blue** (factory/family layer), **Classic**. Switching is a working in-OS feature, persisted. This is also why "it's just one skin" holds — more styles can be added later.
+## The theming engine = msstyles, replicated (build it pack-driven)
+Implement Display Properties → Appearance as the real style switcher. Ship 3 visual styles from `tokens/themes.css`: **bug.msstyles (dark, default)**, **Luna Blue** (factory/family layer), **Classic**. Switching is a working in-OS feature, persisted. This is also why "it's just one skin" holds — more styles can be added later. **Build the engine pack/manifest-driven + `border-image`-ready** (`docs/02` → Theming engine) so the deferred real-`.msstyles` loader (`docs/06`) drops in additively. Do not hard-code per-theme.
 
 ## Deferred (do NOT build now; stubs/hooks only)
 - `trivia.exe` internals (no LLM; API questions + scripted bots + hand-written host line-bank) — its own spec later.
 - The `\weird\` locked-folder payload (conspiracy/Easter-egg layer).
 - System-sound pack.
+- **Real-`.msstyles` theme loader/installer** (`docs/06`, Phase 5) — but build the theming engine pack/manifest-driven NOW (`docs/02`) so it's additive, not a rewrite.
 - Real portfolio content — `WORK/`, résumé, about are **placeholder structure** the owner fills later.
 
 ## Read next

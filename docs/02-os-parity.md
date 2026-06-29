@@ -16,8 +16,10 @@ Parity target: **daedalOS**. Every item below must be real, not faked. Run the c
 11. **Responsive** — graceful fallback on small screens (windows → near-fullscreen; taskbar adapts); the XP feel survives.
 12. **A11y floor** — semantic landmarks, focus management, reduced-motion, adequate contrast in each visual style.
 
-## Theming engine
-Display Properties → Appearance is the real visual-style switcher. 3 styles from `tokens/themes.css`: `bug.msstyles` (dark, default), Luna Blue, Classic. Switching is live + persisted. Architect chrome so all colors/bitmaps derive from theme tokens (so future styles drop in cleanly).
+## Theming engine (build it pack/manifest-driven)
+Display Properties → Appearance is the real visual-style switcher. v0 ships 3 styles from `tokens/themes.css`: `bug.msstyles` (dark, default), Luna Blue, Classic. Switching is live + persisted.
+
+**Architecture requirement:** the engine must be **pack/manifest-driven**, not hard-coded per theme. A "theme pack" = a manifest mapping chrome parts → image slices + sizing margins + colors + fonts (schema in `docs/06`). Chrome renders from the manifest using CSS custom properties + **`border-image` 9-slice** (so part bitmaps drop in cleanly). Our 3 styles are just the first packs. This is a cheap choice now that makes the deferred **real-`.msstyles` loader** (`docs/06`, Phase 5) an additive module instead of a rewrite — do not close that door by hard-coding.
 
 ## Base repo & stack
 - Fork **`ShizukuIchi/winXP`** (authentic XP) ; reference **`DustinBrett/daedalOS`** for FS/WM depth. Phase-0 decision logged in `DECISIONS.md`.

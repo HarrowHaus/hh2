@@ -16,6 +16,17 @@ Parity-content floor (from the OS-portfolio set): a visitor can learn **who/what
 - **Recycle Bin** — Easter-egg payload (leak-and-hide).
 - **"Internet"/Browser** — curated weird-web webring + a guestbook (bots keep it alive).
 
+### Period software (diorama props — the 2004–06 texture)
+The era's lived reality: torrenting fansubbed anime and DivX movies at brutal speeds, then fighting codec hell to make them play (pre-VLC-ubiquity). Build these as **diegetic props, not working software.**
+- **BitTorrent client** (period-appropriate: µTorrent-/Azureus-style window) — fake torrents mid-download: invented anime/movie release names with era-authentic fansub-group tags (e.g. `[FakeSubGroup]`), columns for size / seeds / peers / % / ratio, the classic crawling progress and the "ratio: 0.04" guilt. **Non-functional: no real trackers, no real downloads, no real titles — fictional data only.** A museum diorama of the experience, not a client.
+- **`CODECS/` folder — hundreds of real + fake codec packs.** The authentic horror: a junk-drawer you hoarded trying to play one `.avi`.
+  - *Real-era names (period flavor):* CCCP (Combined Community Codec Pack), K-Lite, ffdshow, DivX, XviD, VobSub, Haali Media Splitter, AC3Filter, Real Alternative, QuickTime Alternative, Nimo, ACE Mega CoDecS, Storm, Cole2k, Media Player Classic.
+  - *Fake/sketchy ones (the joke + the depth-riot):* the malware-vector clutter the era was infamous for — `DivX_Pro_FREE_crack.exe`, `xvid_FULL_no_virus.exe`, `KAZAA_codec_pack.exe`, and friends. **Props only — file names + fake installer dialogs / readmes. Generate NO real executables, NO real or simulated malware, NO working "crack" code.** Opening a sketchy one pops an in-character fake-installer gag (next-next-finish, "12 toolbars installed").
+  - Depth-riot: deeper into `CODECS/` / `do_not_open/`, the names get sketchier — found, never announced.
+- Optional companion clutter: a `DOWNLOADS/` of half-finished `.avi.!ut` part-files; an `.nfo` viewer with ASCII-art scene art (invented groups).
+
+**Full niche-culture artifact set + planting-by-era → see `docs/07-period-strata.md`** (private trackers, P2P, AIM/mIRC, emulation, esoteric/textfiles veins; AIM is a mainstay, anime/JRPG are background only). Everything there obeys the same non-functional/fictional/no-malware guardrails.
+
 ## The music pillar (first-class)
 A foobar2000 (heavily customized power-user dark layout — Columns UI-style: playlist grid + album-art panel + spectrum/peak meters) playing the real catalog in `data/discography.json`:
 - **Moldmouth** (band) · **Dick Crush Records** · **Couch Nap Records** · **Shaking Dog Tapes** (labels).

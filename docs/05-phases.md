@@ -33,4 +33,13 @@ Build per `docs/06`. **Tickets:** client-side `.msstyles` parse/extract worker �
 
 ---
 
-**Deferred to their own specs (do not build until called):** `trivia.exe` internals, `\weird\` payload, real portfolio content, and Phase 5 above.
+## FUTURE PHASES (deferred placeholders — names + intent only, NO specs, do not build)
+- **Phase 6 — Realtime social spine:** one Cloudflare Durable Objects + WebSocket presence/chat service as a shared backbone, with working **AIM** and **mIRC** (+ guestbook / who's-online) as its first consumers. Needs the OS core standing first. Moderation + ephemeral messages + empty-room handling are first-class requirements. (Dossier `docs/08` to be written when called.)
+- **Phase 7 — `trivia.exe` internals:** the always-on no-LLM trivia game; rides the SAME Phase-6 spine, so don't architect anything that boxes out a shared realtime layer.
+- **Phase 8 — `\weird\` payload + sound pack:** the `\weird\` locked-folder payload, and the XP system-sound pack.
+
+**Guiding note:** These are future bolt-ons. Keep the core architecture open to a shared realtime layer (Phase 6) — don't make choices that would force a rewrite to add it later.
+
+---
+
+**Deferred to their own specs (do not build until called):** real portfolio content, plus **Phases 5–8** above (`docs/06` real-theme engine; the Phase-6 realtime spine + AIM/mIRC; `trivia.exe` internals; the `\weird\` payload + sound pack).

@@ -1,0 +1,118 @@
+/* FL Studio / FruityLoops diorama. Fixed dark producer-grey with FL orange
+   accents (its own period skin). NON-FUNCTIONAL prop — inert steps + transport. */
+.fl {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #3a3a3d;
+  color: #dcdcdc;
+  font-size: 11px;
+}
+.menubar {
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px;
+  background: linear-gradient(180deg, #525257, #434347);
+  border-bottom: 1px solid #232325;
+}
+.menu { padding: 1px 7px; border-radius: 2px; cursor: default; }
+.menu:hover { background: #c8651a; color: #fff; }
+
+.transport {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: linear-gradient(180deg, #2c2c2f, #262628);
+  border-bottom: 1px solid #1c1c1e;
+}
+.tdisplay { display: flex; align-items: baseline; gap: 8px; }
+.bpm {
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffae4d;
+  text-shadow: 0 0 6px rgba(255, 150, 40, 0.5);
+}
+.tlabel { font-size: 9px; opacity: 0.6; }
+.patName { font-size: 10px; opacity: 0.7; margin-left: 6px; }
+.tbtns { display: flex; gap: 5px; }
+.tbtn {
+  width: 22px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  background: #4a4a4e;
+  border: 1px solid #1c1c1e;
+  border-radius: 3px;
+  cursor: default;
+}
+.play { color: #6ad06a; }
+.rec { color: #e25b5b; }
+.patmode { background: #c8651a; color: #fff; width: auto; padding: 0 7px; font-size: 9px; font-weight: 700; }
+.tbtn.patmode + .tbtn { width: auto; padding: 0 7px; font-size: 9px; }
+
+.rackHead {
+  display: flex;
+  align-items: center;
+  padding: 3px 8px 3px 10px;
+  background: #2f2f32;
+  border-bottom: 1px solid #1c1c1e;
+}
+.rackTitle { font-size: 10px; font-weight: 700; opacity: 0.8; width: 148px; flex: 0 0 148px; }
+.beatMarks { display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; flex: 1; }
+.mark { height: 4px; background: #4a4a4e; border-radius: 1px; }
+.markBar { background: #ffae4d; }
+
+.rack { flex: 1; overflow: auto; padding: 4px 8px 8px 10px; }
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 0;
+  border-bottom: 1px solid #313134;
+}
+.led {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffd9a0, #c8651a);
+  box-shadow: 0 0 4px rgba(255, 150, 40, 0.6);
+}
+.chName {
+  width: 96px;
+  flex: 0 0 96px;
+  font-size: 10.5px;
+  background: #2a2a2d;
+  border: 1px solid #1c1c1e;
+  border-radius: 3px;
+  padding: 3px 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.steps { display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; flex: 1; }
+.step {
+  height: 17px;
+  background: #d9d4cb;
+  border: 1px solid #1c1c1e;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stepAlt { background: #b9b4ab; }
+.stepOn {
+  background: linear-gradient(180deg, #ffc46a, #ff8c1a);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 0 5px rgba(255, 150, 40, 0.55);
+}
+
+.statusbar {
+  display: flex;
+  gap: 14px;
+  padding: 2px 10px;
+  font-size: 10px;
+  background: linear-gradient(180deg, #2c2c2f, #262628);
+  border-top: 1px solid #1c1c1e;
+}
+.hint { opacity: 0.65; margin-left: auto; }

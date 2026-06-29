@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v4: CODECS\ codec-pack props + do_not_open\ + fake-installer gag.
-      // Bumping discards the old dev seed (pre-release; no real user data yet).
-      version: 4,
+      // v5: + creative-software dioramas (Photoshop CS2, FL Studio) and their
+      // .psd/.flp documents. Bumping discards the old dev seed (pre-release).
+      version: 5,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

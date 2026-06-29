@@ -1,0 +1,133 @@
+/* Photoshop CS2 diorama. Fixed dark CS2 grey (this app's chrome is its own
+   period skin, not the desktop visual style) — but text/accent borrow tokens so
+   it never clashes. NON-FUNCTIONAL prop: nothing here edits anything. */
+.ps {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #4a4a4a;
+  color: #e8e8e8;
+  font-size: 11px;
+}
+.menubar {
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px;
+  background: linear-gradient(180deg, #6a6a6a, #535353);
+  border-bottom: 1px solid #2c2c2c;
+}
+.menu { padding: 1px 7px; border-radius: 2px; cursor: default; }
+.menu:hover { background: #3a6ea5; }
+.optionsbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: linear-gradient(180deg, #5e5e5e, #4d4d4d);
+  border-bottom: 1px solid #2c2c2c;
+}
+.optLabel { opacity: 0.75; }
+.optVal { background: #3a3a3a; border: 1px solid #2a2a2a; padding: 1px 6px; border-radius: 2px; }
+.swatchBox { color: #111; }
+
+.body { flex: 1; display: flex; min-height: 0; }
+
+.toolbox {
+  width: 44px;
+  flex: 0 0 44px;
+  background: linear-gradient(180deg, #565656, #494949);
+  border-right: 1px solid #2c2c2c;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 4px 0;
+  gap: 0;
+}
+.tool {
+  width: 20px;
+  height: 20px;
+  margin: 1px auto;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #1a1a1a;
+  background: #d6d6d6;
+  border: 1px solid #888;
+  border-radius: 2px;
+  cursor: default;
+}
+.toolActive { background: #fff; box-shadow: inset 0 0 0 1px #3a6ea5; }
+.swatches { position: relative; width: 36px; height: 30px; margin: 6px auto 0; }
+.fg, .bg { position: absolute; width: 18px; height: 18px; border: 1px solid #222; }
+.fg { left: 0; top: 0; background: #111; z-index: 1; }
+.bg { right: 0; bottom: 0; background: #f4f1e9; }
+
+.canvasArea { flex: 1; display: flex; flex-direction: column; min-width: 0; background: #3c3c3c; }
+.docTab {
+  align-self: flex-start;
+  margin: 4px 0 0 6px;
+  padding: 2px 10px;
+  font-size: 10px;
+  background: linear-gradient(180deg, #5e5e5e, #4d4d4d);
+  border: 1px solid #2c2c2c;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+.canvasScroll { flex: 1; overflow: auto; display: grid; place-items: center; padding: 16px; }
+.canvas {
+  background: #fff;
+  box-shadow: 0 0 0 1px #000, 4px 4px 14px rgba(0, 0, 0, 0.5);
+}
+.art { display: block; width: 232px; height: 294px; }
+
+.panels {
+  width: 168px;
+  flex: 0 0 168px;
+  background: linear-gradient(180deg, #565656, #4a4a4a);
+  border-left: 1px solid #2c2c2c;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 5px;
+}
+.panel { background: #4f4f4f; border: 1px solid #2c2c2c; border-radius: 3px; overflow: hidden; }
+.panelTab {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  background: linear-gradient(180deg, #6a6a6a, #555);
+  border-bottom: 1px solid #2c2c2c;
+}
+.navThumb { height: 92px; display: grid; place-items: center; background: #3c3c3c; padding: 5px; }
+.navThumb svg { width: auto; height: 100%; box-shadow: 0 0 0 1px #000; }
+
+.layerOpts {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 6px;
+  font-size: 9.5px;
+  opacity: 0.8;
+  border-bottom: 1px solid #2c2c2c;
+}
+.layers { max-height: 150px; overflow: auto; }
+.layer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 5px;
+  border-bottom: 1px solid #444;
+}
+.layerActive { background: #3a6ea5; }
+.eye { font-size: 9px; width: 12px; }
+.layerThumb { width: 20px; height: 16px; background: #ddd; border: 1px solid #222; flex: 0 0 20px; }
+.layerName { font-size: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.statusbar {
+  display: flex;
+  gap: 14px;
+  padding: 2px 8px;
+  font-size: 10px;
+  background: linear-gradient(180deg, #5e5e5e, #4d4d4d);
+  border-top: 1px solid #2c2c2c;
+}
+.statHint { opacity: 0.7; margin-left: auto; }

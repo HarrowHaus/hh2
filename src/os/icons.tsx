@@ -113,6 +113,28 @@ export function SetupIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Adobe Photoshop CS2-era icon: a dark-blue feathered square with "Ps".
+export function PhotoshopIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="3" fill="#001e3c" stroke="#0a3a66" />
+      <rect x="5" y="5" width="22" height="22" rx="2" fill="none" stroke="#2d6ca3" strokeWidth="0.8" />
+      <text x="16" y="22" textAnchor="middle" fontFamily="Georgia, serif" fontSize="15" fontWeight="700" fill="#5fb8f3">Ps</text>
+    </svg>
+  )
+}
+
+// FL Studio / FruityLoops icon: an orange rounded square with a stylized slice.
+export function FLStudioIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="6" fill="#f57f17" stroke="#b8560a" />
+      <path d="M11 9 h10 v3 h-7 v3 h6 v3 h-6 v6 h-3 Z" fill="#fff" />
+      <circle cx="22" cy="21" r="2.4" fill="#fff" />
+    </svg>
+  )
+}
+
 export function VolumeIcon({ size = 16, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">

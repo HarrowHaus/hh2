@@ -356,6 +356,17 @@ const CODEC_FILES: FSNode[] = [
   launcher(`${DNO}/KAZAA_codec_pack.exe`, 'KAZAA_codec_pack.exe', A2, 'installer'),
 ]
 
+// Creative-software dioramas (manifest item 5). The .exe launches the diorama
+// shell; the document files launch it pre-loaded with their artwork/project.
+// Inert props — neither app edits anything.
+const CREATIVE: FSNode[] = [
+  launcher(`${PF}/Adobe Photoshop CS2/Photoshop.exe`, 'Photoshop.exe', A2, 'photoshop'),
+  launcher(`${PF}/FL Studio/FL Studio.exe`, 'FL Studio.exe', A2, 'flstudio'),
+  launcher(`${PICS}/moldmouth_demo_cover.psd`, 'moldmouth_demo_cover.psd', A, 'photoshop'),
+  launcher(`${PICS}/dickcrush_show_flyer.psd`, 'dickcrush_show_flyer.psd', A2, 'photoshop'),
+  launcher(`${MUSIC}/untitled_3.flp`, 'untitled_3.flp', A2, 'flstudio'),
+]
+
 // Program launchers (.exe shortcuts) — opening one opens its app.
 const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/foobar2000`, 'foobar2000', A, 'foobar'),
@@ -369,6 +380,7 @@ export function seedFS(): Record<string, FSNode> {
     ...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)),
     ...FILES,
     ...CODEC_FILES,
+    ...CREATIVE,
     ...LAUNCHERS,
   ]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))

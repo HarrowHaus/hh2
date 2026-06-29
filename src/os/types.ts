@@ -1,7 +1,15 @@
 // OS-level types for the window manager. Ported from the winXP reducer model
 // (apps + zIndex + minimized/maximized + focus) onto our typed store.
 
-export type AppId = 'display' | 'explorer' | 'notepad' | 'foobar' | 'bt' | 'installer'
+export type AppId =
+  | 'display'
+  | 'explorer'
+  | 'notepad'
+  | 'foobar'
+  | 'bt'
+  | 'installer'
+  | 'photoshop'
+  | 'flstudio'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

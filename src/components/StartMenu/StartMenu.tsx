@@ -10,6 +10,9 @@ import {
 } from '../../os/icons'
 import styles from './StartMenu.module.css'
 
+const OWNER = '/Local Disk (C:)/Documents and Settings/owner'
+const MYDOCS = `${OWNER}/My Documents`
+
 // Two-panel XP Start menu. Apps we ship (Display Properties, My Computer) open;
 // the rest are present for authenticity and simply close the menu until their
 // phase lands. No meta-narrative copy (Rule 2).
@@ -43,7 +46,11 @@ export function StartMenu() {
             </span>
           </button>
           <div className={styles.sep} />
-          <button type="button" className={styles.item} onClick={() => openApp('computer')}>
+          <button
+            type="button"
+            className={styles.item}
+            onClick={() => openApp('explorer', { path: '/', title: 'My Computer' })}
+          >
             <ComputerIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
               <span className={styles.text}>My Computer</span>
@@ -78,15 +85,27 @@ export function StartMenu() {
         </div>
 
         <div className={styles.right}>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
+          <button
+            type="button"
+            className={styles.item}
+            onClick={() => openApp('explorer', { path: MYDOCS, title: 'My Documents' })}
+          >
             <FolderIcon size={22} className={styles.itemIcon} />
             <span className={styles.texts}><span className={styles.text}>My Documents</span></span>
           </button>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
+          <button
+            type="button"
+            className={styles.item}
+            onClick={() => openApp('explorer', { path: `${MYDOCS}/My Pictures`, title: 'My Pictures' })}
+          >
             <FolderIcon size={22} className={styles.itemIcon} />
             <span className={styles.texts}><span className={styles.text}>My Pictures</span></span>
           </button>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
+          <button
+            type="button"
+            className={styles.item}
+            onClick={() => openApp('explorer', { path: `${MYDOCS}/My Music`, title: 'My Music' })}
+          >
             <MusicIcon size={22} className={styles.itemIcon} />
             <span className={styles.texts}><span className={styles.text}>My Music</span></span>
           </button>

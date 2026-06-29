@@ -12,8 +12,8 @@ interface Ctx {
   y: number
 }
 
-const DESKTOP_ICONS: { appId: AppId; label: string; Icon: typeof ComputerIcon }[] = [
-  { appId: 'computer', label: 'My Computer', Icon: ComputerIcon },
+const DESKTOP_ICONS: { appId: AppId; args?: Record<string, unknown>; label: string; Icon: typeof ComputerIcon }[] = [
+  { appId: 'explorer', args: { path: '/', title: 'My Computer' }, label: 'My Computer', Icon: ComputerIcon },
   { appId: 'display', label: 'Control Panel', Icon: MonitorIcon },
 ]
 
@@ -55,12 +55,12 @@ export function Desktop() {
         onContextMenu={onContextMenu}
       >
         <div className={styles.icons}>
-          {DESKTOP_ICONS.map(({ appId, label, Icon }) => (
+          {DESKTOP_ICONS.map(({ appId, args, label, Icon }) => (
             <button
-              key={appId}
+              key={label}
               type="button"
               className={styles.deskicon}
-              onDoubleClick={() => openApp(appId)}
+              onDoubleClick={() => openApp(appId, args)}
             >
               <Icon size={32} />
               <span className={styles.label}>{label}</span>

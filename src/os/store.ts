@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { DEFAULT_VISUAL_STYLE, type VisualStyle } from './themes'
-import type { AppId, Geometry, SnapZone, WindowInstance } from './types'
+import type { AppArgs, AppId, Geometry, SnapZone, WindowInstance } from './types'
 import { APP_META } from './appMeta'
 
 const TASKBAR_H = 30
@@ -39,12 +39,13 @@ interface OSState {
   snapPreview: SnapZone
   setSnapPreview: (zone: SnapZone) => void
 
-  openApp: (appId: AppId) => void
+  openApp: (appId: AppId, args?: AppArgs) => void
   closeWindow: (id: number) => void
   focusWindow: (id: number) => void
   minimizeWindow: (id: number) => void
   toggleMaximize: (id: number) => void
   moveWindow: (id: number, x: number, y: number) => void
+  setWindowTitle: (id: number, title: string) => void
   resizeWindow: (id: number, geo: Geometry) => void
   /** Half/maximize tile a window, remembering pre-snap geometry. */
   snapWindow: (id: number, zone: SnapZone) => void
@@ -92,9 +93,10 @@ export const useOS = create<OSState>()(
       snapPreview: null,
       setSnapPreview: (zone) => set((s) => (s.snapPreview === zone ? s : { snapPreview: zone })),
 
-      openApp: (appId) =>
+      openApp: (appId, args) =>
         set((s) => {
           const meta = APP_META[appId]
+          const title = (args?.title as string) || meta.title
           if (meta.single) {
             const existing = s.windows.find((w) => w.appId === appId)
             if (existing) {
@@ -102,7 +104,7 @@ export const useOS = create<OSState>()(
                 startMenuOpen: false,
                 nextZ: s.nextZ + 1,
                 windows: s.windows.map((w) =>
-                  w.id === existing.id ? { ...w, minimized: false, z: s.nextZ } : w,
+                  w.id === existing.id ? { ...w, minimized: false, z: s.nextZ, args, title } : w,
                 ),
               }
             }
@@ -111,7 +113,7 @@ export const useOS = create<OSState>()(
           const win: WindowInstance = {
             id: s.nextId,
             appId,
-            title: meta.title,
+            title,
             x: 64 + (count % 6) * 26,
             y: 44 + (count % 6) * 26,
             width: meta.width,
@@ -121,6 +123,7 @@ export const useOS = create<OSState>()(
             maximized: false,
             snapped: null,
             prev: null,
+            args,
           }
           return {
             startMenuOpen: false,
@@ -162,6 +165,11 @@ export const useOS = create<OSState>()(
       moveWindow: (id, x, y) =>
         set((s) => ({
           windows: s.windows.map((w) => (w.id === id ? { ...w, x, y } : w)),
+        })),
+
+      setWindowTitle: (id, title) =>
+        set((s) => ({
+          windows: s.windows.map((w) => (w.id === id ? { ...w, title } : w)),
         })),
 
       resizeWindow: (id, geo) =>

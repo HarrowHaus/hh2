@@ -144,7 +144,7 @@ export function Window({ win }: { win: WindowInstance }) {
         />
       </div>
       <div className={styles.body}>
-        <Component winId={win.id} />
+        <Component winId={win.id} args={win.args} />
       </div>
 
       {showHandles &&

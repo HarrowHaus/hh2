@@ -13,5 +13,5 @@ export interface AppMeta {
 
 export const APP_META: Record<AppId, AppMeta> = {
   display: { title: 'Display Properties', width: 414, height: 466, single: true, resizable: false },
-  computer: { title: 'My Computer', width: 540, height: 400, single: true, resizable: true },
+  explorer: { title: 'Explorer', width: 580, height: 430, single: false, resizable: true },
 }

@@ -4,7 +4,11 @@
    Phase 1; do not build the final chrome here. */
 
 .taskbar {
-  flex: 0 0 30px;
+  /* 30px visible bar, plus the iOS home-indicator inset so the bar's content
+     never sits under the safe area while its background still fills it. */
+  flex: 0 0 auto;
+  height: calc(30px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   align-items: stretch;
   background: var(--taskbar);

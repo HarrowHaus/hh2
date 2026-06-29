@@ -9,9 +9,15 @@
 }
 
 html,
-body,
-#root {
+body {
   height: 100%;
+}
+
+/* Use the *dynamic* viewport so mobile browser chrome (address/toolbars) can't
+   hide the taskbar behind it; 100vh is the desktop fallback. */
+#root {
+  height: 100vh;
+  height: 100dvh;
 }
 
 body {

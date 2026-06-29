@@ -661,6 +661,8 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${PF}/GAMES/FreeCell.exe`, 'FreeCell.exe', A, 'freecell'),
   launcher(`${PF}/GAMES/Spider Solitaire.exe`, 'Spider Solitaire.exe', A, 'spider'),
   launcher(`${PF}/GAMES/Chess.exe`, 'Chess.exe', B, 'chess'),
+  // TIC-80 fantasy console running an original homemade cart (Tier 3 — docs/08)
+  launcher(`${PF}/GAMES/moth.tic`, 'moth.tic', C, 'tic80'),
   // Emulators (Tier 3 — docs/08): v86 boots a real FreeDOS floppy in the browser
   launcher(`${PF}/Emulators/v86.exe`, 'v86.exe', C, 'v86'),
   // Accessories (Tier 1 — docs/08)

@@ -368,6 +368,21 @@ export function CodeIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function Tic80Icon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="4" width="24" height="24" rx="4" fill="#1a1c2c" stroke="#3b3f54" />
+      <rect x="7" y="7" width="18" height="13" rx="1" fill="#000" />
+      <circle cx="12" cy="13" r="2.4" fill="#ef7d57" />
+      <circle cx="19" cy="15" r="1.6" fill="#ffcd75" />
+      <path d="M15 12 l2 1.5 l-2 1.5 Z" fill="#f4f4f4" />
+      <circle cx="9" cy="24.5" r="1.6" fill="#566c86" />
+      <circle cx="13" cy="24.5" r="1.6" fill="#566c86" />
+      <rect x="20" y="23" width="4" height="3" rx="1" fill="#ef7d57" />
+    </svg>
+  )
+}
+
 export function ChessIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

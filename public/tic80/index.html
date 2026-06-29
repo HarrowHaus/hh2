@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>moth</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #1a1c2c; overflow: hidden; }
+    #wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    #canvas {
+      width: 100%; height: 100%; object-fit: contain;
+      image-rendering: pixelated; image-rendering: crisp-edges;
+      display: block; background: #1a1c2c;
+    }
+    #gate {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #f4f4f4; font: bold 18px monospace; cursor: pointer; background: #1a1c2c;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Self-contained TIC-80 (MIT) host: vendored wasm runtime runs an original
+       cart (moth.tic, authored in scripts/make-tic80-cart.mjs). Loaded in its own
+       iframe context so closing the window tears down the loop + audio cleanly.
+       Same-origin assets → runs fully offline. -->
+  <div id="wrap">
+    <canvas id="canvas" width="240" height="136" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
+  </div>
+  <div id="gate">- CLICK TO PLAY -</div>
+  <script>
+    var canvas = document.getElementById('canvas')
+    var gate = document.getElementById('gate')
+    function start() {
+      gate.removeEventListener('click', start)
+      gate.remove()
+      canvas.focus()
+      fetch('moth.tic')
+        .then(function (r) { return r.arrayBuffer() })
+        .then(function (buf) {
+          var data = new Uint8Array(buf)
+          window.Module = {
+            canvas: canvas,
+            arguments: ['moth.tic'],
+            preRun: [function () { try { FS.writeFile('moth.tic', data) } catch (e) {} }],
+          }
+          var s = document.createElement('script')
+          s.src = 'tic80.js'
+          document.body.appendChild(s)
+        })
+    }
+    gate.addEventListener('click', start)
+    // Keep focus on the canvas so keyboard input reaches the game.
+    window.addEventListener('focus', function () { canvas.focus() })
+  </script>
+</body>
+</html>

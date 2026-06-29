@@ -49,4 +49,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   chess: { title: 'Chess', width: 560, height: 600, single: true, resizable: true },
   code: { title: 'Code', width: 740, height: 520, single: false, resizable: true },
   v86: { title: 'Virtual Machine', width: 700, height: 480, single: true, resizable: true },
+  tic80: { title: 'moth', width: 528, height: 348, single: true, resizable: true },
 }

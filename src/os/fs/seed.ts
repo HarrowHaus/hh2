@@ -430,6 +430,9 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/trivia.exe`, 'trivia.exe', C, 'trivia'),
   launcher(`${PF}/GAMES/Minesweeper.exe`, 'Minesweeper.exe', A, 'minesweeper'),
   launcher(`${DESKTOP_PATH}/Minesweeper`, 'Minesweeper', A, 'minesweeper'),
+  launcher(`${PF}/AIM/aim.exe`, 'aim.exe', A, 'aim'),
+  launcher(`${DESKTOP_PATH}/AOL Instant Messenger`, 'AOL Instant Messenger', A, 'aim'),
+  launcher(`${PF}/mIRC/mirc.exe`, 'mirc.exe', A, 'mirc'),
 ]
 
 export function seedFS(): Record<string, FSNode> {

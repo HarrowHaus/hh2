@@ -26,4 +26,7 @@ export const APP_META: Record<AppId, AppMeta> = {
   minesweeper: { title: 'Minesweeper', width: 184, height: 268, single: true, resizable: false },
   msgbox: { title: 'Message', width: 360, height: 168, single: false, resizable: false },
   recyclebin: { title: 'Recycle Bin', width: 540, height: 400, single: true, resizable: true },
+  aim: { title: 'AOL Instant Messenger', width: 236, height: 446, single: true, resizable: true },
+  mirc: { title: 'mIRC', width: 660, height: 420, single: true, resizable: true },
+  ie: { title: 'Internet Explorer', width: 740, height: 540, single: false, resizable: true },
 }

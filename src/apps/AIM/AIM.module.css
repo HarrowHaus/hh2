@@ -1,0 +1,81 @@
+/* AIM buddy-list prop. Period AIM beige/blue, its own skin. Static — no realtime
+   until Phase 6. */
+.aim {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #e8e8d8;
+  color: #1a1a1a;
+  font-size: 11px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  background: linear-gradient(180deg, #fbe9a0, #f4c84a);
+  border-bottom: 1px solid #b9952a;
+}
+.runner {
+  width: 26px;
+  height: 30px;
+  flex: 0 0 26px;
+  background: #1a1a1a;
+  clip-path: polygon(40% 0, 60% 0, 70% 18%, 92% 30%, 84% 44%, 64% 36%, 70% 60%, 88% 92%, 74% 100%, 56% 66%, 40% 100%, 26% 92%, 44% 56%, 30% 60%, 10% 70%, 6% 54%, 30% 44%, 30% 18%);
+}
+.me { min-width: 0; }
+.sn { font-weight: 700; font-size: 13px; }
+.away { font-size: 9.5px; color: #6a5a1a; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.tabs { display: flex; gap: 2px; padding: 3px 6px 0; background: #d8d8c4; }
+.tab {
+  font-size: 10px;
+  padding: 2px 9px;
+  background: #c8c8b4;
+  border: 1px solid #9a9a86;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  opacity: 0.8;
+}
+.tabOn { background: #fff; opacity: 1; }
+
+.list { flex: 1; overflow: auto; background: #fff; border: 1px solid #9a9a86; margin: 0 6px; padding: 4px 0; }
+.group {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: none;
+  border: none;
+  color: #1a3a6a;
+  cursor: pointer;
+}
+.tri { font-size: 8px; margin-right: 5px; }
+.buddy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 8px 1px 22px;
+}
+.offline { color: #9a9a9a; font-style: italic; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #c0c0c0; flex: 0 0 7px; }
+.dotOn { background: #2fae2f; box-shadow: 0 0 3px rgba(40, 180, 40, 0.6); }
+.bsn { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tag { font-size: 9px; color: #b08a2a; font-style: italic; }
+
+.footer { padding: 5px 8px; }
+.count { font-size: 9.5px; color: #555; }
+.btns { display: flex; gap: 4px; margin-top: 4px; }
+.fbtn {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  padding: 3px 0;
+  background: linear-gradient(180deg, #fff, #d6d6c4);
+  border: 1px solid #9a9a86;
+  border-radius: 3px;
+  cursor: default;
+}
+.awayBtn { background: linear-gradient(180deg, #ffe79a, #f4c84a); font-weight: 700; }

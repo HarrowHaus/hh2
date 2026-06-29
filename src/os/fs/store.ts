@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v10: + Recycle Bin (RECYCLER + normal_person.exe gag), locked \weird\
-      // stub, in-voice message boxes. Bumping discards the old dev seed.
-      version: 10,
+      // v11: + static AIM / mIRC / Internet Explorer (guestbook + webring) props
+      // and their launchers. Bumping discards the old dev seed (pre-release).
+      version: 11,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

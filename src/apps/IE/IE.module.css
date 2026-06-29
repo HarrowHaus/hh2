@@ -1,0 +1,119 @@
+/* Internet Explorer prop: XP IE chrome + a GeoCities-era homepage. The page is
+   its own little world (black bg, neon), the chrome borrows tokens. Static. */
+.ie {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.menubar { display: flex; gap: 12px; padding: 3px 8px; border-bottom: 1px solid var(--winborder); }
+.toolbar { display: flex; gap: 6px; padding: 4px 8px; border-bottom: 1px solid var(--winborder); }
+.tbtn { font-size: 11px; cursor: default; opacity: 0.85; }
+.address {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--winborder);
+}
+.addressbox {
+  flex: 1;
+  background: var(--field);
+  border: 1px solid var(--winborder);
+  padding: 2px 6px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.go { font-size: 11px; opacity: 0.8; }
+
+/* The page itself */
+.page {
+  flex: 1;
+  overflow: auto;
+  background: #0a0a0e;
+  color: #d8d8d8;
+  padding: 14px 18px 24px;
+  font-family: 'Comic Sans MS', 'Trebuchet MS', cursive, sans-serif;
+}
+.banner {
+  text-align: center;
+  padding: 10px;
+  background: linear-gradient(90deg, #2a0d3a, #5a0d1a, #2a0d3a);
+  border: 2px ridge #ff3aa0;
+  margin-bottom: 8px;
+}
+.bannerText {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ff5ab0;
+  text-shadow: 0 0 8px rgba(255, 80, 160, 0.7), 2px 2px 0 #000;
+  letter-spacing: 1px;
+}
+.underConstruction {
+  text-align: center;
+  font-size: 12px;
+  color: #ffd24a;
+  background: repeating-linear-gradient(45deg, #1a1a00, #1a1a00 8px, #2a2a00 8px, #2a2a00 16px);
+  padding: 4px;
+  margin-bottom: 12px;
+  border: 1px dashed #ffd24a;
+}
+.intro { font-size: 12px; line-height: 1.6; color: #b8e0ff; margin: 0 0 14px; }
+
+.webring {
+  border: 2px outset #3a8ac0;
+  background: #06121e;
+  padding: 8px;
+  margin: 0 auto 16px;
+  max-width: 360px;
+  text-align: center;
+}
+.webringHead { color: #7fe0ff; font-weight: 700; margin-bottom: 6px; }
+.webringNav { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.ringlink { color: #ff8a3a; font-size: 11px; text-decoration: underline; cursor: default; }
+.webringFoot { font-size: 10px; color: #6a8a9a; margin-top: 6px; }
+
+.gbHead { text-align: center; font-size: 15px; color: #9aff9a; text-shadow: 0 0 6px rgba(60, 255, 60, 0.5); margin: 8px 0; }
+.gbForm {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 360px;
+  margin: 0 auto 16px;
+  background: #10101a;
+  border: 1px inset #444;
+  padding: 10px;
+}
+.gbForm label { font-size: 11px; color: #c8c8d8; display: flex; align-items: center; gap: 6px; }
+.msgLabel { align-items: flex-start; }
+.field { flex: 1; height: 18px; background: #fff; border: 1px solid #888; display: inline-block; }
+.fieldBig { height: 44px; }
+.signBtn {
+  align-self: center;
+  font-size: 11px;
+  padding: 3px 14px;
+  background: linear-gradient(180deg, #e8e8e8, #b8b8b8);
+  border: 2px outset #ddd;
+  color: #111;
+  cursor: default;
+}
+
+.gbList { max-width: 420px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+.gbEntry { border-bottom: 1px dotted #444; padding-bottom: 6px; }
+.gbMeta { color: #ff8ad0; font-size: 11px; }
+.gbDate { color: #888; font-weight: 400; }
+.gbMsg { color: #d8d8d8; font-size: 11px; line-height: 1.4; margin-top: 2px; }
+
+.counter { text-align: center; margin-top: 18px; font-size: 11px; color: #9a9a9a; }
+.odometer {
+  font-family: 'Courier New', monospace;
+  background: #000;
+  color: #2fff2f;
+  padding: 2px 6px;
+  border: 1px solid #2f7d2f;
+  letter-spacing: 2px;
+}

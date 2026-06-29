@@ -135,6 +135,39 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// AIM icon: the yellow running man.
+export function AimIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="3" width="24" height="26" rx="3" fill="#f4c020" stroke="#a8830a" />
+      <g fill="#1a1a1a">
+        <circle cx="15" cy="9" r="2.6" />
+        <path d="M14 12 q3 0 4 3 l3 4 -2.4 1.6 -2.6 -3.4 -1 6 3 5 -2.4 1.4 -3.6 -5.6 -2 4.6 -2.6 -1 2.2 -5.6 -1.4 -4.2 q1.2 -2.4 4 -2.6 Z" />
+      </g>
+    </svg>
+  )
+}
+
+// mIRC icon: the folder-with-lightning-bolt look (a # channel marker here).
+export function MircIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="5" width="24" height="22" rx="3" fill="#2a3550" stroke="#11192e" />
+      <text x="16" y="22" textAnchor="middle" fontFamily="Arial Black, sans-serif" fontSize="17" fontWeight="900" fill="#7fd0ff">#</text>
+    </svg>
+  )
+}
+
+// Internet Explorer icon: the blue lowercase "e" with a halo.
+export function IeIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <ellipse cx="16" cy="16" rx="9" ry="5.5" fill="none" stroke="#ffd24a" strokeWidth="2.4" transform="rotate(-20 16 16)" />
+      <text x="16" y="23" textAnchor="middle" fontFamily="Georgia, serif" fontSize="22" fontWeight="700" fontStyle="italic" fill="#1c6fd0">e</text>
+    </svg>
+  )
+}
+
 // Recycle Bin icon: the XP green-arrows bin (shown with a little paper inside).
 export function RecycleBinIcon({ size = 30, style, className }: IconProps) {
   return (

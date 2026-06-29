@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -15,6 +15,9 @@ import { Trivia } from '../apps/Trivia/Trivia'
 import { Minesweeper } from '../apps/Minesweeper/Minesweeper'
 import { MsgBox } from '../apps/MsgBox/MsgBox'
 import { RecycleBin } from '../apps/RecycleBin/RecycleBin'
+import { AIM } from '../apps/AIM/AIM'
+import { Mirc } from '../apps/Mirc/Mirc'
+import { IE } from '../apps/IE/IE'
 
 interface IconProps {
   size?: number
@@ -43,4 +46,7 @@ export const APPS: Record<AppId, AppEntry> = {
   minesweeper: { Icon: MineIcon, Component: Minesweeper },
   msgbox: { Icon: NoteIcon, Component: MsgBox },
   recyclebin: { Icon: RecycleBinIcon, Component: RecycleBin },
+  aim: { Icon: AimIcon, Component: AIM },
+  mirc: { Icon: MircIcon, Component: Mirc },
+  ie: { Icon: IeIcon, Component: IE },
 }

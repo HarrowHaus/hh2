@@ -8,6 +8,9 @@ import {
   NoteIcon,
   MusicIcon,
   TerminalIcon,
+  AimIcon,
+  MircIcon,
+  IeIcon,
 } from '../../os/icons'
 import styles from './StartMenu.module.css'
 
@@ -39,8 +42,8 @@ export function StartMenu() {
 
       <div className={styles.body}>
         <div className={styles.left}>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
-            <GlobeIcon size={30} className={styles.itemIcon} />
+          <button type="button" className={styles.item} onClick={() => openApp('ie')}>
+            <IeIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
               <span className={styles.text}>Internet</span>
               <span className={styles.subtext}>Internet Explorer</span>
@@ -79,6 +82,18 @@ export function StartMenu() {
             <TerminalIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
               <span className={styles.text}>Command Prompt</span>
+            </span>
+          </button>
+          <button type="button" className={styles.item} onClick={() => openApp('aim')}>
+            <AimIcon size={30} className={styles.itemIcon} />
+            <span className={styles.texts}>
+              <span className={styles.text}>AOL Instant Messenger</span>
+            </span>
+          </button>
+          <button type="button" className={styles.item} onClick={() => openApp('mirc')}>
+            <MircIcon size={30} className={styles.itemIcon} />
+            <span className={styles.texts}>
+              <span className={styles.text}>mIRC</span>
             </span>
           </button>
           <div className={styles.spacer} />

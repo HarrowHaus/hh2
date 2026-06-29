@@ -1,5 +1,6 @@
-import { type PointerEvent as ReactPointerEvent } from 'react'
+import { type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId, MIN_W, MIN_H } from '../../os/store'
+import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
 import { APP_META } from '../../os/appMeta'
 import type { SnapZone, WindowInstance } from '../../os/types'
@@ -28,9 +29,25 @@ export function Window({ win }: { win: WindowInstance }) {
   const restoreWindow = useOS((s) => s.restoreWindow)
   const setSnapPreview = useOS((s) => s.setSnapPreview)
   const focused = useOS((s) => getFocusedId(s.windows) === win.id)
+  const openMenu = useMenu((s) => s.openMenu)
 
   const meta = APP_META[win.appId]
   const { Icon, Component } = APPS[win.appId]
+
+  function onTitleContextMenu(e: MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    focusWindow(win.id)
+    const tiled = win.maximized || !!win.snapped
+    const items: MenuItem[] = [
+      { label: 'Restore', disabled: !tiled, onClick: () => restoreWindow(win.id, win.prev?.x ?? win.x, win.prev?.y ?? win.y) },
+      { label: 'Minimize', onClick: () => minimizeWindow(win.id) },
+      { label: 'Maximize', disabled: !meta.resizable || win.maximized, onClick: () => toggleMaximize(win.id) },
+      { separator: true },
+      { label: 'Close', onClick: () => closeWindow(win.id) },
+    ]
+    openMenu(e.clientX, e.clientY, items)
+  }
 
   function onTitlePointerDown(e: ReactPointerEvent) {
     focusWindow(win.id)
@@ -110,12 +127,12 @@ export function Window({ win }: { win: WindowInstance }) {
   if (win.minimized) return null
 
   const style = win.maximized
-    ? { left: 0, top: 0, width: '100%', height: '100%', borderRadius: 0, zIndex: win.z }
+    ? { left: 0, top: 0, width: '100%', height: '100%', borderRadius: 0, zIndex: win.z + 100 }
     : {
         transform: `translate(${win.x}px, ${win.y}px)`,
         width: win.width,
         height: win.height,
-        zIndex: win.z,
+        zIndex: win.z + 100,
       }
 
   const showHandles = !win.maximized && meta.resizable
@@ -132,6 +149,7 @@ export function Window({ win }: { win: WindowInstance }) {
         className={styles.titlebar}
         onPointerDown={onTitlePointerDown}
         onDoubleClick={() => meta.resizable && toggleMaximize(win.id)}
+        onContextMenu={onTitleContextMenu}
       >
         <Icon size={15} className={styles.icon} />
         <span className={styles.title}>{win.title}</span>

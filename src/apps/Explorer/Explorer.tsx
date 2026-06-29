@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type MouseEvent } from 'react'
 import { useOS } from '../../os/store'
 import { useFS } from '../../os/fs/store'
+import { useMenu, type MenuItem } from '../../os/menu'
 import { ROOT, baseName, listDir, parentOf } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
 import type { FSNode } from '../../os/fs/types'
@@ -16,14 +17,20 @@ function iconFor(node: FSNode) {
 
 export function Explorer({ winId, args }: AppProps) {
   const nodes = useFS((s) => s.nodes)
+  const createFolder = useFS((s) => s.createFolder)
+  const createTextFile = useFS((s) => s.createTextFile)
+  const renameNode = useFS((s) => s.rename)
+  const removeNode = useFS((s) => s.remove)
   const openApp = useOS((s) => s.openApp)
   const setWindowTitle = useOS((s) => s.setWindowTitle)
+  const openMenu = useMenu((s) => s.openMenu)
 
   const initial = (args?.path as string) || ROOT
   const [path, setPath] = useState(initial)
   const [back, setBack] = useState<string[]>([])
   const [fwd, setFwd] = useState<string[]>([])
   const [selected, setSelected] = useState<string | null>(null)
+  const [renaming, setRenaming] = useState<string | null>(null)
 
   const items = useMemo(() => listDir(nodes, path), [nodes, path])
 
@@ -72,6 +79,33 @@ export function Explorer({ winId, args }: AppProps) {
     if (target) openApp(target.appId, target.args)
   }
 
+  // New Folder/Text only outside the read-only root (drives live there).
+  const canCreate = path !== ROOT
+
+  function viewMenu(e: MouseEvent) {
+    if (e.target !== e.currentTarget) return
+    e.preventDefault()
+    const items: MenuItem[] = [
+      { label: 'New Folder', disabled: !canCreate, onClick: () => setRenaming(createFolder(path)) },
+      { label: 'New Text Document', disabled: !canCreate, onClick: () => setRenaming(createTextFile(path)) },
+      { separator: true },
+      { label: 'Refresh' },
+    ]
+    openMenu(e.clientX, e.clientY, items)
+  }
+
+  function itemMenu(e: MouseEvent, node: FSNode) {
+    e.preventDefault()
+    e.stopPropagation()
+    setSelected(node.path)
+    openMenu(e.clientX, e.clientY, [
+      { label: 'Open', onClick: () => onOpen(node) },
+      { separator: true },
+      { label: 'Rename', onClick: () => setRenaming(node.path) },
+      { label: 'Delete', onClick: () => removeNode(node.path) },
+    ])
+  }
+
   return (
     <div className={styles.explorer}>
       <div className={styles.menubar}>
@@ -100,7 +134,7 @@ export function Explorer({ winId, args }: AppProps) {
         <div className={styles.addressbox}>{path === ROOT ? 'My Computer' : path}</div>
       </div>
 
-      <div className={styles.view} onClick={() => setSelected(null)}>
+      <div className={styles.view} onClick={() => setSelected(null)} onContextMenu={viewMenu}>
         {items.length === 0 && <div className={styles.empty}>This folder is empty.</div>}
         {items.map((node) => {
           const Icon = iconFor(node)
@@ -114,9 +148,30 @@ export function Explorer({ winId, args }: AppProps) {
                 setSelected(node.path)
               }}
               onDoubleClick={() => onOpen(node)}
+              onContextMenu={(e) => itemMenu(e, node)}
             >
               <Icon size={32} />
-              <span className={styles.label}>{node.name}</span>
+              {renaming === node.path ? (
+                <input
+                  className={styles.renameInput}
+                  defaultValue={node.name}
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  onClick={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      renameNode(node.path, (e.target as HTMLInputElement).value)
+                      setRenaming(null)
+                    } else if (e.key === 'Escape') setRenaming(null)
+                  }}
+                  onBlur={(e) => {
+                    renameNode(node.path, e.currentTarget.value)
+                    setRenaming(null)
+                  }}
+                />
+              ) : (
+                <span className={styles.label}>{node.name}</span>
+              )}
             </button>
           )
         })}

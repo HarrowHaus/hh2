@@ -93,6 +93,14 @@
   word-break: break-word;
   max-width: 100%;
 }
+.renameInput {
+  width: 78px;
+  font-size: 11px;
+  text-align: center;
+  border: 1px solid #000;
+  color: #000;
+  background: #fff;
+}
 
 .statusbar {
   border-top: 1px solid rgba(128, 128, 128, 0.35);

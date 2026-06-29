@@ -1,5 +1,6 @@
-import type { PointerEvent as ReactPointerEvent } from 'react'
+import type { MouseEvent, PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId } from '../../os/store'
+import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
 import { FlagIcon, VolumeIcon } from '../../os/icons'
 import { useClock } from './useClock'
@@ -13,12 +14,34 @@ export function Taskbar() {
   const taskbarClick = useOS((s) => s.taskbarClick)
   const toggleStartMenu = useOS((s) => s.toggleStartMenu)
   const startMenuOpen = useOS((s) => s.startMenuOpen)
+  const focusWindow = useOS((s) => s.focusWindow)
+  const minimizeWindow = useOS((s) => s.minimizeWindow)
+  const toggleMaximize = useOS((s) => s.toggleMaximize)
+  const closeWindow = useOS((s) => s.closeWindow)
+  const restoreWindow = useOS((s) => s.restoreWindow)
+  const openMenu = useMenu((s) => s.openMenu)
   const time = useClock()
 
   // PointerDown + stopPropagation so the desktop's close-on-click doesn't race.
   const onStart = (e: ReactPointerEvent) => {
     e.stopPropagation()
     toggleStartMenu()
+  }
+
+  function onTaskContextMenu(e: MouseEvent, id: number) {
+    e.preventDefault()
+    e.stopPropagation()
+    const w = windows.find((x) => x.id === id)
+    if (!w) return
+    const tiled = w.maximized || !!w.snapped
+    const items: MenuItem[] = [
+      { label: 'Restore', disabled: !tiled && !w.minimized, onClick: () => (tiled ? restoreWindow(id, w.prev?.x ?? w.x, w.prev?.y ?? w.y) : focusWindow(id)) },
+      { label: 'Minimize', onClick: () => minimizeWindow(id) },
+      { label: 'Maximize', onClick: () => toggleMaximize(id) },
+      { separator: true },
+      { label: 'Close', onClick: () => closeWindow(id) },
+    ]
+    openMenu(e.clientX, e.clientY, items)
   }
 
   return (
@@ -44,6 +67,7 @@ export function Taskbar() {
               type="button"
               className={`${styles.task} ${focused ? styles.taskFocus : ''}`}
               onClick={() => taskbarClick(w.id)}
+              onContextMenu={(e) => onTaskContextMenu(e, w.id)}
               title={w.title}
             >
               <Icon size={15} className={styles.taskIcon} />

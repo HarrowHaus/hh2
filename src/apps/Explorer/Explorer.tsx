@@ -74,7 +74,8 @@ export function Explorer({ winId, args }: AppProps) {
   }
 
   function onOpen(node: FSNode) {
-    if (node.type === 'folder') {
+    // Locked folders deny access via routeOpen (msgbox) instead of opening.
+    if (node.type === 'folder' && !node.locked) {
       navigate(node.path)
       return
     }

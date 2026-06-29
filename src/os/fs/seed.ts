@@ -64,7 +64,7 @@ const FOLDERS: [string, string, number][] = [
   [`${PF}/GAMES`, 'GAMES', A],
   [`${C_DRIVE}/CODECS`, 'CODECS', A],
   [`${C_DRIVE}/CODECS/do_not_open`, 'do_not_open', A2],
-  [`${C_DRIVE}/weird`, 'weird', B2],
+  [`${C_DRIVE}/RECYCLER`, 'RECYCLER', C],
   [DOCS, 'Documents and Settings', A],
   [`${DOCS}/FAMILY`, 'FAMILY', A],
   [`${DOCS}/FAMILY/Desktop`, 'Desktop', A],
@@ -384,6 +384,41 @@ const IMAGES: FSNode[] = [
   image(`${READING}/chaos_magick_sigil.bmp`, 'chaos_magick_sigil.bmp', B2, 'chaos-sigil'),
 ]
 
+// Recycle Bin + leak-and-hide (manifest item 11). The locked \weird\ folder is
+// a Phase-8 stub (opening it denies access). RECYCLER holds the deleted items,
+// incl. normal_person.exe — the maturation gag, shown not told (docs/03).
+const WEIRD = T('2014-02-09T03:33:00')
+const SPECIAL: FSNode[] = [
+  { path: `${C_DRIVE}/weird`, name: 'weird', type: 'folder', kind: 'folder', ts: WEIRD, locked: true },
+  launcher(`${C_DRIVE}/RECYCLER/normal_person.exe`, 'normal_person.exe', C, 'msgbox'),
+  text(
+    `${C_DRIVE}/RECYCLER/curfew.txt`,
+    'curfew.txt',
+    A2,
+    ['10:00 PM.', '', 'not anymore.'].join('\n'),
+  ),
+  text(
+    `${C_DRIVE}/RECYCLER/old_screenname.txt`,
+    'old_screenname.txt',
+    A,
+    [
+      'retired this one. it followed me to too many places.',
+      'kept the away message though. some things you earn.',
+    ].join('\n'),
+  ),
+  text(
+    `${C_DRIVE}/RECYCLER/apology_draft_FINAL_final.txt`,
+    'apology_draft_FINAL_final.txt',
+    B,
+    [
+      'draft 7.',
+      '',
+      'never sent it. did not need to in the end.',
+      'leaving it here instead of the trash for good.',
+    ].join('\n'),
+  ),
+]
+
 // Program launchers (.exe shortcuts) — opening one opens its app.
 const LAUNCHERS: FSNode[] = [
   launcher(`${DESKTOP_PATH}/foobar2000`, 'foobar2000', A, 'foobar'),
@@ -404,6 +439,7 @@ export function seedFS(): Record<string, FSNode> {
     ...CODEC_FILES,
     ...CREATIVE,
     ...IMAGES,
+    ...SPECIAL,
     ...LAUNCHERS,
   ]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))

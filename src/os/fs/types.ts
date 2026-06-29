@@ -17,4 +17,6 @@ export interface FSNode {
   content?: string
   /** Launchable program: opening this node opens this app (e.g. a .exe shortcut). */
   app?: import('../types').AppId
+  /** A locked folder: opening it denies access instead of listing contents. */
+  locked?: boolean
 }

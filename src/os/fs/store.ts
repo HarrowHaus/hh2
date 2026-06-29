@@ -99,9 +99,9 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v9: + GAMES\ + playable Minesweeper. Bumping discards the old dev seed
-      // (pre-release; no real user data yet).
-      version: 9,
+      // v10: + Recycle Bin (RECYCLER + normal_person.exe gag), locked \weird\
+      // stub, in-voice message boxes. Bumping discards the old dev seed.
+      version: 10,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

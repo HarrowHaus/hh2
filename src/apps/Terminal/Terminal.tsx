@@ -118,8 +118,9 @@ export function Terminal({ winId }: AppProps) {
       case 'chdir': {
         if (!arg) { print([winPath(cwd)]); break }
         const dir = resolveDir(arg)
-        if (dir) setCwd(dir)
-        else print(['The system cannot find the path specified.'], 'err')
+        if (!dir) print(['The system cannot find the path specified.'], 'err')
+        else if (nodes[dir]?.locked) print(['Access is denied.'], 'err')
+        else setCwd(dir)
         break
       }
       case 'dir':

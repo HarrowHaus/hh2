@@ -24,4 +24,6 @@ export const APP_META: Record<AppId, AppMeta> = {
   imageviewer: { title: 'Windows Picture and Fax Viewer', width: 560, height: 480, single: false, resizable: true },
   trivia: { title: 'trivia.exe', width: 480, height: 420, single: true, resizable: false },
   minesweeper: { title: 'Minesweeper', width: 184, height: 268, single: true, resizable: false },
+  msgbox: { title: 'Message', width: 360, height: 168, single: false, resizable: false },
+  recyclebin: { title: 'Recycle Bin', width: 540, height: 400, single: true, resizable: true },
 }

@@ -1,0 +1,77 @@
+/* Recycle Bin — Explorer two-pane with the blue XP task strip, token-skinned. */
+.bin {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.menubar {
+  display: flex;
+  gap: 12px;
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--winborder);
+}
+.body { flex: 1; display: flex; min-height: 0; }
+.tasks {
+  width: 150px;
+  flex: 0 0 150px;
+  padding: 8px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 22%, var(--winbody)), var(--winbody));
+  border-right: 1px solid var(--winborder);
+}
+.taskPanel {
+  background: color-mix(in srgb, var(--winbody) 88%, #888 12%);
+  border: 1px solid var(--winborder);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.taskHead {
+  font-weight: 700;
+  font-size: 11px;
+  padding: 5px 8px;
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.task {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 5px 8px;
+  font-size: 11px;
+  background: none;
+  border: none;
+  color: var(--wintext);
+  cursor: pointer;
+}
+.task:hover:not(:disabled) { text-decoration: underline; color: var(--accent); }
+.task:disabled { opacity: 0.45; cursor: default; }
+
+.view {
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px;
+  overflow: auto;
+}
+.empty { opacity: 0.6; padding: 14px; }
+.item {
+  width: 88px;
+  height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: default;
+  color: var(--wintext);
+}
+.item:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.selected { background: color-mix(in srgb, var(--accent) 28%, transparent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+.label { font-size: 11px; text-align: center; line-height: 1.15; word-break: break-word; }
+.statusbar { border-top: 1px solid var(--winborder); padding: 3px 8px; font-size: 10px; opacity: 0.8; }

@@ -135,6 +135,23 @@ export function FLStudioIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+// Recycle Bin icon: the XP green-arrows bin (shown with a little paper inside).
+export function RecycleBinIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M9 12 H23 L21 29 H11 Z" fill="#dfe3e6" stroke="#8a9298" />
+      <path d="M9 12 H23 L22.4 14 H9.6 Z" fill="#c2c8cd" stroke="#8a9298" />
+      <rect x="6" y="11" width="3" height="2" fill="#9aa2a8" />
+      <g fill="none" stroke="#3aa33a" strokeWidth="2.4" strokeLinecap="round">
+        <path d="M12 6 a5 5 0 0 1 8 1" />
+        <path d="M20 4 l0.6 3.2 l-3.1 -0.5" stroke="none" fill="#3aa33a" />
+        <path d="M20 11 a5 5 0 0 1 -8 -1" />
+        <path d="M12 13 l-0.6 -3.2 l3.1 0.5" stroke="none" fill="#3aa33a" />
+      </g>
+    </svg>
+  )
+}
+
 // Minesweeper icon: the classic naval mine on a grey tile.
 export function MineIcon({ size = 30, style, className }: IconProps) {
   return (

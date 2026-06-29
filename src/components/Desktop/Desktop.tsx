@@ -13,7 +13,7 @@ import { DESKTOP_PATH, listDir } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
 import type { FSNode } from '../../os/fs/types'
 import { APPS } from '../../os/apps'
-import { ComputerIcon, MonitorIcon, FolderIcon, NoteIcon, MusicIcon, ImageIcon } from '../../os/icons'
+import { ComputerIcon, MonitorIcon, FolderIcon, NoteIcon, MusicIcon, ImageIcon, RecycleBinIcon } from '../../os/icons'
 import { Taskbar } from '../Taskbar/Taskbar'
 import { StartMenu } from '../StartMenu/StartMenu'
 import { Window } from '../Window/Window'
@@ -83,6 +83,7 @@ export function Desktop() {
       open: () => openApp('explorer', { path: '/', title: 'My Computer' }),
     },
     { id: 'sys:display', label: 'Control Panel', Icon: MonitorIcon, open: () => openApp('display') },
+    { id: 'sys:recyclebin', label: 'Recycle Bin', Icon: RecycleBinIcon, open: () => openApp('recyclebin') },
     ...fsIcons,
   ]
 

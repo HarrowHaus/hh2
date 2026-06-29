@@ -14,6 +14,8 @@ export type AppId =
   | 'imageviewer'
   | 'trivia'
   | 'minesweeper'
+  | 'msgbox'
+  | 'recyclebin'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

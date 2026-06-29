@@ -1,0 +1,32 @@
+/* Standard XP message box, skinned from tokens so it reads in every style. */
+.box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+  padding: 14px 16px 12px;
+}
+.body { flex: 1; display: flex; gap: 14px; align-items: flex-start; }
+.glyph { flex: 0 0 32px; margin-top: 2px; }
+.text { flex: 1; }
+.text p { margin: 0 0 2px; line-height: 1.4; }
+.gap { height: 6px; }
+.actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+.ok {
+  min-width: 78px;
+  padding: 3px 12px;
+  font-size: 11px;
+  color: var(--wintext);
+  background: color-mix(in srgb, var(--winbody) 78%, #888 22%);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.ok:hover { filter: brightness(1.08); }
+.ok:active { filter: brightness(0.94); }

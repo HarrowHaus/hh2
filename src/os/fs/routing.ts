@@ -11,10 +11,14 @@ const KIND_APP: Partial<Record<FSNode['kind'], AppId>> = {
 
 export interface OpenTarget {
   appId: AppId
-  args: { path: string; title: string }
+  args: { path: string; title: string; kind?: string }
 }
 
 export function routeOpen(node: FSNode): OpenTarget | null {
+  // A locked folder denies access via an in-voice message box instead of opening.
+  if (node.type === 'folder' && node.locked) {
+    return { appId: 'msgbox', args: { path: node.path, title: node.name, kind: 'locked' } }
+  }
   // Explicit program launcher wins (e.g. a .exe shortcut).
   if (node.app) return { appId: node.app, args: { path: node.path, title: node.name } }
   if (node.type === 'folder') {

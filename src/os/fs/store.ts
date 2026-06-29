@@ -170,10 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v16: + Tier-2 launchers — warez keygen (iso\) + sigilizer (reading\); .nfo
-      // now opens in the ANSI viewer. (v15: FreeCell/Spider; v14: easter eggs;
-      // v13: Accessories/GAMES.) Bumping discards the old dev seed (pre-release).
-      version: 16,
+      // v17: + Chess in GAMES. (v16: keygen/sigil + .nfo routing; v15: FreeCell/
+      // Spider; v14: easter eggs; v13: Accessories/GAMES.) Bumping discards the
+      // old dev seed (pre-release).
+      version: 17,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

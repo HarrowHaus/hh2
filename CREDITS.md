@@ -113,4 +113,7 @@ assets).
 
 ### Tier 2
 - **Sigil generator, ANSI/.nfo viewer, and the warez keygen are original code** (no third-party upstream). The keygen's chiptune is an **original Web Audio square-wave synth** (not chiptune3/libopenmpt). The ANSI viewer is an **original CP437/SGR renderer** (not ansilove.js). Scene group/product names and serials are invented; nothing is cracked. The Sigil generator is an original implementation of the public-domain Spare/Carroll method (no upstream code).
-- _Deferred Tier-2 items pending owner decisions:_ Webamp (skin), chiptune3 real-`.mod` player (AudioWorklet/wasm bundling), BassoonTracker (not on npm — needs the dist vendored). See the review notes.
+- **chess.js** — https://github.com/jhlywa/chess.js — **BSD-2-Clause**. Chess rules/move-generation for the Chess app.
+- **Stockfish** — https://github.com/nmrugg/stockfish.js (engine: https://stockfishchess.org) — **GPL-3.0**. ⚠️ Copyleft. Shipped **isolated** as a separate single-threaded-lite Web Worker under `public/stockfish/` (loaded at runtime, never bundled into our MIT app code); the GPL text ships at `/stockfish/COPYING.txt` and the entire project source is public, satisfying GPL source-availability. The built-in minimax is the fallback when the engine can't load.
+- **BassoonTracker** — https://github.com/steffest/BassoonTracker — **MIT**. The "FL Studio" app loads it from `public/bassoon/` via an iframe seam **if the dist is vendored there** (not on npm; not yet bundled — replace its sample disks with free/original audio before shipping).
+- _Deferred Tier-2 items pending owner decisions:_ Webamp (skin — going gray-area classic per owner), chiptune3 real-`.mod` player (AudioWorklet/wasm bundling — in progress). See the review notes.

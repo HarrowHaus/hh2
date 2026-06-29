@@ -648,6 +648,7 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${PF}/GAMES/Crypt Runner.exe`, 'Crypt Runner.exe', C, 'runner'),
   launcher(`${PF}/GAMES/FreeCell.exe`, 'FreeCell.exe', A, 'freecell'),
   launcher(`${PF}/GAMES/Spider Solitaire.exe`, 'Spider Solitaire.exe', A, 'spider'),
+  launcher(`${PF}/GAMES/Chess.exe`, 'Chess.exe', B, 'chess'),
   // Accessories (Tier 1 — docs/08)
   launcher(`${PF}/Accessories/Calculator.exe`, 'Calculator.exe', A, 'calc'),
   launcher(`${PF}/Accessories/Character Map.exe`, 'Character Map.exe', A, 'charmap'),

@@ -35,6 +35,7 @@ export type AppId =
   | 'sigil'
   | 'ansi'
   | 'keygen'
+  | 'chess'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

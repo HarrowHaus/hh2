@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon, ChessIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -34,6 +34,7 @@ import { Spider } from '../apps/Spider/Spider'
 import { Sigil } from '../apps/Sigil/Sigil'
 import { AnsiViewer } from '../apps/AnsiViewer/AnsiViewer'
 import { Keygen } from '../apps/Keygen/Keygen'
+import { Chess } from '../apps/Chess/Chess'
 
 interface IconProps {
   size?: number
@@ -81,4 +82,5 @@ export const APPS: Record<AppId, AppEntry> = {
   sigil: { Icon: SigilIcon, Component: Sigil },
   ansi: { Icon: AnsiIcon, Component: AnsiViewer },
   keygen: { Icon: KeygenIcon, Component: Keygen },
+  chess: { Icon: ChessIcon, Component: Chess },
 }

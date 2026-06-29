@@ -346,6 +346,21 @@ export function PdfIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function ChessIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#efe6d2" stroke="#7a6a4a" />
+      <g fill="#3a2f22">
+        <rect x="3" y="3" width="6.5" height="6.5" /><rect x="16" y="3" width="6.5" height="6.5" />
+        <rect x="9.5" y="9.5" width="6.5" height="6.5" /><rect x="22.5" y="9.5" width="6.5" height="6.5" />
+        <rect x="3" y="16" width="6.5" height="6.5" /><rect x="16" y="16" width="6.5" height="6.5" />
+        <rect x="9.5" y="22.5" width="6.5" height="6.5" /><rect x="22.5" y="22.5" width="6.5" height="6.5" />
+      </g>
+      <text x="16" y="22" textAnchor="middle" fontSize="16" fill="#111">♞</text>
+    </svg>
+  )
+}
+
 export function SigilIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

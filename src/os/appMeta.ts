@@ -46,4 +46,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   sigil: { title: 'Sigilizer', width: 384, height: 478, single: true, resizable: false },
   ansi: { title: 'ACiDview', width: 600, height: 460, single: false, resizable: true },
   keygen: { title: 'KeyMaker', width: 432, height: 372, single: false, resizable: false },
+  chess: { title: 'Chess', width: 560, height: 600, single: true, resizable: true },
 }

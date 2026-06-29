@@ -102,6 +102,10 @@ name-restricted components are flagged as owner decisions before adoption.
 - **pdf.js (pdfjs-dist)** — https://github.com/mozilla/pdf.js — **Apache-2.0**. Renders the PDF viewer; pinned to 4.x for broad browser compatibility. Mozilla name/logo are not used.
 
 All three are permissive (no copyleft). The Calculator, Character Map, Sound
-Recorder, Hex Editor, Solitaire, Brick Breaker, and Crypt Runner are **original
-code** (no third-party upstream); card faces, sprites, and screensaver art are
-original (no Microsoft/Google/Taito assets).
+Recorder, Hex Editor, Solitaire, Brick Breaker, Crypt Runner, the CRT/VHS
+overlay, the screen savers (Starfield/Mystify/Matrix/3D Pipes), and the BSOD /
+fake-Windows-Update easter eggs are **original code** (no third-party upstream);
+card faces, sprites, and screensaver art are original (no Microsoft/Google/Taito
+assets).
+
+- **oneko (desktop pet)** — concept inspired by https://github.com/adryd325/oneko.js (**MIT**) and the public-domain Neko sprite; our cat is an **original SVG** (no upstream code or sprite shipped).

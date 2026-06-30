@@ -24,40 +24,33 @@ export function WebampApp(_props: AppProps) {
     const el = containerRef.current
     if (!el) return
     let disposed = false
+    let webamp: Webamp | null = null
 
-    let webamp: Webamp
-    try {
-      webamp = new Webamp({ enableHotkeys: true, zIndex: 1 })
-    } catch {
-      setFailed(true)
-      return
+    // renderWhenReady() runs centerWindowsInContainer(el) — Webamp centers its
+    // own windows inside `el` by reading its bounds. So we must NOT dispatch our
+    // own positions (that pushed them to page 0,0 = viewport top-left), and we
+    // must wait until the window-open animation has settled so `el`'s bounds are
+    // final before Webamp measures them.
+    const start = () => {
+      if (disposed) return
+      try {
+        webamp = new Webamp({ enableHotkeys: true })
+      } catch {
+        setFailed(true)
+        return
+      }
+      webampRef.current = webamp
+      webamp
+        .renderWhenReady(el)
+        .then(() => { if (disposed) webamp?.dispose() })
+        .catch(() => { if (!disposed) setFailed(true) })
     }
-    webampRef.current = webamp
-    webamp
-      .renderWhenReady(el)
-      .then(() => {
-        if (disposed) { webamp.dispose(); return }
-        // Webamp defaults its windows to viewport-centered coords that escape a
-        // contained window. Anchor main + EQ + playlist to the top-left of our
-        // frame and push milkdrop off-screen (daedalOS does the same).
-        try {
-          const store = (webamp as unknown as { store?: { dispatch: (a: unknown) => void } }).store
-          store?.dispatch({
-            type: 'UPDATE_WINDOW_POSITIONS',
-            positions: {
-              main: { x: 0, y: 0 },
-              equalizer: { x: 0, y: 116 },
-              playlist: { x: 0, y: 232 },
-              milkdrop: { x: -9999, y: -9999 },
-            },
-          })
-        } catch { /* positioning is best-effort */ }
-      })
-      .catch(() => { if (!disposed) setFailed(true) })
+    const timer = window.setTimeout(start, 220)
 
     return () => {
       disposed = true
-      try { webamp.dispose() } catch { /* already gone */ }
+      window.clearTimeout(timer)
+      try { webamp?.dispose() } catch { /* already gone */ }
       webampRef.current = null
     }
   }, [])

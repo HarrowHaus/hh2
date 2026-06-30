@@ -89,3 +89,30 @@
 
 /* Lazy-app suspense fallback — fills the window body without flashing chrome. */
 .loading { width: 100%; height: 100%; background: var(--winbody); }
+
+/* Open/close animation (Framer-Motion parity, done in CSS). The root .window
+   owns the positioning transform, so the scale/fade lives on an inner wrapper
+   that fills it. Reduced-motion disables it. */
+.inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  transform-origin: center;
+  animation: winOpen 0.14s ease-out;
+}
+.exiting {
+  animation: winClose 0.14s ease-in forwards;
+  pointer-events: none;
+}
+@keyframes winOpen {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes winClose {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.94); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inner { animation: none; }
+}

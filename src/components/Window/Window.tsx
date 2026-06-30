@@ -1,4 +1,4 @@
-import { Suspense, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
+import { Suspense, useState, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId, MIN_W, MIN_H } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { runCloseGuard } from '../../os/closeGuards'
@@ -35,10 +35,12 @@ export function Window({ win }: { win: WindowInstance }) {
   const meta = APP_META[win.appId]
   const { Icon, Component } = APPS[win.appId]
 
-  // Close via the guard: an app (e.g. Paint) can intercept to prompt about
-  // unsaved work; otherwise close immediately.
+  // Animate the close: play the exit animation, then unmount. A close guard
+  // (e.g. Paint's "save changes?") runs first and may defer or cancel.
+  const [exiting, setExiting] = useState(false)
+  const proceedClose = () => { setExiting(true); window.setTimeout(() => closeWindow(win.id), 140) }
   const requestClose = () => {
-    if (!runCloseGuard(win.id, () => closeWindow(win.id))) closeWindow(win.id)
+    if (!runCloseGuard(win.id, proceedClose)) proceedClose()
   }
 
   function onTitleContextMenu(e: MouseEvent) {
@@ -152,6 +154,7 @@ export function Window({ win }: { win: WindowInstance }) {
       role="dialog"
       aria-label={win.title}
     >
+      <div className={`${styles.inner} ${exiting ? styles.exiting : ''}`}>
       <div
         className={styles.titlebar}
         onPointerDown={onTitlePointerDown}
@@ -183,6 +186,7 @@ export function Window({ win }: { win: WindowInstance }) {
             onPointerDown={(e) => onResizePointerDown(e, dir)}
           />
         ))}
+      </div>
     </div>
   )
 }

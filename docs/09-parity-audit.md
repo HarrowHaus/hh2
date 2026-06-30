@@ -25,15 +25,25 @@ _Audited at Phase-4 polish. Deploy: the live `*.pages.dev` build reflects `maste
 ✅ Three visual styles (`bug.msstyles` dark default, Luna Blue, Classic) switch live via Display Properties → Appearance and persist. Engine is pack/manifest-shaped per `docs/02` so the deferred real-`.msstyles` loader (Phase 5) drops in additively.
 
 ## Phase-4 tickets — status
-- ✅ **Perf** — all 39 apps lazy-split; initial bundle 873 kB → 243 kB (gzip 276 → 77).
+- ✅ **Perf** — all 39 apps lazy-split; initial bundle 873 kB → 245 kB (gzip 276 → 78). See sign-off below.
 - ✅ **A11y / reduced-motion** — selectable content, keyboard-open icons, arrow-nav menus, landmarks (all above).
 - ✅ **Responsive / mobile fallback** — viewport-clamped + mobile-maximize.
-- 🟡 **Asset pass** — token-driven cursor set, foobar2000 skin polish, boot/logon refinement: **awaiting owner art-direction** (aesthetic is locked to XP + `bug.msstyles`, Rule 4).
-- ⏸️ **System sounds** — deferred to **Phase 8** per CLAUDE.md ("stubs/hooks only"); no audio assets this phase.
-- ⏸️ **"Dock" + "system-monitor widget"** — **dropped**: neither is XP-authentic (dock = macOS/daedalOS, widgets = Vista). Rule 1/4 (parity, match real XP). The authentic taskbar quick-launch + tray cover the intent.
+- ✅ **Asset pass** (all token-driven, matching `bug.msstyles`):
+  - **foobar2000** — tightened to the Columns-UI dark palette; functional transport (click-to-seek + current/total time), accent volume slider, gradient spectrum w/ peak caps, gradient header bars, refined now-playing.
+  - **Cursors** — original XP-style set (`scripts/make-cursors.mjs` → `src/styles/cursors.css`): arrow everywhere incl. buttons (fixing the prior un-XP hand-on-buttons), hand on real links, I-beam in fields/Monaco, custom resize on handles, `none` preserved over fullscreen overlays. No Microsoft bitmaps; `--cur-*` tokens.
+  - **Boot/logon** — authentic XP sliding marquee (lit triad on a rail); welcome screen with distinct per-account avatar tiles + hairline bars. Reduced-motion still instant.
+- ✅ **System sounds (silent seam)** — `src/os/sound.ts` wires every event point (startup/shutdown/window open/close/minimize/menu/error) to empty slots; persisted mute/volume + a real tray mute toggle; **ships zero audio assets** and stays silent (verified 0 playback calls) until the Phase-8 pack fills the slots.
+- ⏸️ **"Dock" + "system-monitor widget"** — **dropped**: neither is XP-authentic (dock = macOS/daedalOS, widgets = Vista). Rule 1/4. The authentic taskbar quick-launch + tray cover the intent.
+
+## Perf sign-off
+- **Initial load:** `index` JS 245 kB (**gzip 78 kB**) + CSS 24 kB (gzip ~5 kB) for a full windowed desktop OS — lean.
+- **Code-splitting:** 135 chunks; every app loads on demand. The heavy chunks (Monaco `editor.main` 3.8 MB + its TS/CSS/HTML/JSON language workers) are fetched **only when the Code app opens**, never on first paint.
+- **Heavy emulator/runtime assets** (v86 wasm, EmulatorJS cores, Ruffle wasm, TIC-80 wasm) are static `public/` files fetched only when their app opens — off the critical path.
+- **Animation:** OS-wide `prefers-reduced-motion` kill-switch; boot skips instantly.
+- **Verdict:** initial payload is small and stable; no regressions from the asset pass (CSS-only + one small sound module). ✅
 
 ## Gaps / follow-ups
 - **DOOM+Freedoom / OpenTyrian** (Tier 3) — toolchain-blocked; need a CI wasm-build pass (emscripten not available locally). Deferred per ruling, not a code blocker.
-- **Asset pass** is the only open Phase-4 work and is gated on owner aesthetic decisions.
+- **System sound pack** (Phase 8) — drop `.wav` files into `public/sounds/` and fill the `SLOTS` paths in `src/os/sound.ts`; no rewiring needed.
 
-**Bottom line:** the `docs/02` parity checklist passes end-to-end against daedalOS; Phase-4 quality work (perf, a11y, responsive) is shipped. Remaining is owner-gated cosmetic asset work.
+**Bottom line:** the `docs/02` parity checklist passes end-to-end against daedalOS; all Phase-4 work (perf, a11y, responsive, the full asset pass, and the silent sound seam) is shipped and deployed. Phase 4 is complete.

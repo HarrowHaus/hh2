@@ -15,10 +15,28 @@
   border-bottom: 1px solid #000;
 }
 .hint { margin-left: auto; opacity: 0.65; }
-.screen {
+.btn {
+  font: inherit;
+  font-size: 11px;
+  color: #ddd;
+  background: #2c2c2c;
+  border: 1px solid #000;
+  padding: 1px 8px;
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { background: #3a3a3a; }
+.btn:disabled { opacity: 0.4; cursor: default; }
+/* Stage centers + clips the scaled screen (auto-resize). */
+.stage {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #000;
+}
+.screen {
+  transform-origin: center center;
   display: grid;
   place-items: center;
   background: #000;

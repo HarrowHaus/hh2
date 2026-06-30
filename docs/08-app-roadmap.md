@@ -60,8 +60,8 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 |---|---|---|---|
 | **Quake III** (lrusso/Quake3, GPL-2.0+) | missing | **ADOPT+DATA** | Retail pak0–8 are copyrighted → ship **OpenArena** free data instead, or user-supplied. Engine adopted, isolated. |
 | **Space Cadet Pinball** (alula/SpaceCadetPinball, MIT code) | missing | **ADOPT+DATA** | MS Pinball game data not redistributable → **user-supplied-data loader**. Engine is clean MIT. |
-| **ClassiCube** (UnknownShadow200/ClassiCube, BSD-3) | missing | **FLAG** | Pulls **Minecraft Classic** assets at runtime (Mojang/MS) → **owner decision before adopting.** |
-| **Cave Story** (NXEngine, GPL) — our addition | missing | **ADOPT+DATA** | NXEngine is GPL; Cave Story freeware data is **user-supplied, never rehosted**. |
+| **ClassiCube** (UnknownShadow200/ClassiCube, BSD-3) | missing | **SKIP** (owner ruled) | Pulls **Minecraft Classic** assets at runtime (Mojang/MS) → owner ruled **SKIP**. Not adopted. |
+| **Cave Story** (NXEngine, GPL) — our addition | missing | **DEFER** (owner ruled) | Engine clean; Cave Story freeware data would be user-supplied/never-rehosted — owner ruled **defer til later** (revisit after the core tiers). |
 
 ### SUBSTITUTE / SKIP (named policy — owner anti-LLM)
 
@@ -75,7 +75,7 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | Item | Our status | Ruling | Note |
 |---|---|---|---|
 | **Chess** (chess.js BSD-2 + stockfish.js GPL-3) | have-real | **KEEP** | Board + isolated Stockfish already shipped. |
-| **DX-Ball** | have-real (our original **Breakout**) | **KEEP** | His link is an article, not a repo → **build-original**; our Breakout already satisfies it. |
+| **DX-Ball** (dx-ball.ru/code.html) | have-real (our original **Breakout**) | **KEEP (+ optional embed)** | Owner-supplied link is an **embed-widget generator** (iframe snippet to a third-party-hosted game), **not** vendorable source — no stated license, external host, not offline, and the game is Longbow/Michael P. Welch IP. Our original Breakout stays the **shipped** game; the dx-ball.ru embed can ride the "Old Net"/external-iframe seam as an optional in-world bonus, flagged as an external dependency. |
 | **ZZT**, **A Dark Room** | missing | **ADOPT** | Verified-clean set, adopt now. |
 | **DOOM / ROTT / Wolf3D / Duke3D / OpenTyrian** | missing (toolchain-blocked) | **ADOPT (CI-wasm batch)** | C→wasm; need an emscripten build step (GitHub Actions job builds + commits artifacts), then vendor + free data (Freedoom, Tyrian freeware, etc.). |
 
@@ -102,8 +102,8 @@ Keyboard set · Windows (react-rnd/Framer-Motion) · Start Menu (sidebar/spotlig
   webring).
 - **ADOPT new apps:** BoxedWine, eruda DevTools, js-dos, OpenType viewer, jsPaint,
   TinyMCE, Video Player (video.js), Vim.js, Webamp (re-solve skin), and the
-  ADOPT+DATA quartet (Quake3/OpenArena, Space Cadet Pinball, Cave Story, +ClassiCube
-  pending FLAG).
+  ADOPT+DATA games (Quake3/OpenArena, Space Cadet Pinball). *(ClassiCube skipped;
+  Cave Story deferred — both owner-ruled.)*
 - **EXTEND real apps:** Monaco (+Prettier/status), Photos (HEIF/JXL/QOI/TIFF), v86
   (save-states/auto-resize), and the OS subsystems in `docs/02`.
 - **GAMES batch:** ZZT, A Dark Room now; DOOM/ROTT/Wolf3D/Duke3D/OpenTyrian on the
@@ -159,8 +159,9 @@ codecbox + youtube) · TinyMCE · Vim.js · Webamp (+ Skin Museum + butterchurn)
 save-states/auto-resize · OS-subsystem extensions (`docs/02`).
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
-BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · Cave Story
-(NXEngine + user data) · ZZT · A Dark Room · **ClassiCube pending FLAG.**
+BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·
+A Dark Room. *(ClassiCube — **skipped**, owner ruled. Cave Story — **deferred**,
+owner ruled, revisit after core tiers.)*
 
 **Tier D — Phase-6 realtime spine (Durable-Objects / WebSockets)**
 **Messenger** (Nostr + NIP-04, auto keypair) · **IRC** (KiwiIRC over WebSockets) ·
@@ -174,11 +175,12 @@ Actions job builds the wasm artifacts + commits them; then vendor artifact + fre
 
 ## OWNER DECISIONS OUTSTANDING (only the genuinely-blocked)
 Per the governing rule, copyleft alone is **no longer** a decision — accepted engines
-are isolated (Rule 4). The only items that still need an owner ruling:
+are isolated (Rule 4). The remaining open rulings:
 
-1. **ClassiCube** — pulls Minecraft Classic assets at runtime (Mojang/MS trademark + asset legality). **FLAG: adopt or skip?** (default: skip until ruled.)
-2. **HEIC via libheif-js** — LGPL-3 + HEVC patent licensing for the decode path. Adopt as Photos add-on, or ship the patent-free formats (JXL/QOI/TIFF) only? (default: ship clean formats, HEIC behind a notice.)
-3. **TinyMCE** — GPL-2.0-or-later *or* paid commercial. Confirm we ship under GPL (isolated module + source offer), not the commercial license. (default: GPL, isolated.)
-4. **Trademark/name discipline** (no blocker, just naming): DOOM, Quake III, ClassiCube↔Minecraft, "3D Pinball/Space Cadet", "3D Pipes/Maze/FlowerBox", Video.js®, Winamp/Nullsoft, KiwiIRC, DX-Ball/Arkanoid — descriptive/period labels, our own skin, no logos, no implied affiliation.
+1. **ClassiCube** — ✅ **RESOLVED: SKIP** (owner ruled). Pulls Minecraft Classic assets at runtime; not adopted.
+2. **Cave Story (NXEngine)** — ✅ **RESOLVED: DEFER** (owner ruled). Revisit after the core tiers.
+3. **HEIC via libheif-js** — LGPL-3 + HEVC patent licensing for the decode path. Adopt as Photos add-on, or ship the patent-free formats (JXL/QOI/TIFF) only? (default: ship clean formats, HEIC behind a notice.) — *still open*
+4. **TinyMCE** — GPL-2.0-or-later *or* paid commercial. Confirm we ship under GPL (isolated module + source offer), not the commercial license. (default: GPL, isolated.) — *still open*
+5. **Trademark/name discipline** (no blocker, just naming): DOOM, Quake III, ClassiCube↔Minecraft, "3D Pinball/Space Cadet", "3D Pipes/Maze/FlowerBox", Video.js®, Winamp/Nullsoft, KiwiIRC, DX-Ball/Arkanoid — descriptive/period labels, our own skin, no logos, no implied affiliation.
 
 Everything else: **ADOPT** per the table — no silent skips.

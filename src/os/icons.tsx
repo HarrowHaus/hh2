@@ -368,6 +368,17 @@ export function CodeIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function RuffleIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="4" width="24" height="24" rx="5" fill="#cc0000" />
+      <rect x="4" y="4" width="24" height="24" rx="5" fill="url(#rfl)" opacity="0.25" />
+      <defs><linearGradient id="rfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff" /><stop offset="1" stopColor="#000" /></linearGradient></defs>
+      <text x="16" y="21" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="12" fill="#fff">Sf</text>
+    </svg>
+  )
+}
+
 export function Tic80Icon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

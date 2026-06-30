@@ -170,10 +170,10 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v21: + Internet Explorer/iexplore.exe in Program Files. v20: + TIC-80 (moth.tic) in GAMES.
-      // v19: + v86 (x86 emulator) in Emulators. v18: + Code (Monaco). (v16: keygen/sigil + .nfo routing;
-      // v15: FreeCell/Spider; v14: easter eggs; v13: Accessories/GAMES.) Bumping discards the old dev seed.
-      version: 21,
+      // v22: + Macromedia/Flash Player (Ruffle). v21: + Internet Explorer/iexplore.exe. v20: + TIC-80
+      // (moth.tic) in GAMES. v19: + v86 (x86 emulator). v18: + Code (Monaco). (v16: keygen/sigil + .nfo
+      // routing; v15: FreeCell/Spider; v14: easter eggs; v13: Accessories/GAMES.) Bumping discards old seed.
+      version: 22,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

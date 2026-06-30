@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState, type ReactNode } from 'react'
+import type { AppProps } from '../../os/types'
 import styles from './IE.module.css'
 
 // Internet Explorer — a real little browser over a STATIC in-world web. Back/
@@ -48,10 +49,12 @@ const GUESTBOOK: Entry[] = [
   { name: 'no_master', date: '06.03.2005', msg: 'first.' },
 ]
 
-export function IE() {
-  const [history, setHistory] = useState<string[]>([HOME])
+export function IE({ args }: AppProps) {
+  // Optional launch arg: another app (e.g. Flash Player) can open IE at a URL.
+  const initial = typeof args?.url === 'string' ? normalize(args.url) : HOME
+  const [history, setHistory] = useState<string[]>([initial])
   const [idx, setIdx] = useState(0)
-  const [addr, setAddr] = useState(HOME)
+  const [addr, setAddr] = useState(initial)
   // Refresh key remounts the page/iframe so Refresh + Stop feel real.
   const [nonce, setNonce] = useState(0)
   const stopRef = useRef(false)

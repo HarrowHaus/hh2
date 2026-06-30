@@ -39,6 +39,7 @@ export type AppId =
   | 'code'
   | 'v86'
   | 'tic80'
+  | 'ruffle'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

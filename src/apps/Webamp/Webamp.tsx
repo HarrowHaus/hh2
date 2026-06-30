@@ -35,7 +35,24 @@ export function WebampApp(_props: AppProps) {
     webampRef.current = webamp
     webamp
       .renderWhenReady(el)
-      .then(() => { if (disposed) webamp.dispose() })
+      .then(() => {
+        if (disposed) { webamp.dispose(); return }
+        // Webamp defaults its windows to viewport-centered coords that escape a
+        // contained window. Anchor main + EQ + playlist to the top-left of our
+        // frame and push milkdrop off-screen (daedalOS does the same).
+        try {
+          const store = (webamp as unknown as { store?: { dispatch: (a: unknown) => void } }).store
+          store?.dispatch({
+            type: 'UPDATE_WINDOW_POSITIONS',
+            positions: {
+              main: { x: 0, y: 0 },
+              equalizer: { x: 0, y: 116 },
+              playlist: { x: 0, y: 232 },
+              milkdrop: { x: -9999, y: -9999 },
+            },
+          })
+        } catch { /* positioning is best-effort */ }
+      })
       .catch(() => { if (!disposed) setFailed(true) })
 
     return () => {

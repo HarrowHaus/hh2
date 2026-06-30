@@ -58,5 +58,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   run: { title: 'Run', width: 400, height: 190, single: true, resizable: false },
   dos: { title: 'MS-DOS Prompt', width: 700, height: 520, single: false, resizable: true },
   wordpad: { title: 'WordPad', width: 720, height: 540, single: false, resizable: true },
-  webamp: { title: 'Winamp', width: 300, height: 240, single: true, resizable: true },
+  webamp: { title: 'Winamp', width: 295, height: 376, single: true, resizable: true },
 }

@@ -3,6 +3,9 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  /* New stacking context so Webamp's z-indexes stay inside our frame instead of
+     floating over the desktop; overflow clips its windows to the body. */
+  isolation: isolate;
   background: #0a0a0e;
 }
 /* Webamp renders an absolutely-positioned #webamp inside the container; keep its

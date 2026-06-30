@@ -19,6 +19,10 @@
   align-items: center;
   flex: 0 0 26px;
   height: 26px;
+  /* Sit above the body so an app's content (e.g. Webamp's absolute windows) can
+     never overlap the caption buttons and swallow their clicks. */
+  position: relative;
+  z-index: 2;
   padding: 0 1px 0 4px;
   background: var(--titlegrad);
   color: var(--title);

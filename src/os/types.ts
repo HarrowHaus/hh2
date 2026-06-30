@@ -44,6 +44,7 @@ export type AppId =
   | 'opentype'
   | 'videoplayer'
   | 'paint'
+  | 'run'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

@@ -11,6 +11,7 @@ import {
   AimIcon,
   MircIcon,
   IeIcon,
+  RunIcon,
 } from '../../os/icons'
 import { APPS } from '../../os/apps'
 import { PROGRAMS } from '../../os/programs'
@@ -179,8 +180,8 @@ export function StartMenu() {
             <GlobeIcon size={22} className={styles.itemIcon} />
             <span className={styles.texts}><span className={styles.text}>Help and Support</span></span>
           </button>
-          <button type="button" className={styles.item} onClick={closeStartMenu}>
-            <NoteIcon size={22} className={styles.itemIcon} />
+          <button type="button" className={styles.item} onClick={() => { openApp('run'); closeStartMenu() }}>
+            <RunIcon size={22} className={styles.itemIcon} />
             <span className={styles.texts}><span className={styles.text}>Run...</span></span>
           </button>
         </div>

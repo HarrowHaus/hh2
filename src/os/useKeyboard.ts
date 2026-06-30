@@ -24,6 +24,14 @@ export function useKeyboard(): void {
         // SHIFT+F12 → eruda DevTools (lazy-loaded on first use).
         e.preventDefault()
         void toggleDevTools()
+      } else if ((e.metaKey || e.getModifierState?.('Meta')) && (e.key === 'r' || e.key === 'R')) {
+        // Win+R → Run dialog.
+        e.preventDefault()
+        useOS.getState().openApp('run')
+      } else if (e.key === 'Meta' && !e.repeat) {
+        // Win key → toggle Start menu.
+        e.preventDefault()
+        useOS.getState().toggleStartMenu()
       } else if (e.key === 'Escape') {
         useMenu.getState().closeMenu()
         useOS.getState().closeStartMenu()

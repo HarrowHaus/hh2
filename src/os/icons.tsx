@@ -555,3 +555,15 @@ export function PaintIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function RunIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <ellipse cx="16" cy="27" rx="11" ry="3" fill="#000" opacity="0.18" />
+      <path d="M7 8 C7 5 25 5 25 8 L23 22 C23 25 9 25 9 22 Z" fill="#d9b25a" stroke="#7a5f22" strokeWidth="0.8" />
+      <ellipse cx="16" cy="8" rx="9" ry="2.6" fill="#f0d488" stroke="#7a5f22" strokeWidth="0.8" />
+      <rect x="13" y="12" width="6" height="9" rx="1" fill="#2a2a30" />
+      <path d="M16 12 L16 21 M13 16 L19 16" stroke="#7fd0ff" strokeWidth="1.1" opacity="0.5" />
+    </svg>
+  )
+}

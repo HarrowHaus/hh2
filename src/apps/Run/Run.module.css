@@ -1,0 +1,39 @@
+.run {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px 12px 10px;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+  gap: 10px;
+}
+.top { display: flex; gap: 10px; align-items: flex-start; }
+.icon { flex: 0 0 auto; }
+.prompt { margin: 2px 0 0; line-height: 1.4; }
+.row { display: flex; align-items: center; gap: 8px; }
+.label { flex: 0 0 auto; }
+.input {
+  flex: 1;
+  min-width: 0;
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  padding: 3px 6px;
+  font: inherit;
+}
+.input:focus { outline: 1px solid var(--accent); }
+.error { margin: 0; color: #ff6a6a; line-height: 1.4; }
+.buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: auto; }
+.btn {
+  font: inherit;
+  min-width: 74px;
+  padding: 3px 10px;
+  background: color-mix(in srgb, var(--winbody) 55%, #fff 45%);
+  color: #111;
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { filter: brightness(1.08); }
+.btn:disabled { opacity: 0.45; cursor: default; }

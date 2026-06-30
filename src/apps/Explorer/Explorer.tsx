@@ -247,6 +247,23 @@ export function Explorer({ winId, args }: AppProps) {
       clearSel()
     } else if (e.key === 'F2' && arr.length === 1 && canEdit) {
       setRenaming(arr[0])
+    } else if (e.key === 'Enter' && arr.length === 1) {
+      const node = items.find((n) => n.path === arr[0])
+      if (node) onOpen(node)
+    } else if (e.key === 'Backspace') {
+      e.preventDefault()
+      goUp()
+    } else if (e.key === 'F5') {
+      e.preventDefault() // FS is live; swallow so the page never reloads
+      clearSel()
+    } else if (e.key.startsWith('Arrow')) {
+      e.preventDefault()
+      if (!items.length) return
+      const cur = arr.length === 1 ? items.findIndex((n) => n.path === arr[0]) : -1
+      const delta = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1
+      const ni = cur < 0 ? 0 : Math.max(0, Math.min(items.length - 1, cur + delta))
+      const target = items[ni]
+      if (target) { setSelected(new Set([target.path])); lastIndexRef.current = ni }
     } else if (e.key === 'Escape') {
       clearSel()
     }

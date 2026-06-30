@@ -1,40 +1,95 @@
-import { useMemo, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { AppProps } from '../../os/types'
 import styles from './IE.module.css'
 
-// Internet Explorer — a real little browser over a STATIC in-world web. Back/
-// Forward/Home walk a history stack; the Underground Noise Webring's prev/next/
-// random/list actually cycle its member sites. The address bar is live: an
-// allowlisted archive.org URL opens "Old Net" mode (a sandboxed read-only
-// iframe — the only thing that touches the network, and only that one host);
-// anything else resolves to an in-world page or an XP "cannot be displayed"
-// error. No open proxy. All site content is fictional/in-voice (docs/03); the
-// realtime guestbook stays Phase 6. (Owner ruling E, docs/08.)
+// Internet Explorer — a real little browser over a STATIC in-world web, now with
+// the full daedalOS browser surface adapted to our read-only/no-open-proxy
+// posture (docs/08 Tier A · owner ruling E):
+//   • Back / Forward / Reload / Stop / Home history.
+//   • A Favorites (bookmark) bar with favicons; entries actually navigate.
+//   • The Underground Noise Webring (prev/next/random/list) merged in.
+//   • Address-bar search: non-URL input → an in-world search-results page.
+//   • Read-only proxy modes — the ONLY network seams, each a single allowlisted
+//     host in a sandboxed iframe: the Wayback Machine (web.archive.org) and The
+//     Old Net (theoldnet.com), plus an IPFS gateway for ipfs: URIs. No open
+//     proxy; every other URL resolves to an in-world page or an XP error.
+//   • chrome://dino — an original endless-runner (no Google sprite).
+// All site content is fictional/in-voice (docs/03); the realtime guestbook stays
+// Phase 6.
 
 const HOME = 'http://www.geocities.com/sunsetstrip/basement/4127/'
 const ROTBOX = 'http://www.angelfire.com/oh/rotbox/'
 const TAPEHISS = 'http://members.tripod.com/~tapehiss/'
 const VAULT = 'http://www.geocities.com/area51/vault/8806/'
 const RING_LIST = 'about:ring'
+const DINO = 'chrome://dino'
 
 // The ring proper — ordered; prev/next wrap around it.
 const RING: string[] = [HOME, ROTBOX, TAPEHISS, VAULT]
 
-// archive.org is the single allowlisted live host ("Old Net" read-only mode).
-function archiveTarget(raw: string): string | null {
+// Favorites bar — diegetic bookmarks. Each favicon is an original 1-char glyph.
+interface Bookmark {
+  url: string
+  label: string
+  icon: string
+}
+const BOOKMARKS: Bookmark[] = [
+  { url: HOME, label: "moldmouth's corner", icon: '★' },
+  { url: ROTBOX, label: 'ROTBOX vhs', icon: '☠' },
+  { url: TAPEHISS, label: 'TAPE HISS', icon: '♪' },
+  { url: VAULT, label: 'VAULT 8806', icon: '⌂' },
+  { url: RING_LIST, label: 'the ring', icon: '◉' },
+  { url: 'http://web.archive.org/web/2004/http://www.geocities.com/', label: 'old net', icon: '🕸' },
+  { url: DINO, label: 'dino', icon: '🦖' },
+]
+
+// ── Read-only proxy seams (the only network access) ──────────────────────────
+// Each returns a single allowlisted https host to load in a sandboxed iframe, or
+// null. Nothing else can reach the network.
+interface Proxy {
+  kind: 'wayback' | 'oldnet' | 'ipfs'
+  src: string
+  label: string
+}
+function proxyTarget(raw: string): Proxy | null {
   const url = raw.trim()
-  const m = url.match(/^(?:https?:\/\/)?(web\.archive\.org|archive\.org)(\/.*)?$/i)
-  if (!m) return null
-  return `https://${m[1]}${m[2] ?? ''}`
+  // Wayback Machine — web.archive.org / archive.org.
+  const wb = url.match(/^(?:https?:\/\/)?(web\.archive\.org|archive\.org)(\/.*)?$/i)
+  if (wb) return { kind: 'wayback', src: `https://${wb[1]}${wb[2] ?? ''}`, label: 'Wayback Machine' }
+  // The Old Net — theoldnet.com (a period-rendering read-only proxy).
+  const on = url.match(/^(?:https?:\/\/)?(?:www\.)?(theoldnet\.com)(\/.*)?$/i)
+  if (on) return { kind: 'oldnet', src: `https://${on[1]}${on[2] ?? ''}`, label: 'The Old Net' }
+  // IPFS — ipfs://CID or ipfs:/ipfs/CID → a single allowlisted gateway.
+  const ip = url.match(/^ipfs:(?:\/\/|\/ipfs\/|\/)?([a-z0-9]+.*)$/i)
+  if (ip) {
+    const path = ip[1].replace(/^ipfs\//i, '')
+    return { kind: 'ipfs', src: `https://dweb.link/ipfs/${path}`, label: 'IPFS · dweb.link' }
+  }
+  return null
 }
 
+// Build an in-world search URL from a free-text query.
+function searchUrl(q: string): string {
+  return 'about:search?q=' + encodeURIComponent(q.trim())
+}
+function searchQuery(url: string): string | null {
+  const m = url.match(/^about:search\?q=(.*)$/)
+  return m ? decodeURIComponent(m[1]) : null
+}
+
+// Decide what an address-bar entry means: a known scheme, a hostname, or a
+// search. Period-accurate: bare hosts assume http:// and we don't force https.
 function normalize(raw: string): string {
   let u = raw.trim()
   if (!u) return HOME
-  if (u === RING_LIST) return u
-  // Bare host/path → assume http:// (period-accurate; we don't force https).
-  if (!/^[a-z]+:\/\//i.test(u) && !/^about:/i.test(u)) u = 'http://' + u
-  return u.replace(/\s+$/, '')
+  if (u === RING_LIST || u === DINO || u.startsWith('about:')) return u
+  if (/^(chrome|ipfs|nostr):/i.test(u)) return u
+  if (/^https?:\/\//i.test(u)) return u.replace(/\s+$/, '')
+  // No scheme. If it looks like a host (a dot, no spaces) treat as a URL;
+  // otherwise it's a search.
+  const looksLikeHost = /^[^\s]+\.[^\s]+$/.test(u) && !u.includes(' ')
+  if (looksLikeHost) return 'http://' + u
+  return searchUrl(u)
 }
 
 interface Entry {
@@ -57,7 +112,7 @@ export function IE({ args }: AppProps) {
   const [addr, setAddr] = useState(initial)
   // Refresh key remounts the page/iframe so Refresh + Stop feel real.
   const [nonce, setNonce] = useState(0)
-  const stopRef = useRef(false)
+  const [stopped, setStopped] = useState(false)
 
   const url = history[idx]
   const canBack = idx > 0
@@ -65,6 +120,7 @@ export function IE({ args }: AppProps) {
 
   function go(raw: string) {
     const next = normalize(raw)
+    setStopped(false)
     if (next === url) {
       setNonce((n) => n + 1)
       setAddr(next)
@@ -78,11 +134,13 @@ export function IE({ args }: AppProps) {
   }
   function back() {
     if (!canBack) return
+    setStopped(false)
     setIdx(idx - 1)
     setAddr(history[idx - 1])
   }
   function forward() {
     if (!canFwd) return
+    setStopped(false)
     setIdx(idx + 1)
     setAddr(history[idx + 1])
   }
@@ -95,13 +153,14 @@ export function IE({ args }: AppProps) {
     go(RING[n])
   }
   function ringRandom() {
-    // Deterministic-ish spread without Math.random (banned in some contexts):
-    // hop a prime stride from the current spot so it never lands on itself.
+    // Deterministic-ish spread without Math.random: hop a prime stride from the
+    // current spot so it never lands on itself.
     const base = ringIndex < 0 ? 0 : ringIndex
     go(RING[(base + 3) % RING.length])
   }
 
-  const archive = useMemo(() => archiveTarget(url), [url])
+  const proxy = useMemo(() => proxyTarget(url), [url])
+  const query = useMemo(() => searchQuery(url), [url])
 
   return (
     <div className={styles.ie}>
@@ -111,8 +170,8 @@ export function IE({ args }: AppProps) {
       <div className={styles.toolbar}>
         <button type="button" className={styles.tbtn} disabled={!canBack} onClick={back}>◄ Back</button>
         <button type="button" className={styles.tbtn} disabled={!canFwd} onClick={forward}>Forward ►</button>
-        <button type="button" className={styles.tbtn} onClick={() => { stopRef.current = true }}>✕ Stop</button>
-        <button type="button" className={styles.tbtn} onClick={() => setNonce((n) => n + 1)}>↻ Refresh</button>
+        <button type="button" className={styles.tbtn} onClick={() => setStopped(true)}>✕ Stop</button>
+        <button type="button" className={styles.tbtn} onClick={() => { setStopped(false); setNonce((n) => n + 1) }}>↻ Refresh</button>
         <button type="button" className={styles.tbtn} onClick={() => go(HOME)}>⌂ Home</button>
       </div>
       <form
@@ -130,9 +189,32 @@ export function IE({ args }: AppProps) {
         <button type="submit" className={styles.go}>Go</button>
       </form>
 
+      {/* Favorites / bookmark bar */}
+      <div className={styles.bookmarks}>
+        <span className={styles.bmLabel}>Links</span>
+        {BOOKMARKS.map((b) => (
+          <button
+            key={b.url}
+            type="button"
+            className={`${styles.bookmark} ${url === b.url ? styles.bookmarkActive : ''}`}
+            onClick={() => go(b.url)}
+            title={b.url}
+          >
+            <span className={styles.favicon} aria-hidden>{b.icon}</span>
+            {b.label}
+          </button>
+        ))}
+      </div>
+
       <div className={styles.viewport} key={`${url}#${nonce}`}>
-        {archive ? (
-          <OldNet src={archive} />
+        {stopped ? (
+          <StoppedPage url={url} />
+        ) : proxy ? (
+          <OldNet proxy={proxy} />
+        ) : url === DINO ? (
+          <DinoGame />
+        ) : query !== null ? (
+          <SearchPage query={query} onGo={go} />
         ) : (
           <Page url={url} onRing={ringStep} onRandom={ringRandom} onList={() => go(RING_LIST)} onGo={go} />
         )}
@@ -141,20 +223,194 @@ export function IE({ args }: AppProps) {
   )
 }
 
-// ── Old Net (archive.org, read-only, sandboxed) ───────────────────────────────
-function OldNet({ src }: { src: string }) {
+// ── Read-only proxy view (Wayback / Old Net / IPFS — single allowlisted host) ─
+function OldNet({ proxy }: { proxy: Proxy }) {
   return (
     <div className={styles.oldnet}>
       <div className={styles.oldnetBar}>
-        🕸 Old Net · viewing an archived page (read-only) · {src.replace(/^https:\/\//, '')}
+        🕸 {proxy.label} · read-only · {proxy.src.replace(/^https:\/\//, '')}
       </div>
       <iframe
         className={styles.oldnetFrame}
-        src={src}
-        title="Old Net archived page"
+        src={proxy.src}
+        title={`${proxy.label} (read-only)`}
         sandbox="allow-scripts allow-same-origin allow-popups"
         referrerPolicy="no-referrer"
       />
+    </div>
+  )
+}
+
+// ── Stop button result ───────────────────────────────────────────────────────
+function StoppedPage({ url }: { url: string }) {
+  return (
+    <div className={styles.errorPage}>
+      <div className={styles.errorInner}>
+        <div className={styles.errorTitle}>Action canceled</div>
+        <p>Internet Explorer was unable to link to the Web page you requested. The page might be temporarily unavailable.</p>
+        <hr className={styles.errorRule} />
+        <p className={styles.errorSmall}>Stopped — <code>{url}</code></p>
+      </div>
+    </div>
+  )
+}
+
+// ── chrome://dino — original endless runner (no Google T-Rex sprite) ──────────
+// A little moth hops the bulbs. Space / ↑ / click to jump. Original canvas art.
+function DinoGame() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [score, setScore] = useState(0)
+  const [best, setBest] = useState(0)
+  const [over, setOver] = useState(false)
+  const [started, setStarted] = useState(false)
+  // Mutable game state lives in a ref so the rAF loop never restarts on render.
+  const game = useRef({
+    y: 0, vy: 0, ground: 0, obstacles: [] as { x: number; w: number; h: number }[],
+    speed: 3.2, t: 0, spawn: 0, score: 0, dead: false, running: false,
+  })
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')!
+    if (!ctx) return
+    const W = canvas.width, H = canvas.height
+    const g = game.current
+    g.ground = H - 22
+
+    let raf = 0
+    let last = 0
+    function reset() {
+      g.y = g.ground; g.vy = 0; g.obstacles = []; g.speed = 3.2
+      g.t = 0; g.spawn = 40; g.score = 0; g.dead = false
+    }
+    function jump() {
+      if (g.dead) { reset(); setOver(false); setScore(0); g.running = true; setStarted(true); return }
+      if (g.y >= g.ground - 0.5) g.vy = -7.6
+      g.running = true; setStarted(true)
+    }
+    function step(ts: number) {
+      raf = requestAnimationFrame(step)
+      if (!last) last = ts
+      const dt = Math.min(2, (ts - last) / 16.67); last = ts
+      if (!g.running) return
+      g.t += dt
+      // physics
+      g.vy += 0.42 * dt
+      g.y += g.vy * dt
+      if (g.y > g.ground) { g.y = g.ground; g.vy = 0 }
+      // obstacles
+      g.spawn -= dt
+      if (g.spawn <= 0) {
+        const h = 12 + ((g.t * 7) % 14)
+        g.obstacles.push({ x: W + 10, w: 8 + ((g.t * 3) % 8), h })
+        g.spawn = 60 + ((g.t * 13) % 50) / g.speed
+      }
+      g.speed += 0.0012 * dt
+      for (const o of g.obstacles) o.x -= g.speed * dt
+      g.obstacles = g.obstacles.filter((o) => o.x + o.w > -4)
+      // score + collision
+      g.score += dt * 0.15
+      const px = 30, pw = 18, ph = 14
+      for (const o of g.obstacles) {
+        if (px + pw > o.x && px < o.x + o.w && g.y > g.ground - ph - o.h + 6) {
+          g.dead = true; g.running = false
+          setOver(true)
+          setBest((b) => { const s = Math.floor(g.score); return s > b ? s : b })
+        }
+      }
+      setScore(Math.floor(g.score))
+      // draw
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = '#0a0a0e'; ctx.fillRect(0, 0, W, H)
+      // ground line
+      ctx.strokeStyle = '#3a6a3a'; ctx.lineWidth = 1
+      ctx.beginPath(); ctx.moveTo(0, g.ground + 8); ctx.lineTo(W, g.ground + 8); ctx.stroke()
+      // obstacles = lightbulbs on poles
+      ctx.fillStyle = '#ffd24a'
+      for (const o of g.obstacles) {
+        ctx.fillRect(o.x, g.ground + 8 - o.h, o.w, o.h)
+        ctx.beginPath(); ctx.arc(o.x + o.w / 2, g.ground + 8 - o.h, o.w * 0.7, 0, Math.PI * 2); ctx.fill()
+      }
+      // player = a moth (two triangle wings + body)
+      const py = g.y
+      ctx.fillStyle = '#d8d8e8'
+      const flap = Math.sin(g.t * 0.6) * 3
+      ctx.beginPath()
+      ctx.moveTo(px + 9, py - 7)
+      ctx.lineTo(px - 2, py - 12 - flap); ctx.lineTo(px - 2, py - 1)
+      ctx.lineTo(px + 9, py - 7)
+      ctx.lineTo(px + 20, py - 12 - flap); ctx.lineTo(px + 20, py - 1)
+      ctx.closePath(); ctx.fill()
+      ctx.fillStyle = '#8a7a5a'
+      ctx.fillRect(px + 7, py - 12, 4, 12)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump() }
+    }
+    reset()
+    window.addEventListener('keydown', onKey)
+    canvas.addEventListener('pointerdown', jump)
+    raf = requestAnimationFrame(step)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('keydown', onKey)
+      canvas.removeEventListener('pointerdown', jump)
+      g.running = false
+    }
+  }, [])
+
+  return (
+    <div className={styles.dinoWrap}>
+      <div className={styles.dinoHud}>
+        <span>chrome://dino</span>
+        <span>HI {String(best).padStart(5, '0')}  {String(score).padStart(5, '0')}</span>
+      </div>
+      <canvas ref={canvasRef} width={520} height={170} className={styles.dinoCanvas} />
+      <div className={styles.dinoHint}>
+        {over ? 'G A M E   O V E R — press space to retry' : started ? 'space / ↑ to jump' : 'press space to start'}
+      </div>
+    </div>
+  )
+}
+
+// ── In-world search results ───────────────────────────────────────────────────
+function SearchPage({ query, onGo }: { query: string; onGo: (u: string) => void }) {
+  const q = query.toLowerCase()
+  const corpus: { url: string; title: string; blurb: string }[] = [
+    { url: HOME, title: "moldmouth's corner of the web", blurb: 'noise tapes, horror VHS, and whatever i&#39;m ripping this week.' },
+    { url: ROTBOX, title: 'ROTBOX — horror vhs trader', blurb: 'i trade tapes. i do not sell tapes. SOV, pre-cert, late-night TV dubs.' },
+    { url: TAPEHISS, title: 'TAPE HISS distro', blurb: 'one-person mailorder. Dickcrush Records, Shaking Dog Tapes, hand-numbered C30s.' },
+    { url: VAULT, title: 'VAULT 8806 — links + now playing', blurb: 'dead links stay up. that&#39;s the point. if it 404s, try the archive.' },
+    { url: RING_LIST, title: 'The Underground Noise Webring', blurb: '39 members, in ring order. the dead ones aren&#39;t shown.' },
+  ]
+  const hits = corpus.filter((c) =>
+    !q || c.title.toLowerCase().includes(q) || c.blurb.toLowerCase().includes(q),
+  )
+  return (
+    <div className={styles.search}>
+      <div className={styles.searchHead}>
+        <span className={styles.searchLogo}>ask<b>jervis</b></span>
+        <span className={styles.searchFor}>results for <b>{query}</b></span>
+      </div>
+      <div className={styles.searchCount}>{hits.length} site(s) in the index · the web is bigger than the index</div>
+      <div className={styles.searchList}>
+        {hits.map((h) => (
+          <div key={h.url} className={styles.searchHit}>
+            <button type="button" className={styles.searchTitle} onClick={() => onGo(h.url)}>{h.title}</button>
+            <div className={styles.searchUrl}>{h.url}</div>
+            <div className={styles.searchBlurb} dangerouslySetInnerHTML={{ __html: h.blurb }} />
+          </div>
+        ))}
+        {hits.length === 0 && (
+          <div className={styles.searchEmpty}>
+            nothing in the index matched. try the{' '}
+            <button type="button" className={styles.inlink} onClick={() => onGo('http://web.archive.org/web/*/' + query)}>
+              Wayback Machine
+            </button>{' '}— the old net remembers more than this little crawler does.
+          </div>
+        )}
+      </div>
     </div>
   )
 }

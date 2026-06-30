@@ -55,9 +55,59 @@
 }
 .go:hover { border-color: var(--winborder); opacity: 1; }
 
+/* Favorites / bookmark bar */
+.bookmarks {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-bottom: 1px solid var(--winborder);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.bmLabel { font-size: 11px; opacity: 0.6; margin-right: 4px; }
+.bookmark {
+  font: inherit;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: default;
+  background: transparent;
+  border: 1px solid transparent;
+  color: inherit;
+  padding: 1px 5px;
+  flex: 0 0 auto;
+}
+.bookmark:hover { border-color: var(--winborder); }
+.bookmarkActive { border-color: var(--winborder); background: var(--field); }
+.favicon { font-size: 11px; line-height: 1; }
+
 /* Content viewport hosts either an in-world page or the Old Net iframe. */
 .viewport { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
 .viewport > * { flex: 1; min-height: 0; }
+
+/* ── chrome://dino — original endless runner ─────────────────────────────── */
+.dinoWrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #0a0a0e; height: 100%; }
+.dinoHud { display: flex; justify-content: space-between; width: 520px; max-width: 92%; font-family: 'Courier New', monospace; font-size: 11px; color: #6a8a9a; }
+.dinoCanvas { max-width: 92%; border: 1px solid #2a2a3a; background: #0a0a0e; image-rendering: pixelated; touch-action: none; }
+.dinoHint { font-family: 'Courier New', monospace; font-size: 11px; color: #ffd24a; letter-spacing: 1px; }
+
+/* ── In-world search results (askjervis) ─────────────────────────────────── */
+.search { flex: 1; overflow: auto; background: #f4f4ec; color: #111; padding: 12px 18px 24px; font-family: 'Tahoma', 'Verdana', sans-serif; }
+.searchHead { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid #d24; padding-bottom: 6px; margin-bottom: 8px; }
+.searchLogo { font-size: 20px; color: #1a3a8a; font-family: 'Times New Roman', serif; }
+.searchLogo b { color: #d24; }
+.searchFor { font-size: 11px; color: #555; }
+.searchCount { font-size: 11px; color: #777; margin-bottom: 12px; }
+.searchList { display: flex; flex-direction: column; gap: 14px; }
+.searchHit { max-width: 520px; }
+.searchTitle { font: inherit; font-size: 14px; color: #1a3a8a; text-decoration: underline; background: none; border: none; padding: 0; cursor: pointer; text-align: left; }
+.searchTitle:hover { color: #d24; }
+.searchUrl { font-size: 11px; color: #1a7a1a; }
+.searchBlurb { font-size: 12px; color: #333; line-height: 1.4; margin-top: 2px; }
+.searchEmpty { font-size: 12px; color: #555; line-height: 1.6; max-width: 460px; }
+.searchEmpty .inlink { color: #1a3a8a; }
 
 /* The page itself */
 .page {

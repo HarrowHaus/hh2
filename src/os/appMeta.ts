@@ -52,4 +52,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   tic80: { title: 'moth', width: 528, height: 348, single: true, resizable: true },
   ruffle: { title: 'Flash Player', width: 580, height: 460, single: false, resizable: true },
   emulatorjs: { title: 'Game Console', width: 640, height: 520, single: true, resizable: true },
+  opentype: { title: 'Font Viewer', width: 720, height: 560, single: false, resizable: true },
 }

@@ -1,0 +1,82 @@
+.ot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+  font-size: 11px;
+}
+.dragging { outline: 2px dashed var(--accent); outline-offset: -4px; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--winborder);
+}
+.openBtn {
+  display: inline-block;
+  background: var(--field);
+  border: 1px solid var(--winborder);
+  padding: 2px 10px;
+  cursor: pointer;
+}
+.openBtn:hover { filter: brightness(1.15); }
+.fileInput { display: none; }
+.fileName { opacity: 0.7; }
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  opacity: 0.85;
+}
+.emptyGlyph {
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.err { color: #ff6a6a; max-width: 380px; }
+
+.body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+
+.sampleArea {
+  border-bottom: 1px solid var(--winborder);
+  padding: 8px;
+  background: #0c0c12;
+}
+.controls { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sampleInput {
+  flex: 1;
+  min-width: 0;
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  padding: 2px 6px;
+  font: inherit;
+}
+.sizeVal { width: 40px; text-align: right; opacity: 0.7; }
+.sampleCanvas { display: block; width: 100%; }
+
+.cols { flex: 1; min-height: 0; display: flex; overflow: hidden; }
+.metaPanel {
+  width: 230px;
+  flex: 0 0 auto;
+  border-right: 1px solid var(--winborder);
+  padding: 8px;
+  overflow: auto;
+}
+.metaRow { display: flex; gap: 8px; padding: 3px 0; border-bottom: 1px dotted var(--winborder); }
+.metaKey { width: 78px; flex: 0 0 auto; opacity: 0.6; }
+.metaVal { word-break: break-word; }
+
+.gridPanel { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+.gridHead { padding: 6px 8px; opacity: 0.7; border-bottom: 1px solid var(--winborder); }
+.gridScroll { flex: 1; overflow: auto; padding: 8px; background: #0c0c12; }
+.gridCanvas { display: block; image-rendering: auto; }

@@ -521,3 +521,13 @@ export function VolumeMutedIcon({ size = 16, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function OpenTypeIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="6" y="3" width="20" height="26" rx="2" fill="#f3f1ea" stroke="#8a8a8e" />
+      <path d="M10 23 L14.5 10 H17 L21.5 23 H19 L18 20 H13.5 L12.5 23 Z M14.1 18 H17.4 L15.8 13 Z" fill="#2a2a30" />
+      <text x="21" y="14" fontFamily="Georgia, serif" fontSize="9" fill="#c0392b">a</text>
+    </svg>
+  )
+}

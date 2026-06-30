@@ -138,3 +138,4 @@ assets).
 ### Tier B (daedalOS reconciliation)
 - **Prettier** — https://github.com/prettier/prettier — **MIT**. Code formatter in the Code app (Shift+Alt+F / Format button). `prettier/standalone` + the babel/estree/typescript/postcss/html/markdown plugins are lazy-imported on first format. No network.
 - **eruda** — https://github.com/liriliri/eruda — **MIT**. In-page DevTools (Console/Elements/Network/Resources), toggled with SHIFT+F12. Lazy-loaded (own chunk) on first use; its floating entry button is hidden so the keystroke is the only door.
+- **opentype.js** — https://github.com/opentypejs/opentype.js — **MIT**. Parses fonts for the OpenType Font Viewer app (metadata, live sample, glyph grid). No font is bundled — the user opens their own `.otf`/`.ttf`/`.woff`. opentype.js name used nominatively.

@@ -25,6 +25,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'hexedit', label: 'Hex Editor' },
       { appId: 'code', label: 'Code' },
       { appId: 'terminal', label: 'Command Prompt' },
+      { appId: 'opentype', label: 'Font Viewer' },
     ],
   },
   {

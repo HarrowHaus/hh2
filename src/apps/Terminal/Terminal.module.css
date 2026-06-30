@@ -1,36 +1,15 @@
-/* cmd.exe — fixed black console (its own surface, not the desktop visual style),
-   classic Lucida Console / Consolas raster look. */
-.term {
+/* cmd.exe on the real xterm.js engine — its own black console surface (not the
+   desktop visual style). xterm ships its own CSS (imported in the component);
+   we just give it a sized, padded host. */
+.host {
   height: 100%;
-  background: #000;
-  color: #c8c8c8;
+  width: 100%;
+  background: #0a0a0e;
   padding: 4px 6px;
   overflow: hidden;
   cursor: text;
 }
-.screen {
-  height: 100%;
-  overflow: auto;
-  font-family: 'Lucida Console', 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.32;
-}
-.line { white-space: pre-wrap; word-break: break-word; }
-.in { color: #c8c8c8; }
-.err { color: #d0d0d0; }
-.dim { color: #8a8a8a; }
-
-.prompt { display: flex; align-items: baseline; }
-.cwd { white-space: pre; color: #c8c8c8; }
-.input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #c8c8c8;
-  font-family: inherit;
-  font-size: 12px;
-  padding: 0;
-  margin-left: 0;
-  caret-color: #c8c8c8;
-}
+.host :global(.xterm) { height: 100%; padding: 0; }
+.host :global(.xterm-viewport) { overflow-y: auto; background: transparent !important; }
+.host :global(.xterm-viewport)::-webkit-scrollbar { width: 14px; }
+.host :global(.xterm-viewport)::-webkit-scrollbar-thumb { background: #2a2a3a; border: 2px solid #0a0a0e; }

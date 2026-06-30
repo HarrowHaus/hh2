@@ -148,9 +148,15 @@ Keyboard set · Windows (react-rnd/Framer-Motion) · Start Menu (sidebar/spotlig
 > ships only this doc + `docs/02` for review; tiers build after sign-off.
 
 **Tier A — REPLACE placeholders with real upstreams (highest user-visible delta)**
-miniPaint (Paint pillar) · xterm.js Terminal (FS/git/python/convert) · full Browser
-(Wayback + The Old Net proxy, bookmark bar+favicons, IPFS, chrome://dino, merge
-webring). *(Messenger/IRC are realtime — Tier D.)*
+✅ **Browser** (full IE: Wayback + The Old Net + IPFS read-only proxy, bookmark
+bar+favicons, chrome://dino, address search, webring merged in) — **DONE**.
+✅ **Terminal** on the real **xterm.js** engine (line editing, history, Tab
+autocomplete, pipes, neofetch, live weather, VFS commands) — **DONE**. *git /
+python / ffmpeg / convert / wapm ride the vendored **wasm pack** (Tier B/E) so the
+offline guarantee holds; until vendored they read as "not recognized" (honest XP
+behavior), not stubs.*
+⏳ **miniPaint** (Paint pillar, replaces the Photoshop diorama) — next.
+*(Messenger/IRC are realtime — Tier D.)*
 
 **Tier B — ADOPT new local apps (no realtime, no toolchain)**
 eruda DevTools (SHIFT+F12) · jsPaint · OpenType viewer · Video Player (video.js +

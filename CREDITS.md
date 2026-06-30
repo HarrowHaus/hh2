@@ -129,3 +129,7 @@ assets).
     - **Libbet and the Magic Floor** — Damian Yerrick (pinobatch) — **Zlib** — https://github.com/pinobatch/libbet (release `libbet.gb`)
     - **µCity** — Antonio Niño Díaz (AntonioND) — **GPL-3.0** — https://github.com/AntonioND/ucity (release `ucity.gbc`)
     - **Nova the Squirrel** — NovaSquirrel — **GPL-3.0** — https://github.com/NovaSquirrel/NovaTheSquirrel (release `nova.nes`)
+
+### Tier A (daedalOS reconciliation)
+- **@xterm/xterm** + **@xterm/addon-fit** — https://github.com/xtermjs/xterm.js — **MIT**. The terminal engine (the same one daedalOS uses) powering the Command Prompt app — real line editing, history, autocomplete, and pipes. The shell, commands, and VFS integration over it are our original code. xterm.js name used nominatively.
+- **External read-only services (no code vendored):** the terminal's `weather` command queries **wttr.in** (https://github.com/chubin/wttr.in); the Browser loads the **Wayback Machine** (web.archive.org), **The Old Net** (theoldnet.com), and the **dweb.link** IPFS gateway in sandboxed read-only iframes. Single allowlisted hosts each — no open proxy.

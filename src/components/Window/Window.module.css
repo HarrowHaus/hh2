@@ -120,3 +120,12 @@
 @media (prefers-reduced-motion: reduce) {
   .inner { animation: none; }
 }
+
+/* Frameless apps (Webamp): a transparent, click-through desktop layer above the
+   desktop and below the taskbar. The app's own windows opt back into pointer
+   events. No chrome, no clipping — they float like real Winamp. */
+.frameless {
+  position: absolute;
+  inset: 0 0 30px 0;
+  pointer-events: none;
+}

@@ -133,6 +133,23 @@ export function Window({ win }: { win: WindowInstance }) {
     window.addEventListener('pointerup', onUp)
   }
 
+  // Frameless apps (e.g. Webamp) bring their own window chrome. Render a
+  // transparent, click-through desktop layer — no titlebar/body frame — and keep
+  // it mounted while minimized (hidden) so playback/state survive.
+  if (meta.frameless) {
+    return (
+      <div
+        className={styles.frameless}
+        style={{ zIndex: win.z + 100, display: win.minimized ? 'none' : 'block' }}
+        onPointerDownCapture={() => focusWindow(win.id)}
+      >
+        <Suspense fallback={null}>
+          <Component winId={win.id} args={win.args} />
+        </Suspense>
+      </div>
+    )
+  }
+
   if (win.minimized) return null
 
   const style = win.maximized

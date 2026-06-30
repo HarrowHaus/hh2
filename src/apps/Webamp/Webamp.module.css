@@ -1,18 +1,17 @@
+/* Transparent, click-through layer; Webamp centers its own floating windows
+   within it (see renderWhenReady). Only Webamp's windows take pointer events. */
 .container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  /* Stacking context so Webamp's z-indexes stay inside our frame; Webamp centers
-     its own windows within this container (see renderWhenReady). */
-  isolation: isolate;
-  background: #0a0a0e;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
+.container :global(#webamp) { pointer-events: auto; }
 .missing {
-  height: 100%;
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
-  background: var(--winbody);
+  pointer-events: auto;
   color: var(--wintext);
   opacity: 0.7;
   font-size: 12px;

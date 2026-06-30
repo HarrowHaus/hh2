@@ -9,6 +9,12 @@ export interface AppMeta {
   /** Single-instance apps focus the existing window instead of opening another. */
   single?: boolean
   resizable?: boolean
+  /**
+   * Chromeless apps that bring their own window UI (e.g. Webamp/Winamp). The WM
+   * renders them as a transparent, click-through desktop layer with no titlebar
+   * or body frame; the app's own windows float and provide their own controls.
+   */
+  frameless?: boolean
 }
 
 export const APP_META: Record<AppId, AppMeta> = {
@@ -58,5 +64,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   run: { title: 'Run', width: 400, height: 190, single: true, resizable: false },
   dos: { title: 'MS-DOS Prompt', width: 700, height: 520, single: false, resizable: true },
   wordpad: { title: 'WordPad', width: 720, height: 540, single: false, resizable: true },
-  webamp: { title: 'Winamp', width: 295, height: 376, single: true, resizable: true },
+  webamp: { title: 'Winamp', width: 295, height: 376, single: true, frameless: true },
 }

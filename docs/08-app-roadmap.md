@@ -175,12 +175,12 @@ Actions job builds the wasm artifacts + commits them; then vendor artifact + fre
 
 ## OWNER DECISIONS OUTSTANDING (only the genuinely-blocked)
 Per the governing rule, copyleft alone is **no longer** a decision — accepted engines
-are isolated (Rule 4). The remaining open rulings:
+are isolated (Rule 4). **All blocking decisions are resolved — nothing gates the build tiers.** Record (only #5 is ongoing discipline, not a blocker):
 
 1. **ClassiCube** — ✅ **RESOLVED: SKIP** (owner ruled). Pulls Minecraft Classic assets at runtime; not adopted.
 2. **Cave Story (NXEngine)** — ✅ **RESOLVED: DEFER** (owner ruled). Revisit after the core tiers.
-3. **HEIC via libheif-js** — LGPL-3 + HEVC patent licensing for the decode path. Adopt as Photos add-on, or ship the patent-free formats (JXL/QOI/TIFF) only? (default: ship clean formats, HEIC behind a notice.) — *still open*
-4. **TinyMCE** — GPL-2.0-or-later *or* paid commercial. Confirm we ship under GPL (isolated module + source offer), not the commercial license. (default: GPL, isolated.) — *still open*
+3. **HEIC via libheif-js** — ✅ **RESOLVED: ADOPT behind a notice** (owner ruled). Ship HEIF decode as a Photos add-on; include the LGPL-3 + libde265/HEVC notice in `CREDITS.md` and ship the patent-free formats (JXL/QOI/TIFF) alongside.
+4. **TinyMCE** — ✅ **RESOLVED: GPL, isolated** (owner ruled). Ship under GPL-2.0-or-later as a self-contained, separately-licensed runtime module (own dir + LICENSE + source offer), not the commercial license — so our OS code stays MIT.
 5. **Trademark/name discipline** (no blocker, just naming): DOOM, Quake III, ClassiCube↔Minecraft, "3D Pinball/Space Cadet", "3D Pipes/Maze/FlowerBox", Video.js®, Winamp/Nullsoft, KiwiIRC, DX-Ball/Arkanoid — descriptive/period labels, our own skin, no logos, no implied affiliation.
 
 Everything else: **ADOPT** per the table — no silent skips.

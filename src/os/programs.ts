@@ -46,6 +46,7 @@ export const PROGRAMS: ProgramGroup[] = [
     items: [
       { appId: 'emulatorjs', label: 'Game Console' },
       { appId: 'v86', label: 'Virtual Machine' },
+      { appId: 'dos', label: 'MS-DOS Prompt' },
     ],
   },
   {

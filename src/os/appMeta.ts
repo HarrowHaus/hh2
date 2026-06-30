@@ -56,4 +56,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   videoplayer: { title: 'Video Player', width: 680, height: 480, single: false, resizable: true },
   paint: { title: 'Paint', width: 760, height: 560, single: true, resizable: true },
   run: { title: 'Run', width: 400, height: 190, single: true, resizable: false },
+  dos: { title: 'MS-DOS Prompt', width: 700, height: 520, single: false, resizable: true },
 }

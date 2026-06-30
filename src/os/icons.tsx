@@ -567,3 +567,14 @@ export function RunIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function DosIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="5" width="26" height="22" rx="2" fill="#0a0a0a" stroke="#5a5a5e" />
+      <rect x="3" y="5" width="26" height="4" fill="#2a2a2e" />
+      <text x="6" y="20" fontFamily="Lucida Console, monospace" fontSize="9" fill="#c8c8c8">C:\&gt;</text>
+      <rect x="20" y="14" width="6" height="9" fill="#3cff3c" opacity="0.85" />
+    </svg>
+  )
+}

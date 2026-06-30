@@ -1,0 +1,4 @@
+js-dos is licensed under the GNU General Public License v2.0 (GPL-2.0).
+Upstream: https://github.com/caiiyycuk/js-dos
+The full GPL-2.0 text: https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+Vendored unmodified (classic DOSBox backend only) as a self-contained module.

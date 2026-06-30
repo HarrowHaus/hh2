@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- js-dos v8 (caiiyycuk/js-dos, GPL-2.0) host — vendored offline. Engine only:
+     no DOS content is bundled; you load your own game (.jsdos or .zip). Forced to
+     the classic DOSBox backend (1.4M wasm) with cloud features off. See
+     /jsdos/LICENSE and /CREDITS.md. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MS-DOS Prompt</title>
+  <link rel="stylesheet" href="./js-dos.css" />
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; color: #cfcfcf; font-family: Tahoma, sans-serif; overflow: hidden; }
+    #bar { display: flex; gap: 10px; align-items: center; height: 26px; padding: 0 8px; background: #14141a; font-size: 12px; border-bottom: 1px solid #000; }
+    #open { cursor: pointer; color: #cfe0ff; }
+    #open input { display: none; }
+    #note { opacity: 0.55; }
+    #dos { position: absolute; inset: 27px 0 0 0; }
+    #hint { position: absolute; inset: 27px 0 0 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #8a8a8a; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div id="bar">
+    <label id="open">📁 Open game…<input id="file" type="file" accept=".jsdos,.zip" /></label>
+    <span id="note">load a DOS game bundle (.jsdos or .zip) — DOSBox runs it locally, fully offline. content is yours.</span>
+  </div>
+  <div id="dos"></div>
+  <div id="hint">No game loaded.<br />Use “Open game…” to pick a <b>.jsdos</b> or <b>.zip</b>.</div>
+
+  <script src="./js-dos.js"></script>
+  <script>
+    var props = null;
+    function boot(url) {
+      var hint = document.getElementById("hint");
+      if (hint) hint.style.display = "none";
+      if (props && typeof props.stop === "function") { try { props.stop(); } catch (e) {} }
+      try {
+        props = Dos(document.getElementById("dos"), {
+          url: url,
+          pathPrefix: "./emulators/",
+          backend: "dosbox",
+          noCloud: true,
+        });
+      } catch (e) {
+        if (hint) { hint.style.display = "flex"; hint.textContent = "Could not start DOSBox: " + e; }
+      }
+    }
+    document.getElementById("file").addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (f) boot(URL.createObjectURL(f));
+    });
+  </script>
+</body>
+</html>

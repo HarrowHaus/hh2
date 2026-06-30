@@ -190,9 +190,13 @@ fallback when the vendor copy is absent.
 - ✅ **Video Player** (video.js + videojs-youtube; local/URL/YouTube, hotkeys) — DONE
 - ✅ **Photos formats** (Picture Viewer opens TIFF/QOI/JPEG-XL/HEIF + native;
   decoders lazy + isolated; HEIF behind the LGPL/patent notice) — DONE
-- ⏳ remaining (heavier vendored integrations — verify on deploy between each):
-  **jsPaint** · **TinyMCE** · **Vim.js** · **Webamp** (+ Skin Museum + butterchurn)
-  · **js-dos** (+ auto save-states) · OS-subsystem extensions (`docs/02`).
+- ✅ **jsPaint** (real MS Paint, vendored offline) — DONE
+- ✅ **js-dos** (MS-DOS Prompt — DOSBox classic, offline, user-supplied content,
+  IndexedDB drive persistence) — DONE
+- ✅ **OS-subsystem polish** — DONE (close-guard/save, calendar popup, Explorer
+  keyboard set, Run dialog + Win+R/Win key, window open/close animations)
+- ⏳ remaining "risky" set (verify on deploy between each):
+  **TinyMCE** · **Vim.js** · **Webamp** (+ Skin Museum + butterchurn).
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
 BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·

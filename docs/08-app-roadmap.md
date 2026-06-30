@@ -1,176 +1,184 @@
-# 08 · APP ROADMAP (adoption catalog + license ledger)
+# 08 · APP ROADMAP — FULL daedalOS RECONCILIATION (adoption catalog + license ledger)
 
-## BUILD STATUS (live)
-- **Tier 1 — DONE** (deployed): Calculator, Character Map, Sound Recorder, Hex Editor, Solitaire, FreeCell, Spider, Brick Breaker, Crypt Runner, Markdown viewer, PDF viewer (pdf.js), panzoom Image Viewer, CRT/VHS overlay, oneko, screen savers, BSOD + fake Windows Update.
-- **Tier 2 — mostly DONE** (deployed): Sigil generator, ANSI/`.nfo` viewer, Warez keygen (original Web-Audio chiptune), Chess + isolated Stockfish, BassoonTracker iframe seam.
-  - **Deferred (owner call):** **Webamp** — original `.wsz` skin built + valid (browser-decodable BMPs, std zip, correct `initialSkin` API) but webamp renders its built-in fallback in our React/Vite host regardless of skin; it's a webamp integration issue (skin not honored / sprites not painting), not the skin. Revisit later. **chiptune3** real `.mod` player (AudioWorklet/wasm bundling) and **butterchurn** (rides with Webamp) deferred too — the keygen already covers chiptune.
-- **Tier 3 — IN PROGRESS.** Per owner rulings: BUILD/ADOPT = DOOM+Freedoom, EmulatorJS (isolated, no ROMs), js-dos, v86, OpenTyrian, Ruffle, TIC-80, Monaco; replace the proxied browser with a curated webring + read-only archive.org "Old Net" mode. SKIP = Quake3, Vim.js, TinyMCE, codecbox, BoxedWine, proxied browser, Space Cadet Pinball (not turnkey — needs MS data). ClassiCube still a content DECISION (pulls Minecraft assets at runtime).
-  - **DONE:** **Monaco** Code editor (own chunk; JS/TS/JSON/CSS/HTML workers, Ctrl+S saves to the VFS). **v86** Virtual Machine — boots a real **FreeDOS** floppy to `A:\>` fully offline (engine wasm + SeaBIOS + VGABIOS + FreeDOS image vendored to `public/v86/`, all free/redistributable; BSD-2 engine, lazy-loaded chunk). **Browser (IE)** — the rejected proxied browser is replaced (owner ruling E): IE is now a real mini-browser over a static in-world web — working Back/Forward/Home history, a live address bar, and an Underground Noise Webring whose prev/next/random/list actually cycle member sites. The **only** network seam is "Old Net" mode: an `archive.org`-allowlisted, sandboxed, read-only iframe (no open proxy); every other URL resolves to an in-world page or an XP "page cannot be displayed" error. *Offline caveat: the archived-page iframe can't be exercised in the no-network test harness — the allowlist/sandbox/error-fallback logic is verified, the live render is not.*
-  - **DONE:** **TIC-80** fantasy console (MIT) — prebuilt wasm vendored to `public/tic80/`, hosted in an iframe seam, running an **original** homemade cart (`moth` — a little keep-the-moth-off-the-bulbs game authored in `scripts/make-tic80-cart.mjs`; no third-party game content). Opens from `Program Files/GAMES/moth.tic`. Verified booting + rendering in-OS, fully offline.
-  - **BLOCKED on toolchain (no emscripten here):** **DOOM+Freedoom**, **OpenTyrian** — both are C→wasm ports with no prebuilt single-player web artifact to vendor (doom-wasm ships only C source; Cloudflare's demo build is websocket-multiplayer). Building them needs an emscripten SDK + SDL ports, which isn't installed in this environment. The Freedoom WAD itself is free and downloadable (v0.13.0, ~24MB). Deferred until a build step is available — not a code blocker, a toolchain one.
-  - **DONE:** **Ruffle** Flash Player (MIT/Apache, self-hosted wasm vendored to `public/ruffle/`) — shipped as a **ready shell** per owner ruling: no third-party SWF bundled, you open your own `.swf` via the drop/Open-Movie loader (verified playing a generated test movie end-to-end). The owner's original flyer movie and any individually CC/PD-cleared pieces drop in later. Registered in Start ▸ Sound & Video and `Program Files/Macromedia/Flash Player`.
-  - **DONE:** **Start-menu audit** — added a data-driven All Programs flyout (`src/os/programs.ts`); Monaco, v86, Browser, TIC-80 (+ everything else) now launch from Start. Going forward, shipping an app = registering it in `programs.ts`.
-  - **DONE:** **EmulatorJS** "Game Console" (GPL-3.0, isolated in an iframe under `public/emulatorjs/`, fully offline). Preloads 3 verified open-source homebrew carts (Libbet/GB-Zlib, µCity/GBC-GPL3, Nova the Squirrel/NES-GPL3 — see CREDITS), keeps the drop-your-own-ROM loader (gb/gbc/nes), and links out to itch.io's homebrew tag. Cores: gambatte (GB) + fceumm (NES). Verified both cores boot + run offline, no external calls. Registered in Start ▸ Emulators + `Program Files/Emulators/EmulatorJS`.
-  - **Still toolchain-blocked (deferred per ruling, NOT blocking Tier 3):** **DOOM+Freedoom / OpenTyrian** — C→wasm, need an emscripten build. Plan: a GitHub Actions job builds the wasm artifacts + commits them, then vendor artifact + Freedoom v0.13.0 WAD + OpenTyrian free data. Dedicated "wasm artifacts" pass.
-  - **DROP/SKIP (confirmed):** js-dos (v86 covers DOS), ClassiCube (Minecraft assets), Space Cadet Pinball (needs MS data); plus earlier Quake3 / Vim.js / TinyMCE / codecbox / BoxedWine / open proxied browser.
+## GOVERNING RULE (overrides all earlier conservatism)
+Adopt **EVERY** upstream Dustin Brett links in the daedalOS README, **from its own
+source**, credited in `CREDITS.md`. Do **not** skip because we ship a
+placeholder/diorama version — his is the real one, **REPLACE ours**. Do **not** skip
+for vague "safety" — MIT diligence covers the engine code. Only **two** skip reasons,
+and each must be **named per item**:
 
-The full app roster we're adopting, organized by the four build tiers. Every
-third-party component is verified against its **own upstream repo** (not
-daedalOS's glue) and carries its license + any name/content terms. Build in
-tier order; **stop for owner review after each tier**; deploy when creds exist
-(currently deferred). Keep `CREDITS.md` current as each app actually lands.
+- **(a) data/asset-license blocker** → adopt the **ENGINE** + free / user-supplied
+  data. Never drop the engine; ship a data loader instead.
+- **(b) policy line** → the **AI Chat Agent** (Prompt API / WebLLM) and **Stable
+  Diffusion / WebSD** are substituted/skipped (owner anti-LLM). Nothing else.
 
-Status legend (this doc is the plan; nothing here is built yet):
-- **ADOPT** — permissive, clean, no decision needed.
-- **ADOPT*** — adopt **with conditions** (attribution/notice, re-skin, supply free content).
-- **BUILD** — build original (mechanics/idea not copyrightable, or upstream unusable); no third-party license.
-- **DECISION** — owner must rule before adoption (copyleft / trademark / content-legality).
-- **DEFER** — needs Phase-6 realtime infra; architect now so it isn't boxed out, build later.
+This supersedes the SKIP rulings recorded in earlier revisions of this doc (Quake3,
+Vim.js, TinyMCE, codecbox, BoxedWine, js-dos, Space Cadet Pinball, proxied browser).
+Those are now **ADOPT** (engine, with the data/policy notes below).
+
+---
+
+## STEP 1 — COVERAGE TABLE
+
+Status legend: **have-real** = built & functional · **have-placeholder** = a
+diorama/partial stands in · **missing** = not present.
+Ruling legend: **KEEP** (already real) · **REPLACE** (swap placeholder for the real
+upstream) · **EXTEND** (real but below the full feature set) · **ADOPT** (build the
+gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
+(owner decision before adopt) · **SUBSTITUTE/SKIP** (named policy).
+
+### ADOPT — APPS
+
+| Item (upstream) | Our status | Ruling | Reason / note |
+|---|---|---|---|
+| **BoxedWine** (danoon2/Boxedwine, GPL-2.0 + Wine LGPL-2.1) | missing | **ADOPT** | 16/32-bit Windows apps; user-supplied `.exe`/`.zip`, no MS assets. Isolated GPL module. |
+| **Browser** (full: CORS load, bookmark bar+favicons, Wayback+The Old Net proxy, back/fwd/reload, address search, IPFS, chrome://dino t-rex-runner) | have-placeholder (IE mini-browser: webring + read-only archive.org) | **EXTEND** | Our IE has back/fwd/home + webring + archive.org read-only. Extend to the full proxy set (Wayback Machine + The Old Net = the approved read-only/no-open-proxy path), bookmark bar, IPFS, chrome://dino. **Merge our webring into it.** |
+| **DevTools** (liriliri/eruda, MIT) | missing | **ADOPT** | Console/Elements/Network/etc.; bind **SHIFT+F12**. |
+| **EmulatorJS** (EmulatorJS/EmulatorJS, GPL-3.0) | have-real | **KEEP** | Engine isolated; verified-clean homebrew carts + drop-your-own loader already shipped. |
+| **IRC** (kiwiirc/kiwiirc, Apache-2.0) | have-placeholder (mIRC diorama) | **REPLACE** | KiwiIRC over WebSockets becomes our **real mIRC**. Rides Phase-6 realtime. |
+| **js-dos** (caiiyycuk/js-dos, GPL-2.0) | have-placeholder (dep `js-dos@^8.4.0` installed, no app) | **ADOPT** | Reverses the earlier drop — Dustin ships **both** js-dos and v86; keep both. DOS emulator + **auto save-states**; content user-supplied/shareware. |
+| **Marked** (markedjs/marked, MIT) | have-real | **KEEP** | Markdown viewer (with DOMPurify). |
+| **Messenger** (Nostr + NIP-04, automatic keypair) | have-placeholder (AIM diorama) | **REPLACE** | **Real encrypted DM** — Nostr + NIP-04 + auto public/private keypair = our **AIM, for real**, on the Phase-6 realtime work. |
+| **Monaco Editor** (microsoft/monaco-editor, MIT) | have-real | **EXTEND** | Full editor + CTRL+S already; add line/cursor/lang status + **Prettier** formatting. |
+| **OpenType** font viewer (`.otf/.ttf/.woff`) | missing (opentype.js used by Sigil only) | **ADOPT** | Build a font viewer app on opentype.js (MIT). |
+| **Paint** (jspaint, 1j01/jspaint) | missing | **ADOPT** | jsPaint, **respect its name terms**; ships **alongside** our miniPaint-as-Photoshop. |
+| **PDF** (mozilla/pdf.js, Apache-2.0) | have-real | **KEEP** | Real `résumé.pdf` viewer (render/print/page/zoom). |
+| **Photos** (libheif-js LGPL, jxl.js, QOI, UTIF.js, panzoom) | have-placeholder (ImageViewer = panzoom only) | **EXTEND** | Add HEIF (libheif-js, **LGPL → ship notice**), JPEG XL (jxl.js), QOI, TIFF (UTIF.js). panzoom already present. |
+| **Ruffle** (ruffle-rs/ruffle, MIT/Apache-2.0) | have-real | **KEEP** | Flash engine shell + our original `.swf` / CC-cleared content. |
+| **Terminal** (xterm.js full set) | have-placeholder (our own cmd.exe over VFS) | **REPLACE/EXTEND** | Adopt **xterm.js** (@xterm/xterm, MIT) + the full feature set: FS, autocomplete+history, pipes, help, **git** (isomorphic-git), **Python** (Pyodide), **WAPM** (e.g. `wapm cowsay`), weather (wttr.in), neofetch, **FFmpeg.wasm** + **WASM-ImageMagick** convert, **SHIFT+F10**. Keep our hidden-command leak surface. |
+| **TinyMCE** (tinymce/tinymce, GPL-2.0-or-later) | missing | **ADOPT** | RTF/WYSIWYG editor w/ save. Isolated GPL module. |
+| **Video Player** (video.js Apache-2.0 + codecbox.js + videojs-youtube MIT) | missing | **ADOPT** | video.js + codecbox.js formats + youtube plugin + keyboard shortcuts. |
+| **Vim** (coolwanglu/vim.js, GPL-2.0) | missing | **ADOPT** | vim.js editor **alongside** Monaco; isolate + credit its license. |
+| **Webamp** (captbaritone/webamp, MIT) | have-placeholder (deferred — skin not honored in our host) | **ADOPT** | Winamp + **Winamp Skin Museum** random skins + playlist/streaming + **butterchurn** Milkdrop, as the **BONUS** player (custom foobar2000 stays the pillar). Re-solve the skin-load integration issue. |
+| **TIC-80** (nesbox/TIC-80, MIT) | have-real | **KEEP** | Original `moth` cart already shipped. |
+| **v86** (copy/v86, BSD-2) | have-real | **KEEP+EXTEND** | Boots FreeDOS offline. Add **save-states + auto-resize** per his. |
+| **Paint pillar: miniPaint-as-Photoshop** | have-placeholder (Photoshop = non-functional diorama) | **REPLACE** | Adopt **miniPaint** (viliusle/miniPaint, MIT) as the real Photoshop; jsPaint sits beside it. |
+
+### ADOPT ENGINE + DATA-NOTE (named data blockers — engine adopted, data substituted)
+
+| Item (upstream) | Our status | Ruling | Named blocker → resolution |
+|---|---|---|---|
+| **Quake III** (lrusso/Quake3, GPL-2.0+) | missing | **ADOPT+DATA** | Retail pak0–8 are copyrighted → ship **OpenArena** free data instead, or user-supplied. Engine adopted, isolated. |
+| **Space Cadet Pinball** (alula/SpaceCadetPinball, MIT code) | missing | **ADOPT+DATA** | MS Pinball game data not redistributable → **user-supplied-data loader**. Engine is clean MIT. |
+| **ClassiCube** (UnknownShadow200/ClassiCube, BSD-3) | missing | **FLAG** | Pulls **Minecraft Classic** assets at runtime (Mojang/MS) → **owner decision before adopting.** |
+| **Cave Story** (NXEngine, GPL) — our addition | missing | **ADOPT+DATA** | NXEngine is GPL; Cave Story freeware data is **user-supplied, never rehosted**. |
+
+### SUBSTITUTE / SKIP (named policy — owner anti-LLM)
+
+| Item | Ruling | Named reason |
+|---|---|---|
+| **AI Chat Agent** (Prompt API / WebLLM) | **SUBSTITUTE** | Owner anti-LLM (policy line b) → a **non-AI search/run menu** (optional ELIZA, no LLM). |
+| **Stable Diffusion / WebSD** (AI wallpapers) | **SKIP** | Owner anti-LLM (policy line b) → **keep all NON-AI wallpapers** (animated + slideshow + custom screensavers in `docs/02 §9`). |
+
+### ADOPT — GAMES
+
+| Item | Our status | Ruling | Note |
+|---|---|---|---|
+| **Chess** (chess.js BSD-2 + stockfish.js GPL-3) | have-real | **KEEP** | Board + isolated Stockfish already shipped. |
+| **DX-Ball** | have-real (our original **Breakout**) | **KEEP** | His link is an article, not a repo → **build-original**; our Breakout already satisfies it. |
+| **ZZT**, **A Dark Room** | missing | **ADOPT** | Verified-clean set, adopt now. |
+| **DOOM / ROTT / Wolf3D / Duke3D / OpenTyrian** | missing (toolchain-blocked) | **ADOPT (CI-wasm batch)** | C→wasm; need an emscripten build step (GitHub Actions job builds + commits artifacts), then vendor + free data (Freedoom, Tyrian freeware, etc.). |
+
+### KEEP (already built, no change required)
+TIC-80, v86 (extend per above), Calculator, Character Map, Sound Recorder, Hex Editor,
+Solitaire, FreeCell, Spider, Breakout, Minesweeper, Sigil generator, ANSI/`.nfo` viewer,
+Keygen, Markdown viewer, PDF viewer, Image Viewer (panzoom), CRT/VHS overlay, oneko,
+screensavers, BSOD + fake Windows Update, Display Properties, Run dialog, Explorer,
+Notepad, foobar2000 (music pillar), Monaco, Browser/IE, Ruffle, EmulatorJS, Chess.
+
+### OS subsystems (see `docs/02` for the full per-subsystem ledger)
+File System (BrowserFS) · File Explorer (full nav/view/dnd) · Context-Menu matrix ·
+Keyboard set · Windows (react-rnd/Framer-Motion) · Start Menu (sidebar/spotlight/power)
+· Taskbar (peek/search) · Clock (worker/NTP/calendar) · Background+Screensaver
+(animated/slideshow/custom) · Run dialog (`ipfs:`/`nostr:`) · URL query loading
+(`/?url=`, `/?app=`). Status: **have-real floor, EXTEND to the full surface.**
+
+---
+
+## STEP-1 SUMMARY (what's actually missing to build)
+- **REPLACE placeholders with real upstreams:** Messenger (Nostr/NIP-04 ← AIM), IRC
+  (KiwiIRC ← mIRC), Paint pillar (miniPaint ← Photoshop diorama), Terminal (xterm.js
+  ← our cmd.exe), Browser (full proxy/bookmarks/IPFS/dino ← IE mini-browser, merge
+  webring).
+- **ADOPT new apps:** BoxedWine, eruda DevTools, js-dos, OpenType viewer, jsPaint,
+  TinyMCE, Video Player (video.js), Vim.js, Webamp (re-solve skin), and the
+  ADOPT+DATA quartet (Quake3/OpenArena, Space Cadet Pinball, Cave Story, +ClassiCube
+  pending FLAG).
+- **EXTEND real apps:** Monaco (+Prettier/status), Photos (HEIF/JXL/QOI/TIFF), v86
+  (save-states/auto-resize), and the OS subsystems in `docs/02`.
+- **GAMES batch:** ZZT, A Dark Room now; DOOM/ROTT/Wolf3D/Duke3D/OpenTyrian on the
+  CI-wasm batch.
+- **SUBSTITUTE/SKIP (named):** AI Chat Agent → non-AI run/search (optional ELIZA);
+  Stable Diffusion → skip, keep non-AI wallpapers.
+
+---
 
 ## GLOBAL ADOPTION RULES (apply to every entry)
-1. Install from the app's **own upstream** package/repo — never copy daedalOS's integration code.
-2. Record the app's license in `CREDITS.md` at adoption (name, upstream URL, SPDX, branding/name terms).
-3. **Engines, not content.** No copyrighted ROMs/WADs/disk-images/skins/character-art. Use Freedoom, public-domain/homebrew/shareware/free-content only; emulators load user-provided or free content.
-4. Every GPL / AGPL / LGPL / non-commercial / name-restriction / content-legality issue is a **DECISION for the owner** (see end), not a guess.
+1. Install from the app's **own upstream** package/repo — never copy daedalOS's glue.
+2. Record the license in `CREDITS.md` at adoption (name, upstream URL, SPDX, branding/name terms).
+3. **Engines, not content.** No copyrighted ROMs/WADs/disk-images/skins/character-art. Free / homebrew / shareware / user-supplied only.
+4. **Copyleft isolation:** any GPL/AGPL/LGPL engine is a **self-contained, separately-licensed runtime module** (own dir + LICENSE + offer-of-source), loaded at runtime, so our OS code stays MIT. AGPL (network copyleft) is the one to avoid embedding — for the BBS dialer build an original ws↔telnet bridge rather than embed fTelnet.
 5. No meta-narrative (Rule 2). Dark XP skin on every adopted app (re-skin where upstream ships its own chrome). Keep the core open to the Phase-6 realtime spine.
-
-## ARCHITECTURE-FIT NOTES
-- **System libraries** (FS/window/zip/metadata) underpin many apps; listed once below, pulled per-app.
-- **Copyleft isolation:** any GPL/AGPL/LGPL engine we keep is integrated as a **self-contained, separately-licensed module** (its own dir, its own LICENSE, an offer-of-source), loaded at runtime — so our OS code stays MIT. AGPL (network copyleft) is the one to avoid embedding.
-- **Phase-6 realtime:** IRC / BBS / ELIZA-buddy / (optionally NetHack & MIDI jukebox) ride the deferred Durable-Objects spine. Don't architect anything that boxes out a shared realtime layer.
-- **Our differentiators stay primary:** skin, strata, music catalog (foobar = pillar), theme engine. Adopted apps are texture/parity, not the thesis. foobar stays the music pillar; Webamp is a *bonus*.
+6. **Desktop pet:** keep **oneko** / an original sprite (NOT web-esheep — GPL-3 + Fuji-TV art).
 
 ---
 
-## SYSTEM LIBRARIES (infrastructure — pulled per-app, not user-facing)
+## SYSTEM LIBRARIES (infrastructure — pulled per-app)
 
-| Lib | Upstream | License | Notes | Verdict |
-|---|---|---|---|---|
-| BrowserFS | github.com/jvilk/BrowserFS | MIT *(well-established; confirm at adoption)* | Optional: real binary-file backend if we ever want it (currently our flat FS suffices) | ADOPT (optional) |
-| react-rnd | github.com/bokuweb/react-rnd | MIT *(confirm)* | We already have our own WM; only if we want its resize/drag. Likely **skip** (own code) | BUILD (own WM exists) |
-| Framer Motion | github.com/framer/motion | MIT *(confirm)* | Window open/close/min transitions (respect reduced-motion) | ADOPT |
-| fflate | github.com/101arrowz/fflate | MIT *(confirm)* | Zip read/write (export, .wsz skins, save bundles) | ADOPT |
-| 7z-wasm | github.com/use-strict/7z-wasm | **LGPL-2.1** + 7-Zip **unRAR restriction** *(confirm)* | LGPL flow-through; the unRAR licence forbids using it to reverse-engineer RAR. Only if we need 7z/RAR archives | DECISION (LGPL) |
-| music-metadata-browser | github.com/Borewit/music-metadata-browser | MIT *(confirm)* | ID3/Vorbis tags — already conceptually used by the ingest pipeline | ADOPT |
-| html-to-image | github.com/bubkoo/html-to-image | **MIT** ✓ | DOM→PNG (screenshot/share). No runtime deps | ADOPT |
-
----
-
-## TIER 1 — cheap XP authenticity (low risk; mostly BUILD or clean MIT)
-
-| App | Source | License | Terms | Verdict |
-|---|---|---|---|---|
-| Solitaire / FreeCell / Spider | **build original** | — | Card-game mechanics aren't copyrightable; use original card-face SVGs (no MS deck) | BUILD |
-| Calculator | **build original** | — | Trivial XP applet | BUILD |
-| Character Map | **build original** | — | Reads from system/web fonts | BUILD |
-| Sound Recorder | **build original** | — | MediaRecorder API; the XP "green line" UI | BUILD |
-| oneko / desktop pet | github.com/adryd325/oneko.js | **MIT** ✓ (sprite **public-domain** by declaration, K. Gotoh 1989) | Clean. **Preferred over web-esheep** (which is GPL-3 + Fuji-TV-owned art) | ADOPT |
-| Extra screensavers (Pipes/Starfield/Mystify/Matrix) | 1j01/pipes **MIT** ✓; jcubic/cmatrix **MIT** ✓; Vanta **MIT** ✓ (use three.js effects, avoid p5.js LGPL); Hexells **Apache-2.0** ✓ | mixed permissive | "3D Pipes/Maze/FlowerBox" are MS screensaver *names* — nominative use only. **Do NOT use** kevin-shannon/3D-FlowerBox or ibid-11962/3D-Maze (unlicensed + MS bitmap assets) — build those originals | ADOPT* / BUILD |
-| BSOD + fake Windows Update easter eggs | **build original** | — | Depth-riot flavor; original copy, no MS art | BUILD |
-| Marked (markdown viewer) | github.com/markedjs/marked | **MIT** ✓ | Pair with DOMPurify (security) | ADOPT |
-| pdf.js (résumé / PDF viewer) | github.com/mozilla/pdf.js | **Apache-2.0** ✓ | NOTICE/attribution. Enables a real `resume.pdf` | ADOPT |
-| Photos viewer (HEIC/JXL/TIFF + pan-zoom) | UTIF.js **MIT** ✓ · panzoom **MIT** ✓ · JXL **@jsquash Apache-2.0** ✓ · libheif-js **LGPL-3.0** ✓ | mostly permissive; **libheif = LGPL-3 + HEVC patent** | Core viewer is clean (UTIF/panzoom/JXL). HEIC via libheif is **DECISION** (LGPL + HEVC patents) — optional add-on | ADOPT* (+DECISION for HEIC) |
-| Hex editor | **build original** (or adopt a small MIT one) | — | Simple canvas/table over bytes | BUILD |
-| t-rex-runner (dino game) | github.com/wayou/t-rex-runner | **BSD-3-Clause** ✓ | **Replace Google's dino sprite with original art**; keep BSD code | ADOPT* |
-| DX-Ball / Breakout | **build original** | — | shuddha2021 repo has no LICENSE file; "DX-Ball"/"Arkanoid" are trademarks → build original "Breakout" w/ original art | BUILD |
-
-**Tier-1 takeaway:** almost entirely BUILD-original or clean MIT/Apache. The only copyleft is *optional* (HEIC via libheif). Tier 1 can proceed with zero forced copyleft entanglement.
+| Lib | Upstream | License | Use |
+|---|---|---|---|
+| BrowserFS | jvilk/BrowserFS | MIT | Binary FS backend + ZIP/ISO mounts |
+| react-rnd | bokuweb/react-rnd | MIT | Window resize/drag (optional; our WM is at parity) |
+| Framer Motion | framer/motion | MIT | Window open/close/min animation |
+| fflate | 101arrowz/fflate | MIT | ZIP write |
+| 7z-wasm | use-strict/7z-wasm | LGPL-2.1 + unRAR restriction | ZIP/ISO read + 7Z/GZ/RAR/TAR |
+| music-metadata-browser | Borewit/music-metadata-browser | MIT | Cover-art / tag-driven cached icons |
+| html-to-image | bubkoo/html-to-image | MIT | Taskbar peek preview / screen capture |
+| opentype.js | opentypejs/opentype.js | MIT | OpenType viewer (+ Sigil) |
+| isomorphic-git | isomorphic-git/isomorphic-git | MIT | `git` in Terminal |
+| Pyodide | pyodide/pyodide | MPL-2.0 (+CPython PSF) | `python` in Terminal (per-pkg audit) |
+| FFmpeg.wasm | ffmpegwasm/ffmpeg.wasm | wrapper MIT; core LGPL-2.1 | Terminal media convert |
+| WASM-ImageMagick | KnicKnic/WASM-ImageMagick | wrapper Apache-2.0; engine ImageMagick License | Terminal image convert |
 
 ---
 
-## TIER 2 — identity apps (the scene-kid layer)
+## ADOPTION TIERS (build order; STOP for owner review after each tier)
 
-| App | Source | License | Terms | Verdict |
-|---|---|---|---|---|
-| BassoonTracker (real tracker → the "FL Studio" app) | github.com/steffest/BassoonTracker | **MIT** ✓ | Drop/replace bundled ST-01/02 Amiga sample disks (ambiguous license) with free/original samples | ADOPT* |
-| chiptune player (+ keygen/.nfo tie) | github.com/DrSnuggles/chiptune | **MIT** (wrapper) ✓; **libopenmpt = BSD-3-Clause** ✓ (minimp3 CC0 / stb_vorbis PD) | Attribution only. Wire to the keygen prop = real chiptune on "crack" | ADOPT |
-| Sigil generator | **build original** (Spare/Carroll method) | — | Koda-Pig/sigil-generator-v2 has **no license = reference only, do not copy**. Build original w/ opentype.js (**MIT** ✓) | BUILD |
-| ANSI / .nfo (CP437 + SAUCE) viewer | github.com/ansilove/ansilove.js | **BSD-2-Clause** ✓ (fonts under same license) | Clean | ADOPT |
-| CRT / VHS post-process shader | **build original** | — | Display-Properties toggle, respect reduced-motion. Our WebGL/CSS — no upstream | BUILD |
-| Webamp (BONUS Winamp; foobar stays pillar) | github.com/captbaritone/webamp | **MIT** (code) ✓ | **Winamp name + classic base skin + sample audio are Nullsoft/Llama-Group property, NOT MIT.** Ship with an **original skin**, don't imply affiliation | ADOPT* / DECISION |
-| butterchurn (Webamp/foobar visualizer) | github.com/jberg/butterchurn | **MIT** ✓ (presets MIT-packaged; per-preset provenance informal) | MilkDrop-style viz; pairs with Webamp or foobar | ADOPT |
-| Chess (board + engine) | chess.js **BSD-2** ✓ + stockfish.js **GPL-3.0** ✓ | board clean; **engine GPL-3** | board/logic clean. **Stockfish is GPL-3** → DECISION (isolate as separate module + source offer, or use a permissive engine, or board-only) | ADOPT* + DECISION |
+> Nothing in the tiers below is built yet — this is the post-approval plan. STEP 3
+> ships only this doc + `docs/02` for review; tiers build after sign-off.
 
----
+**Tier A — REPLACE placeholders with real upstreams (highest user-visible delta)**
+miniPaint (Paint pillar) · xterm.js Terminal (FS/git/python/convert) · full Browser
+(Wayback + The Old Net proxy, bookmark bar+favicons, IPFS, chrome://dino, merge
+webring). *(Messenger/IRC are realtime — Tier D.)*
 
-## TIER 3 — heavy / emulation / legal-flagged (most DECISIONs live here)
+**Tier B — ADOPT new local apps (no realtime, no toolchain)**
+eruda DevTools (SHIFT+F12) · jsPaint · OpenType viewer · Video Player (video.js +
+codecbox + youtube) · TinyMCE · Vim.js · Webamp (+ Skin Museum + butterchurn) · js-dos
+(+ auto save-states) · Photos formats (HEIF/JXL/QOI/TIFF) · Monaco +Prettier · v86
+save-states/auto-resize · OS-subsystem extensions (`docs/02`).
 
-| App | Source | License | Content/Name | Verdict |
-|---|---|---|---|---|
-| DOOM + Freedoom | cloudflare/doom-wasm or GMH-Code/Dwasm | **GPL-2.0** | **Ship Freedoom (BSD-3) IWAD only** — never doom.wad/shareware. Don't brand "DOOM" | DECISION (GPL) |
-| EmulatorJS | github.com/EmulatorJS/EmulatorJS | **GPL-3.0** loader + **mixed cores** (many GPL-2; Snes9x lineage **non-commercial**) | No ROMs/BIOS bundled; user supplies free/homebrew. Per-core license review | DECISION (GPL + per-core) |
-| js-dos | github.com/caiiyycuk/js-dos | **GPL-2.0** (wraps DOSBox GPL-2) | Ships no DOS games; user/free content | DECISION (GPL) |
-| v86 | github.com/copy/v86 | **BSD-2-Clause** ✓ | Free OS images (Linux/FreeDOS/ReactOS); no Windows media | ADOPT* |
-| BoxedWine | github.com/danoon2/Boxedwine | **GPL-2.0** (+ Wine LGPL-2.1) | User-supplied Windows apps; no MS assets | DECISION (GPL) |
-| Ruffle (Flash) | github.com/ruffle-rs/ruffle | **Apache-2.0 OR MIT** ✓ | "Flash/Adobe" descriptive only | ADOPT |
-| Quake III | github.com/lrusso/Quake3 | **GPL-2.0+** | **Needs retail pak0–8 (copyrighted)**; no bundled free data (OpenArena = the free substitute) | DECISION (GPL + content) |
-| ClassiCube | github.com/UnknownShadow200/ClassiCube | **BSD-3-Clause** ✓ | Pulls Minecraft-Classic assets at runtime; Mojang/MS **trademark** — don't call it Minecraft | DECISION (content/TM) |
-| Space Cadet Pinball | github.com/alula/SpaceCadetPinball | **MIT** (code) ✓ | **MS game assets NOT redistributable** — user must supply; can't bundle. "3D Pinball" is MS's | DECISION (content) |
-| TIC-80 | github.com/nesbox/TIC-80 | **MIT** ✓ (source stayed MIT; only the PRO binary is paid) | Community carts only | ADOPT |
-| OpenTyrian | github.com/opentyrian/opentyrian | **GPL-2.0** | Tyrian 2.1 data is **officially freeware** — safe to ship | DECISION (GPL; content OK) |
-| Monaco editor | github.com/microsoft/monaco-editor | **MIT** ✓ | A "real" code/text editor | ADOPT |
-| Vim.js | github.com/coolwanglu/vim.js | **GPL-2.0** (composite; archived 2018) | Copyleft + dead dependency | DECISION (GPL; recommend skip) |
-| TinyMCE | github.com/tinymce/tinymce | **GPL-2.0-or-later** (relicensed 2022) or commercial | Trademarked; GPL or pay | DECISION (GPL; recommend skip → Monaco/own) |
-| Real proxied Browser | (own + a proxy) | — | **Abuse/security surface** — must sandbox + rate-limit + same-origin proxy allowlist | DECISION (security) |
-| FFmpeg.wasm | github.com/ffmpegwasm/ffmpeg.wasm | wrapper **MIT**; core **LGPL-2.1** (GPL if GPL codecs) | media transcode utility | DECISION (LGPL/GPL by build) |
-| codecbox.js | github.com/duanyao/codecbox.js | effective **GPL** (links x264) | video decode | DECISION (GPL) |
-| WASM-ImageMagick | github.com/KnicKnic/WASM-ImageMagick | wrapper **Apache-2.0**; engine **ImageMagick License** ✓ | permissive; include ImageMagick NOTICE | ADOPT* |
-| Pyodide | github.com/pyodide/pyodide | **MPL-2.0** (+ CPython PSF + per-pkg) | Python in the terminal; per-package audit if shipping libs | ADOPT* |
-| video.js (+ youtube) | github.com/videojs/video.js | **Apache-2.0** ✓; videojs-youtube **MIT** ✓ | "Video.js" Brightcove **trademark**; YT plugin binds **YouTube ToS** | ADOPT* |
-| eruda (devtools) | github.com/liriliri/eruda | **MIT** ✓ | in-page console easter egg | ADOPT |
-| isomorphic-git | github.com/isomorphic-git/isomorphic-git | **MIT** ✓ | git in the terminal | ADOPT |
-| xterm.js | github.com/xtermjs/xterm.js (`@xterm/xterm`) | **MIT** ✓ | richer terminal backend (we have a CLI already) | ADOPT |
+**Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
+BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · Cave Story
+(NXEngine + user data) · ZZT · A Dark Room · **ClassiCube pending FLAG.**
+
+**Tier D — Phase-6 realtime spine (Durable-Objects / WebSockets)**
+**Messenger** (Nostr + NIP-04, auto keypair) · **IRC** (KiwiIRC over WebSockets) ·
+optional ELIZA buddy · BBS via original ws↔telnet bridge (not fTelnet/AGPL).
+
+**Tier E — CI-wasm artifact batch (needs emscripten build step)**
+DOOM+Freedoom · OpenTyrian (Tyrian freeware) · ROTT · Wolf3D · Duke3D. A GitHub
+Actions job builds the wasm artifacts + commits them; then vendor artifact + free data.
 
 ---
 
-## TIER 4 — needs infra (Phase-6 realtime) — architect now, build later
+## OWNER DECISIONS OUTSTANDING (only the genuinely-blocked)
+Per the governing rule, copyleft alone is **no longer** a decision — accepted engines
+are isolated (Rule 4). The only items that still need an owner ruling:
 
-| App | Source | License | Terms | Verdict |
-|---|---|---|---|---|
-| KiwiIRC / real IRC | github.com/kiwiirc/kiwiirc | **Apache-2.0** ✓ | Re-skin; don't imply affiliation. Rides Phase-6 spine | DEFER |
-| BBS telnet dialer (HyperTerminal) | github.com/rickparrish/fTelnet | **AGPL-3.0** ⚠️ | **Network copyleft** — public deploy must offer source to users. Recommend an alt client or original ws-telnet bridge | DECISION (AGPL) + DEFER |
-| ELIZA-as-AIM-buddy | **build original** (algorithm unencumbered) | — | `elizabot` npm port has **no license** — reimplement the 1966 ELIZA script approach. No LLM | BUILD + DEFER |
-| MIDI soft-synth (old-web BGM) | spessasynth **Apache-2.0** ✓ / js-synthesizer **BSD-3 core + LGPL FluidSynth** / timidity **MIT + FreePats GPL** | mixed | **Soundfont = content decision:** use GeneralUser GS / FluidR3 / MuseScore_General (**all free**); avoid SC-55/Creative dumps & FreePats (GPL). spessasynth+GeneralUser GS = cleanest | ADOPT* (+content) / DEFER |
-| NetHack (Terminal roguelike) | github.com/apowers313/NetHackJS | **NGPL** (NetHack GPL) | Copyleft: source-availability + no relicense for the NetHack portion | DECISION (NGPL) + DEFER |
+1. **ClassiCube** — pulls Minecraft Classic assets at runtime (Mojang/MS trademark + asset legality). **FLAG: adopt or skip?** (default: skip until ruled.)
+2. **HEIC via libheif-js** — LGPL-3 + HEVC patent licensing for the decode path. Adopt as Photos add-on, or ship the patent-free formats (JXL/QOI/TIFF) only? (default: ship clean formats, HEIC behind a notice.)
+3. **TinyMCE** — GPL-2.0-or-later *or* paid commercial. Confirm we ship under GPL (isolated module + source offer), not the commercial license. (default: GPL, isolated.)
+4. **Trademark/name discipline** (no blocker, just naming): DOOM, Quake III, ClassiCube↔Minecraft, "3D Pinball/Space Cadet", "3D Pipes/Maze/FlowerBox", Video.js®, Winamp/Nullsoft, KiwiIRC, DX-Ball/Arkanoid — descriptive/period labels, our own skin, no logos, no implied affiliation.
 
----
-
-## BUILD-ORIGINAL (no third-party license at all)
-Solitaire/FreeCell/Spider · Calculator · Character Map · Sound Recorder · BSOD + fake Windows Update · CRT/VHS shader · Sigil generator · ELIZA · DX-Ball/Breakout · Defrag/ScanDisk visualizer · the two unlicensed screensavers (FlowerBox/Maze) if wanted · t-rex sprite art · original Webamp skin. These carry **no** copyleft/trademark/content risk — they're ours.
-
----
-
-# DECISIONS NEEDED (owner sign-off)
-
-Grouped by risk. My recommendation is in **bold**; you rule.
-
-### A. Copyleft — does the OS bundle stay permissive, and which engines are worth the compliance?
-Posture I recommend across the board: **keep any accepted copyleft engine as a self-contained, separately-licensed module (own dir + LICENSE + offer-of-source), loaded at runtime, so our OS code stays MIT.** Then per item:
-- **AGPL-3.0 — fTelnet (BBS dialer):** network copyleft; a public deploy must offer source to all users. **Recommend: do NOT embed — build an original ws↔telnet bridge, or skip the BBS dialer.**
-- **GPL-3.0 — EmulatorJS, stockfish.js, web-esheep:** **EmulatorJS** = keep, isolated, if you want retro emulation (strongest pull) — but accept GPL-3 + per-core review; **stockfish.js** = isolate as a module, or ship board-only chess (**recommend board + isolated engine**); **web-esheep** = **drop** (GPL-3 *and* infringing art) → use **oneko** instead.
-- **GPL-2.0 — DOOM, js-dos, BoxedWine, Quake3, OpenTyrian, Vim.js, codecbox.js, TinyMCE:** **DOOM+Freedoom = recommend YES** (iconic, free content path, isolated). **js-dos / v86(BSD) / BoxedWine = pick how deep you want "run real old software"** — recommend **v86 (BSD, clean) + js-dos** , defer BoxedWine. **OpenTyrian = YES** (free data). **Quake3 = recommend SKIP** (needs copyrighted retail data). **Vim.js / TinyMCE = SKIP** (archived / relicensed) → use **Monaco (MIT)**. **codecbox.js = skip** unless video decode is essential.
-- **LGPL — FFmpeg.wasm, libheif-js, js-synthesizer/FluidSynth, 7z-wasm:** weak copyleft, OK if you preserve notices + keep the wasm replaceable. **Recommend: adopt only when actually needed** (HEIC, transcode, archives) and document the LGPL notice.
-- **NGPL — NetHack:** isolate + source offer if adopted. **Recommend: defer to Tier 4**, adopt as an isolated module.
-- **MPL-2.0 — Pyodide:** file-level copyleft, low burden. **Recommend: ADOPT** when wanted, per-package audit for bundled Python libs.
-
-### B. Trademark / name — never brand the tile/window with these (nominative use only)
-DOOM, Quake III (id/ZeniMax/MS) · ClassiCube↔Minecraft (Mojang/MS) · "3D Pinball / Space Cadet" (MS) · "3D Pipes/Maze/FlowerBox" screensaver names (MS) · **Video.js** (Brightcove ®) · Winamp/Nullsoft (Webamp) · KiwiIRC · DX-Ball/Arkanoid (Taito) · "SoundFont®" (Creative). **Recommend: descriptive/period labels, our own skin, no logos, no implied affiliation.** (No blocker — just naming discipline.)
-
-### C. Content / asset legality — must NOT bundle; supply free substitute
-- **clippy.js — ⚠️ CRITICAL.** MIT covers code only; bundled sprites/sounds are **unlicensed MS Agent IP**, and **Bonzi is separate third-party IP** (defunct, malware-associated). **Recommend: ship the code with an ORIGINAL assistant character; do NOT ship any MS Agent character or Bonzi art.** (Our existing fake-installer "BonziBUDDY" *text* gag is fine — that's a name in a joke list, not shipped character art.)
-- **DOOM → Freedoom (BSD-3) only.** **Space Cadet Pinball / Quake3** → assets not redistributable → **user-supplies or skip** (recommend skip Quake3; Pinball only if you're OK with "bring your own data"). **ClassiCube** pulls Minecraft assets at runtime → confirm acceptable or skip.
-- **t-rex sprite, 3D-Maze .bmp textures, web-esheep sheep** → replace with **original art**.
-- **Webamp** → ship an **original skin**, not the Nullsoft classic base skin/sample audio (or accept the well-trodden gray area). **Recommend original skin.**
-- **MIDI soundfonts** → **GeneralUser GS / FluidR3 / MuseScore_General (free)**; avoid SC-55/Creative/FreePats(GPL).
-- **BassoonTracker** ST-01/02 sample disks → replace with free/original samples.
-
-### D. No-license / all-rights-reserved → build original (cannot reuse upstream code)
-3D-FlowerBox (kevin-shannon), 3D-Maze (ibid-11962), DX-Ball (shuddha2021), elizabot port, sigil-generator-v2. **Recommend: build originals** (already the plan for sigil/ELIZA/screensavers/Breakout).
-
-### E. Security
-- **Real proxied Browser (Tier 3):** abuse surface (SSRF/open-proxy/malware). **Recommend: only behind a same-origin proxy with a domain allowlist + rate limits, sandboxed iframe, no arbitrary fetch — or skip in favor of a static "weird-web" webring.**
-
----
-
-## What I'd build first (if you approve Tier 1 as-is)
-All BUILD-original or clean MIT/Apache, **zero forced copyleft**: Solitaire/FreeCell/Spider, Calculator, Character Map, Sound Recorder, **oneko**, original screensavers (+ MIT Pipes/cmatrix/Vanta/Hexells), BSOD/Update easter eggs, **Marked + pdf.js + Photos viewer**, hex editor, t-rex (original sprite), Breakout. HEIC-via-libheif (LGPL) held as an optional add-on pending your call in (A).
+Everything else: **ADOPT** per the table — no silent skips.

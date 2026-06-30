@@ -40,6 +40,7 @@ export type AppId =
   | 'v86'
   | 'tic80'
   | 'ruffle'
+  | 'emulatorjs'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

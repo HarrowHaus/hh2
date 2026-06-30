@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+    #game { width: 100vw; height: 100vh; }
+    #msg { color: #ccc; font: 13px monospace; padding: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Isolated EmulatorJS host (GPL-3.0 engine + libretro cores under data/,
+       loaded at runtime, never bundled into the app's MIT code — the same
+       isolation model as the Stockfish worker). Everything is vendored, so it
+       runs fully offline; reads which game to boot from the query string. -->
+  <div id="game"></div>
+  <div id="msg" hidden>Unsupported game format.</div>
+  <script>
+    // Keep the engine fully offline: its only external call is a version-check to
+    // cdn.emulatorjs.org/.../version.json — redirect that to our vendored copy so
+    // nothing leaves the origin (and no unhandled rejection when offline).
+    (function () {
+      var realFetch = window.fetch.bind(window)
+      window.fetch = function (input, init) {
+        var u = typeof input === 'string' ? input : (input && input.url) || ''
+        if (u.indexOf('cdn.emulatorjs.org') !== -1) {
+          if (u.indexOf('version.json') !== -1) return realFetch('data/version.json', init)
+          return Promise.reject(new Error('external request blocked (offline)'))
+        }
+        return realFetch(input, init)
+      }
+    })();
+    (function () {
+      var q = new URLSearchParams(location.search)
+      var core = q.get('core')
+      var rom = q.get('rom')
+      var name = q.get('name') || 'Game'
+      if (!core || !rom) {
+        document.getElementById('msg').hidden = false
+        return
+      }
+      window.EJS_player = '#game'
+      window.EJS_core = core
+      window.EJS_gameUrl = rom
+      window.EJS_gameName = name
+      window.EJS_pathtodata = 'data/'
+      window.EJS_language = 'en-US'
+      window.EJS_disableAutoLang = true
+      window.EJS_startOnLoaded = true
+      // No telemetry / external calls — everything needed is vendored locally.
+      window.EJS_DEBUG_XX = false
+      var s = document.createElement('script')
+      s.src = 'data/loader.js'
+      document.body.appendChild(s)
+    })()
+  </script>
+</body>
+</html>

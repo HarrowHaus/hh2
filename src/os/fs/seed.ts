@@ -69,6 +69,7 @@ const FOLDERS: [string, string, number][] = [
   [`${PF}/Emulators/ZSNES`, 'ZSNES', A],
   [`${PF}/Emulators/SNES9x`, 'SNES9x', A],
   [`${PF}/Emulators/VisualBoyAdvance`, 'VisualBoyAdvance', A2],
+  [`${PF}/Emulators/EmulatorJS`, 'EmulatorJS', C],
   [`${PF}/trivia`, 'trivia', C],
   [`${PF}/Accessories`, 'Accessories', A],
   [`${PF}/GAMES`, 'GAMES', A],
@@ -668,6 +669,8 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${PF}/GAMES/moth.tic`, 'moth.tic', C, 'tic80'),
   // Emulators (Tier 3 — docs/08): v86 boots a real FreeDOS floppy in the browser
   launcher(`${PF}/Emulators/v86.exe`, 'v86.exe', C, 'v86'),
+  // EmulatorJS console — isolated; preloaded open homebrew carts + drop-your-own
+  launcher(`${PF}/Emulators/EmulatorJS/play.exe`, 'play.exe', C, 'emulatorjs'),
   // Accessories (Tier 1 — docs/08)
   launcher(`${PF}/Accessories/Calculator.exe`, 'Calculator.exe', A, 'calc'),
   launcher(`${PF}/Accessories/Character Map.exe`, 'Character Map.exe', A, 'charmap'),

@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon, ChessIcon, CodeIcon, V86Icon, Tic80Icon, RuffleIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon, ChessIcon, CodeIcon, V86Icon, Tic80Icon, RuffleIcon, EmulatorIcon } from './icons'
 import { DisplayProperties } from '../apps/DisplayProperties/DisplayProperties'
 import { Explorer } from '../apps/Explorer/Explorer'
 import { Notepad } from '../apps/Notepad/Notepad'
@@ -39,6 +39,7 @@ import { Code } from '../apps/Code/Code'
 import { V86App } from '../apps/V86/V86'
 import { Tic80 } from '../apps/Tic80/Tic80'
 import { Ruffle } from '../apps/Ruffle/Ruffle'
+import { EmulatorJS } from '../apps/EmulatorJS/EmulatorJS'
 
 interface IconProps {
   size?: number
@@ -91,4 +92,5 @@ export const APPS: Record<AppId, AppEntry> = {
   v86: { Icon: V86Icon, Component: V86App },
   tic80: { Icon: Tic80Icon, Component: Tic80 },
   ruffle: { Icon: RuffleIcon, Component: Ruffle },
+  emulatorjs: { Icon: EmulatorIcon, Component: EmulatorJS },
 }

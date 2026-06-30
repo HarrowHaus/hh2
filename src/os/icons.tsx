@@ -368,6 +368,21 @@ export function CodeIcon({ size = 30, style, className }: IconProps) {
   )
 }
 
+export function EmulatorIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="9" width="26" height="15" rx="6" fill="#6b6f76" stroke="#3a3d42" />
+      <rect x="6" y="12" width="8" height="8" rx="1" fill="#1b1d22" />
+      <rect x="8.5" y="13" width="3" height="6" fill="#3a3d42" />
+      <rect x="7" y="14.5" width="6" height="3" fill="#3a3d42" />
+      <circle cx="22" cy="14.5" r="2" fill="#cc3344" />
+      <circle cx="26" cy="17.5" r="2" fill="#ffcd45" />
+      <circle cx="22" cy="20" r="1.6" fill="#3aa0e0" />
+      <circle cx="18.5" cy="17" r="1.6" fill="#5ab04a" />
+    </svg>
+  )
+}
+
 export function RuffleIcon({ size = 30, style, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">

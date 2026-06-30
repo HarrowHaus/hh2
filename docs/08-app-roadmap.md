@@ -161,11 +161,15 @@ real layers/filters/brush/selection + local open & save. The CS2 diorama is the
 fallback when the vendor copy is absent.
 **Tier A complete — ready for owner review.** *(Messenger/IRC are realtime — Tier D.)*
 
-**Tier B — ADOPT new local apps (no realtime, no toolchain)**
-eruda DevTools (SHIFT+F12) · jsPaint · OpenType viewer · Video Player (video.js +
-codecbox + youtube) · TinyMCE · Vim.js · Webamp (+ Skin Museum + butterchurn) · js-dos
-(+ auto save-states) · Photos formats (HEIF/JXL/QOI/TIFF) · Monaco +Prettier · v86
-save-states/auto-resize · OS-subsystem extensions (`docs/02`).
+**Tier B — ADOPT new local apps (no realtime, no toolchain)** — *in progress*
+- ✅ **Monaco +Prettier** (Shift+Alt+F format + Ln/Col/lang status) — DONE
+- ✅ **eruda DevTools** (SHIFT+F12, lazy) — DONE
+- ✅ **OpenType viewer** (opentype.js; open .otf/.ttf/.woff, glyph grid) — DONE
+- ✅ **v86 save-states + auto-resize** — DONE
+- ✅ **Video Player** (video.js + videojs-youtube; local/URL/YouTube, hotkeys) — DONE
+- ⏳ remaining: **jsPaint** · **TinyMCE** · **Vim.js** · **Webamp** (+ Skin Museum +
+  butterchurn) · **js-dos** (+ auto save-states) · **Photos formats**
+  (HEIF/JXL/QOI/TIFF) · OS-subsystem extensions (`docs/02`).
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
 BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·

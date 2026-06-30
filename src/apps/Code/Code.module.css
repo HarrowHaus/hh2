@@ -15,9 +15,31 @@
   border-bottom: 1px solid #111;
 }
 .name { font-weight: 600; }
+.fmtBtn {
+  font: inherit;
+  font-size: 11px;
+  color: #ccc;
+  background: #3a3a3c;
+  border: 1px solid #111;
+  padding: 1px 8px;
+  cursor: pointer;
+}
+.fmtBtn:hover { background: #4a4a4c; }
 .hint { margin-left: auto; opacity: 0.6; }
 .host {
   flex: 1;
   min-height: 0;
   width: 100%;
 }
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 2px 10px;
+  font-size: 11px;
+  color: #ccc;
+  background: #007acc;
+  border-top: 1px solid #111;
+}
+.lang { text-transform: capitalize; }
+.msg { margin-left: auto; opacity: 0.9; }

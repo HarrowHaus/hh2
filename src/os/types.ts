@@ -42,6 +42,7 @@ export type AppId =
   | 'ruffle'
   | 'emulatorjs'
   | 'opentype'
+  | 'videoplayer'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

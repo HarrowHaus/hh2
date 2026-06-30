@@ -531,3 +531,13 @@ export function OpenTypeIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function VideoIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="7" width="20" height="18" rx="2" fill="#1f1f24" stroke="#6a6a70" />
+      <path d="M23 13 L29 9 V23 L23 19 Z" fill="#2f2f36" stroke="#6a6a70" />
+      <path d="M10 11 L18 16 L10 21 Z" fill="#ff5ab0" />
+    </svg>
+  )
+}

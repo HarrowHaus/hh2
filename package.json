@@ -30,6 +30,8 @@
     "react-dom": "^18.3.1",
     "stockfish": "^18.0.8",
     "v86": "^0.5.419",
+    "video.js": "^8.23.9",
+    "videojs-youtube": "^3.0.1",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

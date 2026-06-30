@@ -20,7 +20,7 @@ export function Logon() {
         <div className={styles.brandline} />
         <div className={styles.accounts}>
           {ACCOUNTS.map((a) => (
-            <button key={a} type="button" className={styles.account} onClick={() => login(a)}>
+            <button key={a} type="button" className={styles.account} data-acct={a} onClick={() => login(a)}>
               <span className={styles.avatar} aria-hidden="true" />
               <span className={styles.name}>{a}</span>
             </button>

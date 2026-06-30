@@ -41,10 +41,13 @@ export function Boot() {
       <div className={styles.brand}>
         HARROW<span>·</span>HAUS
       </div>
+      {/* Authentic XP boot marquee: a lit triad tracking across a dark rail. */}
       <div className={styles.bar} aria-hidden="true">
-        <i />
-        <i />
-        <i />
+        <div className={styles.blocks}>
+          <i />
+          <i />
+          <i />
+        </div>
       </div>
     </div>
   )

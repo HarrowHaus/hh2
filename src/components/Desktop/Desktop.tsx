@@ -245,6 +245,15 @@ export function Desktop() {
               }}
               onDoubleClick={ic.open}
               onContextMenu={(e) => iconMenu(e, ic)}
+              // a11y: keyboard users open the icon with Enter (mouse uses
+              // double-click). Guard to the button itself so the rename input's
+              // own Enter handler isn't double-fired.
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target === e.currentTarget) {
+                  e.preventDefault()
+                  ic.open()
+                }
+              }}
             >
               <ic.Icon size={32} />
               {renaming === ic.id && ic.node ? (

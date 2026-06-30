@@ -18,7 +18,7 @@ export const APP_META: Record<AppId, AppMeta> = {
   foobar: { title: 'foobar2000', width: 660, height: 460, single: true, resizable: true },
   bt: { title: 'µTorrent', width: 640, height: 410, single: true, resizable: true },
   installer: { title: 'Setup', width: 460, height: 358, single: false, resizable: false },
-  photoshop: { title: 'Adobe Photoshop', width: 720, height: 520, single: true, resizable: true },
+  photoshop: { title: 'Adobe Photoshop', width: 940, height: 620, single: true, resizable: true },
   flstudio: { title: 'FL Studio', width: 700, height: 460, single: true, resizable: true },
   terminal: { title: 'Command Prompt', width: 560, height: 360, single: false, resizable: true },
   imageviewer: { title: 'Windows Picture and Fax Viewer', width: 560, height: 480, single: false, resizable: true },

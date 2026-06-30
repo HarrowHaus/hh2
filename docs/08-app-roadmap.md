@@ -155,8 +155,11 @@ autocomplete, pipes, neofetch, live weather, VFS commands) — **DONE**. *git /
 python / ffmpeg / convert / wapm ride the vendored **wasm pack** (Tier B/E) so the
 offline guarantee holds; until vendored they read as "not recognized" (honest XP
 behavior), not stubs.*
-⏳ **miniPaint** (Paint pillar, replaces the Photoshop diorama) — next.
-*(Messenger/IRC are realtime — Tier D.)*
+✅ **miniPaint** (Paint pillar) — **DONE**. viliusle/miniPaint (MIT) vendored to
+`public/minipaint/` and loaded in an iframe behind the "Adobe Photoshop" tile;
+real layers/filters/brush/selection + local open & save. The CS2 diorama is the
+fallback when the vendor copy is absent.
+**Tier A complete — ready for owner review.** *(Messenger/IRC are realtime — Tier D.)*
 
 **Tier B — ADOPT new local apps (no realtime, no toolchain)**
 eruda DevTools (SHIFT+F12) · jsPaint · OpenType viewer · Video Player (video.js +

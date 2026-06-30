@@ -1,6 +1,14 @@
 /* Photoshop CS2 diorama. Fixed dark CS2 grey (this app's chrome is its own
    period skin, not the desktop visual style) — but text/accent borrow tokens so
    it never clashes. NON-FUNCTIONAL prop: nothing here edits anything. */
+/* Real editor (miniPaint) fills the whole window. */
+.editor {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #303030;
+}
 .ps {
   display: flex;
   flex-direction: column;

@@ -1,12 +1,38 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { baseName } from '../../os/fs/path'
 import type { AppProps } from '../../os/types'
 import styles from './Photoshop.module.css'
 
-// Adobe Photoshop CS2 diorama (manifest item 5). A frozen workspace — someone
-// mid-edit on DIY xerox cover art for the owner's own catalog. NON-FUNCTIONAL:
-// tools and menus don't do anything; it's a museum room, not an editor. The
-// canvas art is an original SVG recreation (never a lifted bitmap, docs/04).
+// "Adobe Photoshop" = the REAL image editor (docs/08 Tier A): miniPaint
+// (viliusle/miniPaint, MIT) vendored to public/minipaint/ and loaded in an
+// iframe — layers, filters, selection/clone/brush, open & save (PNG/JPG/etc.).
+// If the vendor copy is missing it falls back to the CS2 diorama below. The
+// "Photoshop" name is nominative period dressing; the engine is miniPaint
+// (credited in CREDITS.md). miniPaint name used nominatively.
+const MINIPAINT_URL = `${import.meta.env.BASE_URL}minipaint/index.html`
+
+export function Photoshop({ winId, args }: AppProps) {
+  // null = checking, false = not vendored (diorama), true = present (editor)
+  const [hasEditor, setHasEditor] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let alive = true
+    fetch(MINIPAINT_URL, { method: 'HEAD' })
+      .then((r) => alive && setHasEditor(r.ok))
+      .catch(() => alive && setHasEditor(false))
+    return () => { alive = false }
+  }, [])
+
+  if (hasEditor) {
+    return <iframe className={styles.editor} src={MINIPAINT_URL} title="Adobe Photoshop (miniPaint)" />
+  }
+  return <Diorama winId={winId} args={args} />
+}
+
+// Adobe Photoshop CS2 diorama (manifest item 5) — the fallback when the real
+// editor isn't vendored. A frozen workspace, someone mid-edit on DIY xerox cover
+// art for the owner's own catalog. NON-FUNCTIONAL museum room. The canvas art is
+// an original SVG recreation (never a lifted bitmap, docs/04).
 
 const MENUS = ['File', 'Edit', 'Image', 'Layer', 'Select', 'Filter', 'View', 'Window', 'Help']
 // Toolbox glyphs (single chars stand in for the classic tool bitmaps).
@@ -98,7 +124,7 @@ function FlyerArt({ art }: { art: Art }) {
   )
 }
 
-export function Photoshop({ args }: AppProps) {
+function Diorama({ args }: AppProps) {
   const path = (args?.path as string) || ''
   const art = useMemo(() => artFor(path ? baseName(path) : ''), [path])
 

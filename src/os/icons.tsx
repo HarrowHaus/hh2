@@ -541,3 +541,17 @@ export function VideoIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function PaintIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="5" width="24" height="18" rx="2" fill="#eef0f2" stroke="#7a7a7e" />
+      <circle cx="10" cy="11" r="2.4" fill="#e23b3b" />
+      <circle cx="16" cy="11" r="2.4" fill="#2db34a" />
+      <circle cx="22" cy="11" r="2.4" fill="#2a6fd6" />
+      <rect x="7" y="16" width="18" height="4" rx="1" fill="#c8ccd0" />
+      <path d="M20 22 L27 29 L29 27 L22 20 Z" fill="#caa24a" stroke="#7a5f22" strokeWidth="0.6" />
+      <rect x="18" y="20" width="4" height="4" transform="rotate(45 20 22)" fill="#9a9a9e" />
+    </svg>
+  )
+}

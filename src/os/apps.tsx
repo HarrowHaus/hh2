@@ -1,6 +1,6 @@
 import { lazy, type ComponentType, type FC, type LazyExoticComponent } from 'react'
 import type { AppId, AppProps } from './types'
-import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon, ChessIcon, CodeIcon, V86Icon, Tic80Icon, RuffleIcon, EmulatorIcon, OpenTypeIcon, VideoIcon } from './icons'
+import { MonitorIcon, FolderIcon, NoteIcon, MusicIcon, GlobeIcon, SetupIcon, PhotoshopIcon, FLStudioIcon, TerminalIcon, ImageIcon, TriviaIcon, MineIcon, RecycleBinIcon, AimIcon, MircIcon, IeIcon, CalcIcon, CharMapIcon, RecorderIcon, HexIcon, SolitaireIcon, BreakoutIcon, RunnerIcon, MarkdownIcon, PdfIcon, BsodIcon, UpdateIcon, FreeCellIcon, SpiderIcon, SigilIcon, AnsiIcon, KeygenIcon, ChessIcon, CodeIcon, V86Icon, Tic80Icon, RuffleIcon, EmulatorIcon, OpenTypeIcon, VideoIcon, PaintIcon } from './icons'
 
 interface IconProps {
   size?: number
@@ -65,4 +65,5 @@ export const APPS: Record<AppId, AppEntry> = {
   emulatorjs: { Icon: EmulatorIcon, Component: named(() => import('../apps/EmulatorJS/EmulatorJS'), 'EmulatorJS') },
   opentype: { Icon: OpenTypeIcon, Component: named(() => import('../apps/OpenType/OpenType'), 'OpenType') },
   videoplayer: { Icon: VideoIcon, Component: named(() => import('../apps/VideoPlayer/VideoPlayer'), 'VideoPlayer') },
+  paint: { Icon: PaintIcon, Component: named(() => import('../apps/Paint/Paint'), 'Paint') },
 }

@@ -54,4 +54,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   emulatorjs: { title: 'Game Console', width: 640, height: 520, single: true, resizable: true },
   opentype: { title: 'Font Viewer', width: 720, height: 560, single: false, resizable: true },
   videoplayer: { title: 'Video Player', width: 680, height: 480, single: false, resizable: true },
+  paint: { title: 'Paint', width: 760, height: 560, single: true, resizable: true },
 }

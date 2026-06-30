@@ -1,9 +1,9 @@
 node_modules/
 /dist/
-build/
+/build/
 .next/
-out/
-.cache/
+/out/
+/.cache/
 .vercel/
 .wrangler/
 *.log

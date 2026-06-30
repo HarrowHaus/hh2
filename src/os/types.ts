@@ -43,6 +43,7 @@ export type AppId =
   | 'emulatorjs'
   | 'opentype'
   | 'videoplayer'
+  | 'paint'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

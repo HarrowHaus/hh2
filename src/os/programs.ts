@@ -69,6 +69,7 @@ export const PROGRAMS: ProgramGroup[] = [
   {
     name: 'Graphics',
     items: [
+      { appId: 'paint', label: 'Paint' },
       { appId: 'photoshop', label: 'Adobe Photoshop' },
     ],
   },

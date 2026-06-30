@@ -19,6 +19,7 @@ export const PROGRAMS: ProgramGroup[] = [
     name: 'Accessories',
     items: [
       { appId: 'notepad', label: 'Notepad' },
+      { appId: 'wordpad', label: 'WordPad' },
       { appId: 'calc', label: 'Calculator' },
       { appId: 'charmap', label: 'Character Map' },
       { appId: 'recorder', label: 'Sound Recorder' },

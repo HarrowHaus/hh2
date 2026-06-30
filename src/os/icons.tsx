@@ -578,3 +578,16 @@ export function DosIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function WordPadIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="7" y="3" width="18" height="26" rx="1.5" fill="#fbfbfd" stroke="#8a8a8e" />
+      <rect x="7" y="3" width="18" height="5" fill="#2a6fd6" />
+      <rect x="10" y="12" width="12" height="1.6" fill="#444" />
+      <rect x="10" y="16" width="12" height="1.6" fill="#444" />
+      <rect x="10" y="20" width="8" height="1.6" fill="#444" />
+      <text x="9.5" y="7.4" fontFamily="Georgia, serif" fontSize="4.4" fill="#fff">RTF</text>
+    </svg>
+  )
+}

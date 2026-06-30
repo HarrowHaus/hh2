@@ -11,7 +11,7 @@ import styles from './Run.module.css'
 // app alias, a VFS path, or a URI (http(s):// / ipfs:// → Internet Explorer;
 // nostr: → Messenger) and opens it, like the real "Open:" box.
 const ALIASES: Record<string, { appId: AppId; args?: AppArgs }> = {
-  notepad: { appId: 'notepad' }, write: { appId: 'notepad' }, wordpad: { appId: 'notepad' },
+  notepad: { appId: 'notepad' }, write: { appId: 'wordpad' }, wordpad: { appId: 'wordpad' },
   calc: { appId: 'calc' }, charmap: { appId: 'charmap' },
   mspaint: { appId: 'paint' }, paint: { appId: 'paint' }, pbrush: { appId: 'paint' },
   photoshop: { appId: 'photoshop' },

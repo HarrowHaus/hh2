@@ -195,8 +195,9 @@ fallback when the vendor copy is absent.
   IndexedDB drive persistence) — DONE
 - ✅ **OS-subsystem polish** — DONE (close-guard/save, calendar popup, Explorer
   keyboard set, Run dialog + Win+R/Win key, window open/close animations)
+- ✅ **TinyMCE** (WordPad — RTF/WYSIWYG, self-hosted GPL, save-to-VFS) — DONE
 - ⏳ remaining "risky" set (verify on deploy between each):
-  **TinyMCE** · **Vim.js** · **Webamp** (+ Skin Museum + butterchurn).
+  **Vim.js** · **Webamp** (+ Skin Museum + butterchurn).
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
 BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·

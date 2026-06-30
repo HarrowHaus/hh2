@@ -1,0 +1,29 @@
+.wordpad {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody);
+  color: var(--wintext);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-bottom: 1px solid var(--winborder);
+}
+.name { font-weight: 600; }
+.saveBtn {
+  font: inherit;
+  font-size: 11px;
+  color: var(--wintext);
+  background: var(--field);
+  border: 1px solid var(--winborder);
+  padding: 1px 10px;
+  cursor: pointer;
+}
+.saveBtn:hover { filter: brightness(1.12); }
+.hint { margin-left: auto; opacity: 0.6; }
+.host { flex: 1; min-height: 0; }
+.host :global(.tox-tinymce) { height: 100% !important; border: 0; }

@@ -33,6 +33,9 @@ export function routeOpen(node: FSNode): OpenTarget | null {
   if (ext === 'nfo' || ext === 'ans' || ext === 'asc') {
     return { appId: 'ansi', args: { path: node.path, title: node.name } }
   }
+  if (ext === 'rtf' || ext === 'doc') {
+    return { appId: 'wordpad', args: { path: node.path, title: node.name } }
+  }
   if (['js','jsx','mjs','ts','tsx','json','css','scss','html','htm','xml','py','sh','sql','c','cpp','ini'].includes(ext ?? '')) {
     return { appId: 'code', args: { path: node.path, title: node.name } }
   }

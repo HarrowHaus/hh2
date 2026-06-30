@@ -85,6 +85,7 @@
 }
 
 .tray {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -95,7 +96,45 @@
 .time {
   color: var(--traytext);
   font-size: 11px;
+  font-family: inherit;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  padding: 1px 4px;
+  cursor: pointer;
 }
+.time:hover { border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); }
+.timeOpen { border-color: rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.12); }
+
+/* ── Calendar popup (above the tray, bottom-right) ────────────────────────── */
+.calendar {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 6px;
+  width: 220px;
+  background: var(--winbody, #1c1c22);
+  color: var(--wintext, #e8e8e8);
+  border: 1px solid var(--winborder, #000);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+  padding: 8px;
+  z-index: 9999;
+  font-size: 11px;
+}
+.calHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.calTitle { font-weight: 600; }
+.calNav {
+  width: 20px; height: 20px;
+  display: grid; place-items: center;
+  background: none; border: 1px solid transparent; color: inherit;
+  font-size: 14px; cursor: pointer; border-radius: 2px;
+}
+.calNav:hover { border-color: var(--winborder); background: rgba(255, 255, 255, 0.08); }
+.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; text-align: center; }
+.calWeekday { opacity: 0.55; font-size: 10px; padding: 2px 0; }
+.calDay { padding: 3px 0; border-radius: 2px; }
+.calBlank { visibility: hidden; }
+.calToday { background: var(--accent, #2a6fd6); color: #fff; font-weight: 700; }
+.calFoot { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--winborder); opacity: 0.8; text-align: center; }
 
 /* Tray mute toggle — flat button hugging the tray icons. */
 .trayBtn {

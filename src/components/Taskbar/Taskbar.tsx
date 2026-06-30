@@ -1,9 +1,10 @@
-import type { MouseEvent, PointerEvent as ReactPointerEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
 import { FlagIcon, VolumeIcon, VolumeMutedIcon } from '../../os/icons'
 import { useClock } from './useClock'
+import { Calendar } from './Calendar'
 import styles from './Taskbar.module.css'
 
 // XP taskbar: Start button, running-task buttons (focus/click-to-minimize),
@@ -22,7 +23,21 @@ export function Taskbar() {
   const muted = useOS((s) => s.muted)
   const toggleMuted = useOS((s) => s.toggleMuted)
   const openMenu = useMenu((s) => s.openMenu)
-  const time = useClock()
+  const clock = useClock()
+  const [calOpen, setCalOpen] = useState(false)
+  const trayRef = useRef<HTMLDivElement>(null)
+
+  // Click-away / Esc closes the calendar popup.
+  useEffect(() => {
+    if (!calOpen) return
+    const onDown = (e: PointerEvent) => {
+      if (trayRef.current && !trayRef.current.contains(e.target as Node)) setCalOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCalOpen(false) }
+    window.addEventListener('pointerdown', onDown)
+    window.addEventListener('keydown', onKey)
+    return () => { window.removeEventListener('pointerdown', onDown); window.removeEventListener('keydown', onKey) }
+  }, [calOpen])
 
   // PointerDown + stopPropagation so the desktop's close-on-click doesn't race.
   const onStart = (e: ReactPointerEvent) => {
@@ -79,7 +94,7 @@ export function Taskbar() {
         })}
       </div>
 
-      <div className={styles.tray} aria-label="Notification area">
+      <div className={styles.tray} aria-label="Notification area" ref={trayRef}>
         <button
           type="button"
           className={styles.trayBtn}
@@ -90,7 +105,17 @@ export function Taskbar() {
         >
           {muted ? <VolumeMutedIcon size={15} /> : <VolumeIcon size={15} />}
         </button>
-        <span className={styles.time}>{time}</span>
+        <button
+          type="button"
+          className={`${styles.time} ${calOpen ? styles.timeOpen : ''}`}
+          title={clock.tooltip}
+          aria-label={`${clock.time} — ${clock.tooltip}`}
+          aria-expanded={calOpen}
+          onClick={() => setCalOpen((o) => !o)}
+        >
+          {clock.time}
+        </button>
+        {calOpen && <Calendar now={clock.now} />}
       </div>
     </nav>
   )

@@ -47,6 +47,7 @@ export type AppId =
   | 'run'
   | 'dos'
   | 'wordpad'
+  | 'webamp'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

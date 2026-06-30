@@ -591,3 +591,20 @@ export function WordPadIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function WebampIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="9" width="26" height="14" rx="2" fill="#1b1b22" stroke="#5a5a62" />
+      <rect x="5" y="11" width="14" height="5" rx="1" fill="#0a0a0e" />
+      <g fill="#3cff5a">
+        <rect x="6" y="12.5" width="1.4" height="2" /><rect x="8" y="12.5" width="1.4" height="2.6" />
+        <rect x="10" y="12.5" width="1.4" height="1.6" /><rect x="12" y="12.5" width="1.4" height="3" />
+        <rect x="14" y="12.5" width="1.4" height="2" />
+      </g>
+      <circle cx="23" cy="13.5" r="2.4" fill="#ffb000" />
+      <rect x="6" y="18" width="20" height="3" rx="1.5" fill="#3a3a44" />
+      <rect x="6" y="18" width="9" height="3" rx="1.5" fill="#ffb000" />
+    </svg>
+  )
+}

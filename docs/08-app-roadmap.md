@@ -67,8 +67,8 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | **Terminal** (xterm.js full set) | have-placeholder (our own cmd.exe over VFS) | **REPLACE/EXTEND** | Adopt **xterm.js** (@xterm/xterm, MIT) + the full feature set: FS, autocomplete+history, pipes, help, **git** (isomorphic-git), **Python** (Pyodide), **WAPM** (e.g. `wapm cowsay`), weather (wttr.in), neofetch, **FFmpeg.wasm** + **WASM-ImageMagick** convert, **SHIFT+F10**. Keep our hidden-command leak surface. |
 | **TinyMCE** (tinymce/tinymce, GPL-2.0-or-later) | missing | **ADOPT** | RTF/WYSIWYG editor w/ save. Isolated GPL module. |
 | **Video Player** (video.js Apache-2.0 + codecbox.js + videojs-youtube MIT) | missing | **ADOPT** | video.js + codecbox.js formats + youtube plugin + keyboard shortcuts. |
-| **Vim** (coolwanglu/vim.js, GPL-2.0) | missing | **ADOPT** | vim.js editor **alongside** Monaco; isolate + credit its license. |
-| **Webamp** (captbaritone/webamp, MIT) | have-placeholder (deferred — skin not honored in our host) | **ADOPT** | Winamp + **Winamp Skin Museum** random skins + playlist/streaming + **butterchurn** Milkdrop, as the **BONUS** player (custom foobar2000 stays the pillar). Re-solve the skin-load integration issue. |
+| **Vim** (coolwanglu/vim.js, GPL-2.0) | missing | **ADOPT → BLOCKED (Tier E)** | No compiled artifact exists (not committed / no releases / dead demo); needs an old emscripten asm.js build unavailable here. vim.wasm alt needs COOP/COEP that breaks our Browser/Video. Deferred to the CI-built-artifact batch — engine not dropped. |
+| **Webamp** (captbaritone/webamp, MIT) | have-placeholder → **DONE (core)** | **ADOPT ✅** | Real Winamp 2 player (classic skin, transport/playlist/EQ, drag-drop, hotkeys), contained in our window — the BONUS player (foobar2000 stays the pillar). Skin Museum random skins + butterchurn Milkdrop **deferred (named: cross-origin skin fetch / milkdrop window, unverified here)**. |
 | **TIC-80** (nesbox/TIC-80, MIT) | have-real | **KEEP** | Original `moth` cart already shipped. |
 | **v86** (copy/v86, BSD-2) | have-real | **KEEP+EXTEND** | Boots FreeDOS offline. Add **save-states + auto-resize** per his. |
 | **Paint pillar: miniPaint-as-Photoshop** | have-placeholder (Photoshop = non-functional diorama) | **REPLACE** | Adopt **miniPaint** (viliusle/miniPaint, MIT) as the real Photoshop; jsPaint sits beside it. |
@@ -196,8 +196,16 @@ fallback when the vendor copy is absent.
 - ✅ **OS-subsystem polish** — DONE (close-guard/save, calendar popup, Explorer
   keyboard set, Run dialog + Win+R/Win key, window open/close animations)
 - ✅ **TinyMCE** (WordPad — RTF/WYSIWYG, self-hosted GPL, save-to-VFS) — DONE
-- ⏳ remaining "risky" set (verify on deploy between each):
-  **Vim.js** · **Webamp** (+ Skin Museum + butterchurn).
+- ✅ **Webamp** (Winamp — real player, classic skin, drag-drop, hotkeys) — DONE
+  core; *Skin Museum random skins + butterchurn deferred (named: cross-origin
+  skin fetch / milkdrop window, unverified here).*
+- ⛔ **Vim.js** — **BLOCKED (named toolchain reason), deferred to the Tier-E
+  wasm batch.** coolwanglu/vim.js ships no compiled artifact (not committed, no
+  releases, the gh-pages/live demo no longer serves the built `vim.js`); it needs
+  an old asm.js **emscripten build** unavailable here. The modern alt
+  (rhysd/vim.wasm) needs site-wide **COOP/COEP** headers that would break our
+  Browser/Video cross-origin iframes — so not cleanly adoptable either. Engine
+  not dropped: it joins DOOM/OpenTyrian/etc. in the CI-built-artifact batch.
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
 BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·

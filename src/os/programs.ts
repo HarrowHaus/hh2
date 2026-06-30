@@ -63,6 +63,7 @@ export const PROGRAMS: ProgramGroup[] = [
     name: 'Sound & Video',
     items: [
       { appId: 'foobar', label: 'foobar2000' },
+      { appId: 'webamp', label: 'Winamp' },
       { appId: 'flstudio', label: 'FL Studio' },
       { appId: 'videoplayer', label: 'Video Player' },
       { appId: 'ruffle', label: 'Flash Player' },

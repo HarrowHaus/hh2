@@ -2,7 +2,7 @@ import type { MouseEvent, PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
-import { FlagIcon, VolumeIcon } from '../../os/icons'
+import { FlagIcon, VolumeIcon, VolumeMutedIcon } from '../../os/icons'
 import { useClock } from './useClock'
 import styles from './Taskbar.module.css'
 
@@ -19,6 +19,8 @@ export function Taskbar() {
   const toggleMaximize = useOS((s) => s.toggleMaximize)
   const closeWindow = useOS((s) => s.closeWindow)
   const restoreWindow = useOS((s) => s.restoreWindow)
+  const muted = useOS((s) => s.muted)
+  const toggleMuted = useOS((s) => s.toggleMuted)
   const openMenu = useMenu((s) => s.openMenu)
   const time = useClock()
 
@@ -78,7 +80,16 @@ export function Taskbar() {
       </div>
 
       <div className={styles.tray} aria-label="Notification area">
-        <VolumeIcon size={15} />
+        <button
+          type="button"
+          className={styles.trayBtn}
+          aria-label={muted ? 'Unmute system sounds' : 'Mute system sounds'}
+          aria-pressed={muted}
+          title={muted ? 'Sounds muted' : 'System sounds'}
+          onClick={toggleMuted}
+        >
+          {muted ? <VolumeMutedIcon size={15} /> : <VolumeIcon size={15} />}
+        </button>
         <span className={styles.time}>{time}</span>
       </div>
     </nav>

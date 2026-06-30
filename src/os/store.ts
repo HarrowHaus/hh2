@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { DEFAULT_VISUAL_STYLE, type VisualStyle } from './themes'
 import type { AppArgs, AppId, Geometry, SnapZone, WindowInstance } from './types'
 import { APP_META } from './appMeta'
+import { playSound, setSoundPrefs } from './sound'
 
 const TASKBAR_H = 30
 export const MIN_W = 200
@@ -28,6 +29,14 @@ interface OSState {
   /** Selected screen saver id (Display Properties → Screen Saver), or 'none'. */
   screensaver: string
   setScreensaver: (id: string) => void
+
+  /** Tray volume: system sounds are muted / scaled by this (0..1). Persisted.
+      The sound pack itself is Phase 8 — these gate the silent seam today. */
+  muted: boolean
+  volume: number
+  setMuted: (on: boolean) => void
+  toggleMuted: () => void
+  setVolume: (v: number) => void
 
   booted: boolean
   setBooted: (booted: boolean) => void
@@ -88,6 +97,11 @@ export const useOS = create<OSState>()(
       setCrt: (crt) => set({ crt }),
       neko: false,
       setNeko: (neko) => set({ neko }),
+      muted: false,
+      volume: 0.8,
+      setMuted: (muted) => { setSoundPrefs({ muted, volume: get().volume }); set({ muted }) },
+      toggleMuted: () => { const muted = !get().muted; setSoundPrefs({ muted, volume: get().volume }); set({ muted }) },
+      setVolume: (volume) => { const v = Math.max(0, Math.min(1, volume)); setSoundPrefs({ muted: get().muted, volume: v }); set({ volume: v }) },
       screensaver: 'none',
       setScreensaver: (screensaver) => set({ screensaver }),
 
@@ -96,8 +110,8 @@ export const useOS = create<OSState>()(
 
       loggedIn: false,
       account: '',
-      login: (account) => set({ loggedIn: true, account }),
-      logOff: () => set({ loggedIn: false, account: '', windows: [], startMenuOpen: false }),
+      login: (account) => { playSound('startup'); set({ loggedIn: true, account }) },
+      logOff: () => { playSound('shutdown'); set({ loggedIn: false, account: '', windows: [], startMenuOpen: false }) },
 
       startMenuOpen: false,
       toggleStartMenu: () => set((s) => ({ startMenuOpen: !s.startMenuOpen })),
@@ -110,7 +124,9 @@ export const useOS = create<OSState>()(
       snapPreview: null,
       setSnapPreview: (zone) => set((s) => (s.snapPreview === zone ? s : { snapPreview: zone })),
 
-      openApp: (appId, args) =>
+      openApp: (appId, args) => {
+        // The error ding for message boxes / BSOD; a window-open tick otherwise.
+        playSound(appId === 'msgbox' || appId === 'bsod' ? 'error' : 'window-open')
         set((s) => {
           const meta = APP_META[appId]
           const title = (args?.title as string) || meta.title
@@ -162,9 +178,10 @@ export const useOS = create<OSState>()(
             nextId: s.nextId + 1,
             nextZ: s.nextZ + 1,
           }
-        }),
+        })
+      },
 
-      closeWindow: (id) => set((s) => ({ windows: s.windows.filter((w) => w.id !== id) })),
+      closeWindow: (id) => { playSound('window-close'); set((s) => ({ windows: s.windows.filter((w) => w.id !== id) })) },
 
       focusWindow: (id) =>
         set((s) => {
@@ -177,10 +194,12 @@ export const useOS = create<OSState>()(
           }
         }),
 
-      minimizeWindow: (id) =>
+      minimizeWindow: (id) => {
+        playSound('minimize')
         set((s) => ({
           windows: s.windows.map((w) => (w.id === id ? { ...w, minimized: true } : w)),
-        })),
+        }))
+      },
 
       toggleMaximize: (id) =>
         set((s) => ({
@@ -273,6 +292,8 @@ export const useOS = create<OSState>()(
         crt: state.crt,
         neko: state.neko,
         screensaver: state.screensaver,
+        muted: state.muted,
+        volume: state.volume,
         windows: state.windows,
         nextId: state.nextId,
         nextZ: state.nextZ,
@@ -286,3 +307,7 @@ export const useOS = create<OSState>()(
     },
   ),
 )
+
+// Seed the sound manager with the (possibly persisted) mute/volume so silent-
+// seam events honor it from the first interaction.
+setSoundPrefs({ muted: useOS.getState().muted, volume: useOS.getState().volume })

@@ -512,3 +512,12 @@ export function VolumeIcon({ size = 16, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function VolumeMutedIcon({ size = 16, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" style={style} className={className} aria-hidden="true">
+      <path d="M3 6 H5 L8 3 V13 L5 10 H3 Z" fill="#cfcfcf" stroke="#444" strokeWidth="0.5" />
+      <path d="M10.5 6 L14 9.5 M14 6 L10.5 9.5" stroke="#ff5a5a" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  )
+}

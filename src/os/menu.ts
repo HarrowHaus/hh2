@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { playSound } from './sound'
 
 // Global context-menu state (not persisted). Any surface calls openMenu with a
 // position + item list; a single <ContextMenu> renders it.
@@ -23,6 +24,6 @@ export const useMenu = create<MenuState>((set) => ({
   x: 0,
   y: 0,
   items: [],
-  openMenu: (x, y, items) => set({ open: true, x, y, items }),
+  openMenu: (x, y, items) => { playSound('menu'); set({ open: true, x, y, items }) },
   closeMenu: () => set((s) => (s.open ? { open: false, items: [] } : s)),
 }))

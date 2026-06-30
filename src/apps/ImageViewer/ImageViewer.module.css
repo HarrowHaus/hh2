@@ -35,6 +35,20 @@
   background: #fff;
 }
 .missing { color: var(--wintext); opacity: 0.7; font-size: 12px; }
+.dragging { outline: 2px dashed var(--accent); outline-offset: -4px; }
+
+.openBtn {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--wintext);
+  background: color-mix(in srgb, var(--winbody) 60%, #fff 40%);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.openBtn:hover { filter: brightness(1.12); }
+.fileInput { display: none; }
 
 .toolbar {
   display: flex;

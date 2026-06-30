@@ -1,4 +1,4 @@
-import type { PointerEvent as ReactPointerEvent } from 'react'
+import { useState, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS } from '../../os/store'
 import {
   MonitorIcon,
@@ -12,6 +12,9 @@ import {
   MircIcon,
   IeIcon,
 } from '../../os/icons'
+import { APPS } from '../../os/apps'
+import { PROGRAMS } from '../../os/programs'
+import type { AppArgs, AppId } from '../../os/types'
 import styles from './StartMenu.module.css'
 
 const OWNER = '/Local Disk (C:)/Documents and Settings/owner'
@@ -26,11 +29,17 @@ export function StartMenu() {
   const closeStartMenu = useOS((s) => s.closeStartMenu)
   const logOff = useOS((s) => s.logOff)
   const setBooted = useOS((s) => s.setBooted)
+  const [showAll, setShowAll] = useState(false)
 
   const stop = (e: ReactPointerEvent) => e.stopPropagation()
   const turnOff = () => {
     logOff()
     setBooted(false)
+  }
+  // Launch from the All Programs flyout, then dismiss the whole menu.
+  const launch = (appId: AppId, args?: AppArgs) => {
+    openApp(appId, args)
+    closeStartMenu()
   }
 
   return (
@@ -41,7 +50,7 @@ export function StartMenu() {
       </div>
 
       <div className={styles.body}>
-        <div className={styles.left}>
+        <div className={styles.left} onMouseLeave={() => setShowAll(false)}>
           <button type="button" className={styles.item} onClick={() => openApp('ie')}>
             <IeIcon size={30} className={styles.itemIcon} />
             <span className={styles.texts}>
@@ -98,12 +107,41 @@ export function StartMenu() {
           </button>
           <div className={styles.spacer} />
           <div className={styles.sep} />
-          <button type="button" className={`${styles.item} ${styles.allprograms}`} onClick={closeStartMenu}>
+          <button
+            type="button"
+            className={`${styles.item} ${styles.allprograms} ${showAll ? styles.allopen : ''}`}
+            onClick={() => setShowAll((v) => !v)}
+            onMouseEnter={() => setShowAll(true)}
+          >
             <span className={styles.texts}>
               <span className={styles.text}>All Programs</span>
             </span>
             <span className={styles.arrow} />
           </button>
+
+          {showAll && (
+            <div className={styles.flyout} role="menu" aria-label="All Programs">
+              {PROGRAMS.map((group) => (
+                <div key={group.name} className={styles.flyGroup}>
+                  <div className={styles.flyHeader}>{group.name}</div>
+                  {group.items.map((it) => {
+                    const Icon = APPS[it.appId].Icon
+                    return (
+                      <button
+                        key={it.appId + it.label}
+                        type="button"
+                        className={styles.flyItem}
+                        onClick={() => launch(it.appId, it.args)}
+                      >
+                        <Icon size={18} className={styles.itemIcon} />
+                        <span className={styles.flyLabel}>{it.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.right}>

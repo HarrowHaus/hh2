@@ -18,3 +18,6 @@
   cursor: none;
   image-rendering: pixelated;
 }
+
+/* Hide the pointer over the game canvas. */
+.canvas { cursor: none !important; }

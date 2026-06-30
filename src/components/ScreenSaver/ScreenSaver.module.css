@@ -11,3 +11,6 @@
   width: 100%;
   height: 100%;
 }
+
+/* Keep the pointer hidden over the screensaver (beats the global cursor theme). */
+.overlay, .overlay * { cursor: none !important; }

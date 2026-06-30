@@ -16,3 +16,6 @@
 }
 .text { margin: 0; white-space: pre-wrap; max-width: 760px; }
 .hint { margin-top: 22px; min-height: 18px; }
+
+/* Hide the pointer over the BSOD gag. */
+.bsod, .bsod * { cursor: none !important; }

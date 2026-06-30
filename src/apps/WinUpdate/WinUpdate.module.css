@@ -25,3 +25,6 @@
 .pct { font-size: 15px; opacity: 0.9; }
 .warn { font-size: 13px; opacity: 0.75; margin-top: 6px; }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
+/* Hide the pointer over the fake update screen. */
+.update, .update * { cursor: none !important; }

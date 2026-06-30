@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useOS, getFocusedId } from './store'
 import { useMenu } from './menu'
+import { toggleDevTools } from './eruda'
 
 // Global OS keyboard: Alt+Tab cycles windows, Esc closes menus. Reads fresh
 // state via getState() so it never needs re-subscription.
@@ -19,6 +20,10 @@ export function useKeyboard(): void {
         const step = e.shiftKey ? -1 : 1
         const next = open[(idx + step + open.length) % open.length]
         focusWindow(next.id)
+      } else if (e.shiftKey && e.key === 'F12') {
+        // SHIFT+F12 → eruda DevTools (lazy-loaded on first use).
+        e.preventDefault()
+        void toggleDevTools()
       } else if (e.key === 'Escape') {
         useMenu.getState().closeMenu()
         useOS.getState().closeStartMenu()

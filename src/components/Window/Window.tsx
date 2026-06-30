@@ -1,6 +1,7 @@
 import { Suspense, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId, MIN_W, MIN_H } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
+import { runCloseGuard } from '../../os/closeGuards'
 import { APPS } from '../../os/apps'
 import { APP_META } from '../../os/appMeta'
 import type { SnapZone, WindowInstance } from '../../os/types'
@@ -34,6 +35,12 @@ export function Window({ win }: { win: WindowInstance }) {
   const meta = APP_META[win.appId]
   const { Icon, Component } = APPS[win.appId]
 
+  // Close via the guard: an app (e.g. Paint) can intercept to prompt about
+  // unsaved work; otherwise close immediately.
+  const requestClose = () => {
+    if (!runCloseGuard(win.id, () => closeWindow(win.id))) closeWindow(win.id)
+  }
+
   function onTitleContextMenu(e: MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
@@ -44,7 +51,7 @@ export function Window({ win }: { win: WindowInstance }) {
       { label: 'Minimize', onClick: () => minimizeWindow(win.id) },
       { label: 'Maximize', disabled: !meta.resizable || win.maximized, onClick: () => toggleMaximize(win.id) },
       { separator: true },
-      { label: 'Close', onClick: () => closeWindow(win.id) },
+      { label: 'Close', onClick: requestClose },
     ]
     openMenu(e.clientX, e.clientY, items)
   }
@@ -158,7 +165,7 @@ export function Window({ win }: { win: WindowInstance }) {
           resizable={!!meta.resizable}
           onMinimize={() => minimizeWindow(win.id)}
           onToggleMaximize={() => toggleMaximize(win.id)}
-          onClose={() => closeWindow(win.id)}
+          onClose={requestClose}
         />
       </div>
       <div className={styles.body}>

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { registerCloseGuard, unregisterCloseGuard } from '../../os/closeGuards'
 import type { AppProps } from '../../os/types'
 import styles from './Paint.module.css'
 
@@ -9,8 +10,18 @@ import styles from './Paint.module.css'
 // the engine is jsPaint — credited in CREDITS.md, name terms respected.
 const PAINT_URL = `${import.meta.env.BASE_URL}jspaint/index.html`
 
-export function Paint(_props: AppProps) {
+// jsPaint exposes a global `saved` flag and an `are_you_sure(action, canceled)`
+// helper (its native "Save changes?" dialog). The iframe is same-origin, so on
+// window-close we trigger that real dialog instead of silently dropping the work.
+interface JsPaintWindow extends Window {
+  saved?: boolean
+  are_you_sure?: (action: () => void, canceled?: () => void) => void
+}
+
+export function Paint({ winId }: AppProps) {
   const [ok, setOk] = useState<boolean | null>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+
   useEffect(() => {
     let alive = true
     fetch(PAINT_URL, { method: 'HEAD' })
@@ -19,8 +30,22 @@ export function Paint(_props: AppProps) {
     return () => { alive = false }
   }, [])
 
+  // Guard the window close: if there's unsaved work, run jsPaint's own
+  // "Save changes?" dialog before the window goes away.
+  useEffect(() => {
+    registerCloseGuard(winId, (proceed) => {
+      const w = iframeRef.current?.contentWindow as JsPaintWindow | null | undefined
+      if (!w || w.saved !== false || typeof w.are_you_sure !== 'function') return false
+      // Take over: jsPaint prompts; on save/discard it calls proceed(); cancel
+      // leaves the window open.
+      w.are_you_sure(() => proceed())
+      return true
+    })
+    return () => unregisterCloseGuard(winId)
+  }, [winId])
+
   if (ok === false) {
     return <div className={styles.missing}>Paint isn’t installed (public/jspaint/ missing).</div>
   }
-  return <iframe className={styles.frame} src={PAINT_URL} title="Paint" />
+  return <iframe ref={iframeRef} className={styles.frame} src={PAINT_URL} title="Paint" />
 }

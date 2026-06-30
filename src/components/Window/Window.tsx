@@ -1,4 +1,4 @@
-import { type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
+import { Suspense, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { useOS, getFocusedId, MIN_W, MIN_H } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
@@ -162,7 +162,10 @@ export function Window({ win }: { win: WindowInstance }) {
         />
       </div>
       <div className={styles.body}>
-        <Component winId={win.id} args={win.args} />
+        {/* Each app is a lazy chunk; suspend on its first load. */}
+        <Suspense fallback={<div className={styles.loading} aria-busy="true" />}>
+          <Component winId={win.id} args={win.args} />
+        </Suspense>
       </div>
 
       {showHandles &&

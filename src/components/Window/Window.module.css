@@ -82,3 +82,6 @@
 .h_nw { top: -3px; left: -3px; width: 13px; height: 13px; cursor: nwse-resize; }
 .h_se { bottom: -3px; right: -3px; width: 13px; height: 13px; cursor: nwse-resize; }
 .h_sw { bottom: -3px; left: -3px; width: 13px; height: 13px; cursor: nesw-resize; }
+
+/* Lazy-app suspense fallback — fills the window body without flashing chrome. */
+.loading { width: 100%; height: 100%; background: var(--winbody); }

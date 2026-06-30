@@ -16,6 +16,25 @@ This supersedes the SKIP rulings recorded in earlier revisions of this doc (Quak
 Vim.js, TinyMCE, codecbox, BoxedWine, js-dos, Space Cadet Pinball, proxied browser).
 Those are now **ADOPT** (engine, with the data/policy notes below).
 
+### RE-AUDIT — no "already have it" skips (retroactive, every item)
+"Ours exists" is **not** a valid skip. Where ours is a placeholder/diorama and Dustin
+ships a real one, the rule is **REPLACE with his real version** — and where his "real
+version" is his *own* integration code (not a third-party lib), that means **porting
+his source** (credited MIT), not reimplementing a lookalike. Corrected rows:
+- **Browser/IE** — was wrongly "EXTEND ours" (I polished the prop). **Flipped → ADOPT-his:**
+  ported daedalOS `components/apps/Browser` (✅ done; see coverage table + CREDITS).
+- **Already-correct REPLACE-his** (confirmed): Messenger (AIM→Nostr Chat), IRC
+  (mIRC→KiwiIRC), Paint (Photoshop→miniPaint ✅), Terminal (cmd→xterm engine ✅; his
+  command suite still to port).
+- **Real-but-below-his → EXTEND-his** (port his behaviors, not "keep ours"): File
+  Explorer, Start Menu, Taskbar, Clock, Background+Screensaver — the `docs/02`
+  OS-subsystem work. Window manager stays KEEP (genuinely at-parity).
+- **No daedalOS equivalent → ours stays** (explicitly not a skip): foobar2000 (he
+  ships Webamp, which we also adopt as bonus), BitTorrent/FL-Studio props,
+  trivia.exe stub, Keygen/Sigil/ANSI + Calculator/Solitaire/etc. originals.
+- **Adopted-from-same-upstream = legit real** (not props): EmulatorJS, v86, TIC-80,
+  Ruffle, Monaco, pdf.js, Marked, Photos decoders, eruda, video.js, opentype, xterm.
+
 ---
 
 ## STEP 1 — COVERAGE TABLE
@@ -32,7 +51,7 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | Item (upstream) | Our status | Ruling | Reason / note |
 |---|---|---|---|
 | **BoxedWine** (danoon2/Boxedwine, GPL-2.0 + Wine LGPL-2.1) | missing | **ADOPT** | 16/32-bit Windows apps; user-supplied `.exe`/`.zip`, no MS assets. Isolated GPL module. |
-| **Browser** (full: CORS load, bookmark bar+favicons, Wayback+The Old Net proxy, back/fwd/reload, address search, IPFS, chrome://dino t-rex-runner) | have-placeholder (IE mini-browser: webring + read-only archive.org) | **EXTEND** | Our IE has back/fwd/home + webring + archive.org read-only. Extend to the full proxy set (Wayback Machine + The Old Net = the approved read-only/no-open-proxy path), bookmark bar, IPFS, chrome://dino. **Merge our webring into it.** |
+| **Browser** (full: CORS load, bookmark bar+favicons, Wayback+The Old Net proxy, back/fwd/reload, address search, IPFS, chrome://dino t-rex-runner) | **placeholder** (in-world prop) → was wrongly EXTEND'd | **ADOPT-his — ✅ DONE** | **Corrected ruling (no "already have it" skips):** ported from DustinBrett/daedalOS `components/apps/Browser` (MIT, credited) onto our stack — real sandboxed CORS iframe browsing, his proxy model (Wayback + Old Net by year; allOrigins open-proxy dropped per ruling E), history, bookmark bar w/real favicons, address search, ipfs://, chrome://dino (original sprite). Our webring + in-world pages folded in as bookmarks/start page. |
 | **DevTools** (liriliri/eruda, MIT) | missing | **ADOPT** | Console/Elements/Network/etc.; bind **SHIFT+F12**. |
 | **EmulatorJS** (EmulatorJS/EmulatorJS, GPL-3.0) | have-real | **KEEP** | Engine isolated; verified-clean homebrew carts + drop-your-own loader already shipped. |
 | **IRC** (kiwiirc/kiwiirc, Apache-2.0) | have-placeholder (mIRC diorama) | **REPLACE** | KiwiIRC over WebSockets becomes our **real mIRC**. Rides Phase-6 realtime. |
@@ -148,8 +167,10 @@ Keyboard set · Windows (react-rnd/Framer-Motion) · Start Menu (sidebar/spotlig
 > ships only this doc + `docs/02` for review; tiers build after sign-off.
 
 **Tier A — REPLACE placeholders with real upstreams (highest user-visible delta)**
-✅ **Browser** (full IE: Wayback + The Old Net + IPFS read-only proxy, bookmark
-bar+favicons, chrome://dino, address search, webring merged in) — **DONE**.
+✅ **Browser** (full IE) — **DONE, ported from daedalOS `Browser` (MIT)**: real
+sandboxed CORS iframe browsing + his proxy model (Wayback + Old Net by year; open
+proxy dropped), history, bookmark bar w/favicons, address search, ipfs://,
+chrome://dino (original sprite); webring + in-world pages folded in as bookmarks.
 ✅ **Terminal** on the real **xterm.js** engine (line editing, history, Tab
 autocomplete, pipes, neofetch, live weather, VFS commands) — **DONE**. *git /
 python / ffmpeg / convert / wapm ride the vendored **wasm pack** (Tier B/E) so the

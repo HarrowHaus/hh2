@@ -9,25 +9,40 @@
   font-size: 11px;
 }
 .menubar { display: flex; gap: 12px; padding: 3px 8px; border-bottom: 1px solid var(--winborder); }
-.toolbar { display: flex; gap: 6px; padding: 4px 8px; border-bottom: 1px solid var(--winborder); }
-.tbtn {
-  font: inherit;
-  font-size: 11px;
-  cursor: default;
+.toolbar { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border-bottom: 1px solid var(--winborder); }
+.navbtn {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  cursor: pointer;
   opacity: 0.85;
   background: transparent;
   border: 1px solid transparent;
   color: inherit;
-  padding: 1px 4px;
+  padding: 0;
+  flex: 0 0 auto;
 }
-.tbtn:hover:not(:disabled) { border-color: var(--winborder); opacity: 1; }
-.tbtn:disabled { opacity: 0.4; }
+.navbtn svg { width: 16px; height: 16px; fill: currentColor; }
+.navbtn:hover:not(:disabled) { border-color: var(--winborder); opacity: 1; }
+.navbtn:disabled { opacity: 0.35; cursor: default; }
+.proxy {
+  font: inherit;
+  font-size: 11px;
+  background: var(--field);
+  color: var(--wintext);
+  border: 1px solid var(--winborder);
+  padding: 1px 2px;
+  flex: 0 0 auto;
+  max-width: 130px;
+}
 .address {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 3px 8px;
-  border-bottom: 1px solid var(--winborder);
+  flex: 1;
+  min-width: 0;
 }
 .addressbox {
   flex: 1;
@@ -82,10 +97,24 @@
 .bookmark:hover { border-color: var(--winborder); }
 .bookmarkActive { border-color: var(--winborder); background: var(--field); }
 .favicon { font-size: 11px; line-height: 1; }
+.faviconImg { width: 14px; height: 14px; object-fit: contain; flex: 0 0 auto; }
 
-/* Content viewport hosts either an in-world page or the Old Net iframe. */
-.viewport { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+/* Content viewport hosts an in-world page, the dino game, or the live iframe. */
+.viewport { flex: 1; position: relative; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
 .viewport > * { flex: 1; min-height: 0; }
+.frame { flex: 1; width: 100%; border: 0; background: #fff; }
+.loadbar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 3px;
+  width: 40%;
+  background: var(--accent, #2a6fd6);
+  animation: ieload 1s ease-in-out infinite;
+}
+@keyframes ieload {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
 
 /* ── chrome://dino — original endless runner ─────────────────────────────── */
 .dinoWrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #0a0a0e; height: 100%; }

@@ -10,6 +10,9 @@ interface Props {
 
 // XP title-bar controls: minimize / maximize(restore) / close.
 export function WindowControls({ maximized, resizable, onMinimize, onToggleMaximize, onClose }: Props) {
+  // Restore is always valid when maximized (e.g. a non-resizable app opened
+  // maximized on mobile); only *maximizing* requires a resizable window.
+  const canToggle = maximized || resizable
   return (
     <div className={styles.controls}>
       <button
@@ -22,9 +25,9 @@ export function WindowControls({ maximized, resizable, onMinimize, onToggleMaxim
         type="button"
         aria-label={maximized ? 'Restore' : 'Maximize'}
         className={`${styles.btn} ${maximized ? styles.restore : styles.max} ${
-          resizable ? '' : styles.disabled
+          canToggle ? '' : styles.disabled
         }`}
-        onClick={resizable ? onToggleMaximize : undefined}
+        onClick={canToggle ? onToggleMaximize : undefined}
       />
       <button
         type="button"

@@ -127,19 +127,33 @@ export const useOS = create<OSState>()(
             }
           }
           const count = s.windows.length
+          // Responsive open geometry: clamp the window to the viewport so it's
+          // never larger than the screen or cascaded off-edge. On phones, open
+          // maximized when the app doesn't already fit (small fixed apps like
+          // Calculator stay at natural size, centered, rather than stretching).
+          const { w: vw, h: vh } = surfaceSize()
+          const width = Math.max(MIN_W, Math.min(meta.width, vw - 8))
+          const height = Math.max(MIN_H, Math.min(meta.height, vh - 8))
+          const fits = meta.width <= vw - 8 && meta.height <= vh - 8
+          const maximize = vw < 768 && !fits
+          const cx = Math.max(0, (vw - width) >> 1)
+          const cy = Math.max(0, (vh - height) >> 1)
+          const x = vw < 768 ? cx : Math.max(0, Math.min(64 + (count % 6) * 26, vw - width))
+          const y = vw < 768 ? cy : Math.max(0, Math.min(44 + (count % 6) * 26, vh - height))
           const win: WindowInstance = {
             id: s.nextId,
             appId,
             title,
-            x: 64 + (count % 6) * 26,
-            y: 44 + (count % 6) * 26,
-            width: meta.width,
-            height: meta.height,
+            x,
+            y,
+            width,
+            height,
             z: s.nextZ,
             minimized: false,
-            maximized: false,
+            maximized: maximize,
             snapped: null,
-            prev: null,
+            // A maximized window needs a restore target (the centered clamped box).
+            prev: maximize ? { x: cx, y: cy, width, height } : null,
             args,
           }
           return {

@@ -207,10 +207,26 @@ fallback when the vendor copy is absent.
   Browser/Video cross-origin iframes — so not cleanly adoptable either. Engine
   not dropped: it joins DOOM/OpenTyrian/etc. in the CI-built-artifact batch.
 
-**Tier C — ADOPT+DATA games + emulation (engine now, data loader)**
-BoxedWine · Quake3 (OpenArena data) · Space Cadet Pinball (user data) · ZZT ·
-A Dark Room. *(ClassiCube — **skipped**, owner ruled. Cave Story — **deferred**,
-owner ruled, revisit after core tiers.)*
+**Tier C — ADOPT+DATA games + emulation (engine now, data loader)** — *in progress*
+- ✅ **A Dark Room** (doublespeakgames/adarkroom, MPL-2.0) — DONE, vendored offline.
+- ⏳ **ZZT** — a dedicated **Zeta** app is emscripten-blocked (asie/zeta ships no
+  prebuilt web build). ZZT is a DOS program, so it's **playable in the MS-DOS
+  Prompt** now; a dedicated auto-boot ZZT app (bundle freeware ZZT — Epic freed it
+  2020) or a Zeta CI build is the follow-up. **Default: DOS-Prompt-playable.**
+- ⛔ **Space Cadet Pinball** — engine (4.5MB) is clean, but it only boots with the
+  original **MS-copyrighted** game data (2.18MB `.data`), which our rules forbid
+  rehosting, and the emscripten build won't run without it. A user-data shell is
+  impractical (emscripten preload packaging). **Default: DEFER (owner decision).**
+- ⛔ **Quake III (38MB data)** + **BoxedWine (57MB Wine env)** — engines are small
+  but the data is **~95MB combined**, 10× anything we've vendored; committing that
+  to git bloats every clone. Needs a **large-asset strategy** (Git LFS, a CDN/R2
+  bucket, or fetch-on-first-use). **Default: DEFER (owner decision).**
+
+**Outstanding Tier-C owner decisions:** (1) large-asset strategy for Quake III +
+BoxedWine — Git LFS vs. CDN/R2 vs. skip; (2) Space Cadet Pinball — accept a
+user-supplied-data shell vs. skip (copyrighted data); (3) ZZT — bundle freeware
+ZZT for the DOS Prompt now vs. hold for a Zeta CI build. *(ClassiCube — skipped;
+Cave Story — deferred; both owner-ruled.)*
 
 **Tier D — Phase-6 realtime spine (Durable-Objects / WebSockets)**
 **Messenger** (Nostr + NIP-04, auto keypair) · **IRC** (KiwiIRC over WebSockets) ·

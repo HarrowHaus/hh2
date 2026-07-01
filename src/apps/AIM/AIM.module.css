@@ -1,81 +1,99 @@
-/* AIM buddy-list prop. Period AIM beige/blue, its own skin. Static — no realtime
-   until Phase 6. */
+/* AOL Instant Messenger — real Nostr messenger, classic AIM beige/blue skin. */
 .aim {
   display: flex;
   flex-direction: column;
   height: 100%;
   background: #e8e8d8;
-  color: #1a1a1a;
+  color: #111;
   font-size: 11px;
+  font-family: 'Tahoma', 'Geneva', sans-serif;
 }
 .header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 9px;
-  background: linear-gradient(180deg, #fbe9a0, #f4c84a);
-  border-bottom: 1px solid #b9952a;
+  background: linear-gradient(180deg, #f9e8a0, #e8c84a);
+  border-bottom: 1px solid #a88a2a;
+  padding: 4px 8px;
 }
-.runner {
-  width: 26px;
-  height: 30px;
-  flex: 0 0 26px;
-  background: #1a1a1a;
-  clip-path: polygon(40% 0, 60% 0, 70% 18%, 92% 30%, 84% 44%, 64% 36%, 70% 60%, 88% 92%, 74% 100%, 56% 66%, 40% 100%, 26% 92%, 44% 56%, 30% 60%, 10% 70%, 6% 54%, 30% 44%, 30% 18%);
-}
-.me { min-width: 0; }
-.sn { font-weight: 700; font-size: 13px; }
-.away { font-size: 9.5px; color: #6a5a1a; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.logo { font-weight: 700; color: #3a3a8a; font-style: italic; }
+.tm { font-size: 8px; vertical-align: super; }
 
-.tabs { display: flex; gap: 2px; padding: 3px 6px 0; background: #d8d8c4; }
-.tab {
-  font-size: 10px;
-  padding: 2px 9px;
-  background: #c8c8b4;
-  border: 1px solid #9a9a86;
-  border-bottom: none;
-  border-radius: 3px 3px 0 0;
-  opacity: 0.8;
-}
-.tabOn { background: #fff; opacity: 1; }
-
-.list { flex: 1; overflow: auto; background: #fff; border: 1px solid #9a9a86; margin: 0 6px; padding: 4px 0; }
-.group {
-  display: block;
-  width: 100%;
-  text-align: left;
-  font-weight: 700;
-  font-size: 11px;
-  padding: 2px 8px;
-  background: none;
-  border: none;
-  color: #1a3a6a;
-  cursor: pointer;
-}
-.tri { font-size: 8px; margin-right: 5px; }
-.buddy {
+.me {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 1px 8px 1px 22px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #c8c8b8;
+  background: #f2f2e8;
 }
-.offline { color: #9a9a9a; font-style: italic; }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: #c0c0c0; flex: 0 0 7px; }
-.dotOn { background: #2fae2f; box-shadow: 0 0 3px rgba(40, 180, 40, 0.6); }
-.bsn { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.tag { font-size: 9px; color: #b08a2a; font-style: italic; }
-
-.footer { padding: 5px 8px; }
-.count { font-size: 9.5px; color: #555; }
-.btns { display: flex; gap: 4px; margin-top: 4px; }
-.fbtn {
-  flex: 1;
-  text-align: center;
+.meLabel { color: #666; }
+.meName { font-weight: 700; color: #1a1a6a; font-family: 'Courier New', monospace; }
+.copyBtn {
+  margin-left: auto;
+  font: inherit;
   font-size: 10px;
-  padding: 3px 0;
-  background: linear-gradient(180deg, #fff, #d6d6c4);
-  border: 1px solid #9a9a86;
+  background: #dcdcd0;
+  border: 1px solid #a0a090;
   border-radius: 3px;
-  cursor: default;
+  padding: 1px 6px;
+  cursor: pointer;
 }
-.awayBtn { background: linear-gradient(180deg, #ffe79a, #f4c84a); font-weight: 700; }
+.copyBtn:hover { background: #e8e8dc; }
+
+.body { flex: 1; min-height: 0; display: flex; }
+
+.buddyList {
+  width: 150px;
+  flex: 0 0 auto;
+  border-right: 1px solid #c8c8b8;
+  background: #fff;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 1px;
+}
+.groupHead { font-weight: 700; color: #3a3a8a; padding: 2px 4px; }
+.empty, .addErr { color: #999; padding: 4px; font-size: 10px; }
+.addErr { color: #c0392b; }
+.buddy {
+  text-align: left;
+  font: inherit;
+  background: none;
+  border: 1px solid transparent;
+  padding: 2px 6px 2px 14px;
+  cursor: pointer;
+  color: #111;
+  border-radius: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.buddy:hover { background: #eef2ff; }
+.buddyActive { background: #cfe0ff; border-color: #7fa8e0; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #2ecc40; margin-right: 4px; }
+.addRow { display: flex; gap: 3px; margin-top: auto; padding-top: 6px; }
+.addInput { flex: 1; min-width: 0; font: inherit; font-size: 10px; border: 1px solid #a0a090; padding: 2px 4px; }
+.addBtn { font: inherit; width: 22px; border: 1px solid #a0a090; background: #dcdcd0; cursor: pointer; border-radius: 3px; }
+.addBtn:hover { background: #e8e8dc; }
+
+.chat { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; }
+.noChat, .logEmpty { color: #888; padding: 16px; text-align: center; line-height: 1.6; }
+.chatHead { background: #f2f2e8; border-bottom: 1px solid #c8c8b8; padding: 4px 8px; font-weight: 700; color: #1a1a6a; }
+.log { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 8px; display: flex; flex-direction: column; gap: 3px; }
+.rowMine .who { color: #c0392b; font-weight: 700; }
+.rowThem .who { color: #1a6ac0; font-weight: 700; }
+.msg { color: #111; word-break: break-word; }
+.sendRow { display: flex; gap: 4px; padding: 6px; border-top: 1px solid #c8c8b8; }
+.sendInput { flex: 1; min-width: 0; font: inherit; border: 1px solid #a0a090; padding: 3px 6px; }
+.sendBtn {
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(180deg, #5a9be8, #2a6fd6);
+  border: 1px solid #1a4fa0;
+  border-radius: 3px;
+  padding: 3px 14px;
+  cursor: pointer;
+}
+.sendBtn:hover { filter: brightness(1.08); }
+
+.foot { padding: 2px 8px; font-size: 9px; color: #888; background: #f2f2e8; border-top: 1px solid #c8c8b8; }

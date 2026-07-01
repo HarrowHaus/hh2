@@ -57,7 +57,7 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | **IRC** (kiwiirc/kiwiirc, Apache-2.0) | have-placeholder (mIRC diorama) | **REPLACE** | KiwiIRC over WebSockets becomes our **real mIRC**. Rides Phase-6 realtime. |
 | **js-dos** (caiiyycuk/js-dos, GPL-2.0) | have-placeholder (dep `js-dos@^8.4.0` installed, no app) | **ADOPT** | Reverses the earlier drop — Dustin ships **both** js-dos and v86; keep both. DOS emulator + **auto save-states**; content user-supplied/shareware. |
 | **Marked** (markedjs/marked, MIT) | have-real | **KEEP** | Markdown viewer (with DOMPurify). |
-| **Messenger** (Nostr + NIP-04, automatic keypair) | have-placeholder (AIM diorama) | **REPLACE** | **Real encrypted DM** — Nostr + NIP-04 + auto public/private keypair = our **AIM, for real**, on the Phase-6 realtime work. |
+| **Messenger** (Nostr + NIP-04, automatic keypair) | have-placeholder (AIM diorama) → **DONE ✅** | **REPLACE** | Real encrypted DM shipped: the AIM app is now Nostr + NIP-04 + auto keypair over public relays (nostr-tools) — no backend/Cloudflare. Add buddy by npub; keys in-browser. |
 | **Monaco Editor** (microsoft/monaco-editor, MIT) | have-real | **EXTEND** | Full editor + CTRL+S already; add line/cursor/lang status + **Prettier** formatting. |
 | **OpenType** font viewer (`.otf/.ttf/.woff`) | missing (opentype.js used by Sigil only) | **ADOPT** | Build a font viewer app on opentype.js (MIT). |
 | **Paint** (jspaint, 1j01/jspaint) | missing | **ADOPT** | jsPaint, **respect its name terms**; ships **alongside** our miniPaint-as-Photoshop. |
@@ -232,9 +232,16 @@ fallback when the vendor copy is absent.
 owner uploads/deploys) · Space Cadet Pinball ⛔ skipped (copyrighted data) ·
 ClassiCube ⛔ skipped · Cave Story ⏸ deferred — all owner-ruled.
 
-**Tier D — Phase-6 realtime spine (Durable-Objects / WebSockets)**
-**Messenger** (Nostr + NIP-04, auto keypair) · **IRC** (KiwiIRC over WebSockets) ·
-optional ELIZA buddy · BBS via original ws↔telnet bridge (not fTelnet/AGPL).
+**Tier D — realtime (most items ride PUBLIC infra — no Cloudflare needed)**
+- ✅ **Messenger** — DONE. The AOL Instant Messenger app is now REAL: automatic
+  Nostr keypair + **NIP-04** encrypted DMs over **public relays** (nostr-tools,
+  MIT). No backend of ours. Add a buddy by npub; keys live in the browser. Flips
+  the AIM diorama. *(Runtime relay flow couldn't be verified headless — needs a
+  live spot-check: two browsers, swap npubs, message.)*
+- ⏳ **IRC** (KiwiIRC / a public IRC WebSocket gateway) — public infra, no Cloudflare.
+- ⏳ **ELIZA** buddy — pure client-side, no infra.
+- ⛔ **BBS** — needs an original ws↔telnet bridge (a backend) → **deferred** with the
+  other infra-gated work.
 
 **Tier E — CI-wasm artifact batch (needs emscripten build step)**
 DOOM+Freedoom · OpenTyrian (Tyrian freeware) · ROTT · Wolf3D · Duke3D. A GitHub

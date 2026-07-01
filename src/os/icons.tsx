@@ -691,3 +691,14 @@ export function PodcastIcon({ size = 30, style, className }: IconProps) {
     </svg>
   )
 }
+
+// AI Chat Agent: a speech bubble with a spark — the in-browser assistant.
+export function AiChatIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M5 6 H27 A2 2 0 0 1 29 8 V21 A2 2 0 0 1 27 23 H13 L7 28 V23 H5 A2 2 0 0 1 3 21 V8 A2 2 0 0 1 5 6 Z" fill="#1d2740" stroke="#0c1120" />
+      <path d="M15 9 l1.4 3.2 L19.6 13.6 l-3.2 1.4 L15 18.2 l-1.4-3.2 L10.4 13.6 l3.2-1.4 Z" fill="#6fd0ff" />
+      <circle cx="22.5" cy="17.5" r="1.6" fill="#e0b0ff" />
+    </svg>
+  )
+}

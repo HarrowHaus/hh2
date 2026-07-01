@@ -1,0 +1,29 @@
+/* AI Chat Agent — clean dark assistant panel on the shared skin. */
+.chat { display: flex; flex-direction: column; height: 100%; background: var(--winbody, #16161c); color: var(--wintext, #e6e6ea); }
+
+.bar { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; height: 28px; padding: 0 8px; background: color-mix(in srgb, var(--winbody, #16161c) 82%, #000); border-bottom: 1px solid var(--winborder, #000); }
+.engine { font-size: 11px; opacity: 0.85; }
+.enable { margin-left: auto; font-size: 11px; color: #fff; background: color-mix(in srgb, var(--accent, #2a6fd6) 55%, #000); border: 1px solid color-mix(in srgb, var(--accent, #2a6fd6) 70%, #000); border-radius: 3px; padding: 2px 10px; cursor: pointer; }
+.enable:hover { filter: brightness(1.12); }
+
+.log { flex: 1; overflow: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.msg { display: flex; }
+.user { justify-content: flex-end; }
+.bot { justify-content: flex-start; }
+.bubble { max-width: 78%; padding: 6px 10px; border-radius: 10px; font-size: 12px; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
+.user .bubble { background: color-mix(in srgb, var(--accent, #2a6fd6) 42%, #202028); color: #fff; border-bottom-right-radius: 3px; }
+.bot .bubble { background: #24242c; color: #e6e6ea; border-bottom-left-radius: 3px; }
+
+.dl { margin: 4px 0; }
+.dlText { font-size: 10px; opacity: 0.6; margin-bottom: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.dlBar { height: 5px; background: #050506; border: 1px solid #000; border-radius: 3px; overflow: hidden; }
+.dlFill { height: 100%; background: var(--accent, #2a6fd6); transition: width 0.2s ease; }
+
+.composer { flex: 0 0 auto; display: flex; align-items: stretch; gap: 6px; padding: 7px; border-top: 1px solid var(--winborder, #000); background: color-mix(in srgb, var(--winbody, #16161c) 88%, #000); }
+.mode { flex: 0 0 auto; font-size: 10px; color: #c9c9d0; background: linear-gradient(180deg, #26262d, #1a1a20); border: 1px solid #000; border-radius: 3px; padding: 0 8px; cursor: pointer; }
+.modeOn { background: color-mix(in srgb, var(--accent, #2a6fd6) 45%, #191920); color: #fff; }
+.input { flex: 1; min-width: 0; resize: none; font: inherit; font-size: 12px; color: inherit; background: #0f0f14; border: 1px solid var(--winborder, #000); border-radius: 4px; padding: 6px 8px; }
+.input:focus { outline: none; border-color: var(--accent, #2a6fd6); }
+.send { flex: 0 0 auto; font-size: 12px; color: #fff; background: color-mix(in srgb, var(--accent, #2a6fd6) 55%, #000); border: 1px solid color-mix(in srgb, var(--accent, #2a6fd6) 70%, #000); border-radius: 4px; padding: 0 16px; cursor: pointer; }
+.send:disabled { opacity: 0.5; cursor: default; }
+.send:not(:disabled):hover { filter: brightness(1.12); }

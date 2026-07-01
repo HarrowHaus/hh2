@@ -13,6 +13,15 @@ network for a casual visitor.
 ## 1 · FREE CHATBOT LAYER  (shared "bot voice" service)
 A single service drives every bot mouth (AIM buddies + MySpace profiles). Zero API cost — hard rule.
 
+> **STATUS (Section 4 — text core landed):** `src/os/botvoice.ts` exposes `getReply(persona, history,
+> userText, mode)` — the single entry point §2 (AIM) and §3 (MySpace) both call. Tier A = ELIZA
+> (`src/apps/Eliza/eliza.ts`, always-on, offline). Tier B = **WebLLM** (`src/os/webllm.ts`,
+> `@mlc-ai/web-llm`, WebGPU, lazy, opt-in ~1 GB download) — silently degrades to ELIZA when WebGPU is
+> absent or a call fails. The **AI Chat Agent** (`src/apps/AIChat/`) ships with chat + Summarize, engine
+> priority **Chrome Prompt API → WebLLM (opt-in) → ELIZA** (`src/os/promptapi.ts`). **Remaining Section-4
+> piece:** WebSD image generation + the AI-Generated-Wallpaper option (§1.1) — next step; WebGPU-only and
+> unverifiable in CI, so being built defensively.
+
 - **Tier A — ELIZA-class (default, always works):** `elizabot.js` (or an AIML-lite engine), pure in-
   browser, instant, no network. A 2003 AIM bot (SmarterChild-era) *should* feel like a clunky pattern
   bot — so ELIZA is period-*accurate*, not a compromise. This is the baseline every bot falls back to.

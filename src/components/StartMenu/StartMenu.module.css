@@ -27,7 +27,24 @@
   color: var(--menuheadtext);
   background: var(--menuhead);
   border-bottom: 2px solid color-mix(in srgb, var(--accent) 70%, #000);
+  position: relative;
+  overflow: hidden;
 }
+/* Spotlight sheen — a light sweep across the user banner (daedalOS parity). */
+.header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.22) 50%, transparent 58%);
+  transform: translateX(-120%);
+  animation: startSheen 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes startSheen {
+  0%, 72% { transform: translateX(-120%); }
+  88%, 100% { transform: translateX(120%); }
+}
+@media (prefers-reduced-motion: reduce) { .header::after { animation: none; } }
 .avatar {
   width: 42px;
   height: 42px;

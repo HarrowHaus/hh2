@@ -167,6 +167,7 @@ export function Window({ win }: { win: WindowInstance }) {
     <div
       className={`${styles.window} ${focused ? '' : styles.inactive}`}
       style={style}
+      data-winid={win.id}
       onPointerDown={() => focusWindow(win.id)}
       role="dialog"
       aria-label={win.title}

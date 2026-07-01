@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react'
+import { toPng } from 'html-to-image'
 import { useOS, getFocusedId } from '../../os/store'
 import { useMenu, type MenuItem } from '../../os/menu'
 import { APPS } from '../../os/apps'
@@ -45,6 +46,32 @@ export function Taskbar() {
     toggleStartMenu()
   }
 
+  // Taskbar peek preview: on hover, capture the window (downscaled + cached) via
+  // html-to-image and float a thumbnail above the button. Minimized/iframe/failed
+  // captures fall back to the window title.
+  const peekTimer = useRef<ReturnType<typeof setTimeout>>()
+  const peekCache = useRef<Map<number, { img: string; ts: number }>>(new Map())
+  const [peek, setPeek] = useState<{ id: number; x: number; img: string | null } | null>(null)
+
+  function onTaskEnter(e: MouseEvent, id: number, minimized: boolean) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = rect.left + rect.width / 2
+    clearTimeout(peekTimer.current)
+    peekTimer.current = setTimeout(async () => {
+      if (minimized) { setPeek({ id, x, img: null }); return }
+      const cached = peekCache.current.get(id)
+      if (cached && Date.now() - cached.ts < 1500) { setPeek({ id, x, img: cached.img }); return }
+      const el = document.querySelector(`[data-winid="${id}"]`) as HTMLElement | null
+      if (!el) { setPeek({ id, x, img: null }); return }
+      try {
+        const img = await toPng(el, { pixelRatio: 0.35, cacheBust: false })
+        peekCache.current.set(id, { img, ts: Date.now() })
+        setPeek({ id, x, img })
+      } catch { setPeek({ id, x, img: null }) }
+    }, 350)
+  }
+  function onTaskLeave() { clearTimeout(peekTimer.current); setPeek(null) }
+
   function onTaskContextMenu(e: MouseEvent, id: number) {
     e.preventDefault()
     e.stopPropagation()
@@ -85,7 +112,8 @@ export function Taskbar() {
               className={`${styles.task} ${focused ? styles.taskFocus : ''}`}
               onClick={() => taskbarClick(w.id)}
               onContextMenu={(e) => onTaskContextMenu(e, w.id)}
-              title={w.title}
+              onMouseEnter={(e) => onTaskEnter(e, w.id, w.minimized)}
+              onMouseLeave={onTaskLeave}
             >
               <Icon size={15} className={styles.taskIcon} />
               <span className={styles.taskText}>{w.title}</span>
@@ -117,6 +145,21 @@ export function Taskbar() {
         </button>
         {calOpen && <Calendar now={clock.now} />}
       </div>
+
+      {peek && (() => {
+        const w = windows.find((x) => x.id === peek.id)
+        if (!w) return null
+        const { Icon } = APPS[w.appId]
+        const left = Math.max(4, Math.min(peek.x - 92, window.innerWidth - 188))
+        return (
+          <div className={styles.peek} style={{ left }}>
+            <div className={styles.peekTitle}><Icon size={13} className={styles.peekIcon} /> <span className={styles.peekName}>{w.title}</span></div>
+            {peek.img
+              ? <img className={styles.peekImg} src={peek.img} alt="" />
+              : <div className={styles.peekFallback}><Icon size={30} /></div>}
+          </div>
+        )
+      })()}
     </nav>
   )
 }

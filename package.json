@@ -20,6 +20,7 @@
     "chess.js": "^1.4.0",
     "dompurify": "^3.4.11",
     "eruda": "^3.4.3",
+    "html-to-image": "^1.11.13",
     "js-dos": "^8.4.0",
     "libheif-js": "^1.19.8",
     "marked": "^18.0.5",

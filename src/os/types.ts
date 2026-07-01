@@ -52,6 +52,7 @@ export type AppId =
   | 'quake3'
   | 'boxedwine'
   | 'zzt'
+  | 'eliza'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

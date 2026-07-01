@@ -239,7 +239,9 @@ ClassiCube ⛔ skipped · Cave Story ⏸ deferred — all owner-ruled.
   the AIM diorama. *(Runtime relay flow couldn't be verified headless — needs a
   live spot-check: two browsers, swap npubs, message.)*
 - ⏳ **IRC** (KiwiIRC / a public IRC WebSocket gateway) — public infra, no Cloudflare.
-- ⏳ **ELIZA** buddy — pure client-side, no infra.
+- ✅ **ELIZA** — DONE. Original 1966 keyword/reflection implementation (no LLM,
+  no upstream), pure client-side — the named non-AI substitute for the AI Chat
+  Agent. New app under Internet ▸ ELIZA.
 - ⛔ **BBS** — needs an original ws↔telnet bridge (a backend) → **deferred** with the
   other infra-gated work.
 

@@ -1,0 +1,8 @@
+.eliza { display: flex; flex-direction: column; height: 100%; background: #001100; color: #33ff66; font-family: 'Lucida Console', 'Courier New', monospace; font-size: 13px; cursor: text; }
+.screen { flex: 1; min-height: 0; overflow-y: auto; padding: 8px 10px; line-height: 1.5; }
+.eli { color: #4bffa0; margin: 2px 0; }
+.you { color: #aaffcc; margin: 2px 0; opacity: 0.9; }
+.who { font-weight: 700; opacity: 0.8; }
+.prompt { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-top: 1px solid #0a4a2a; }
+.caret { color: #33ff66; }
+.input { flex: 1; background: transparent; border: none; outline: none; color: #7dffb0; font-family: inherit; font-size: 13px; caret-color: #33ff66; }

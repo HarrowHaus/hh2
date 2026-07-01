@@ -652,3 +652,14 @@ export function ZztIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function ElizaIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="19" rx="2" fill="#001100" stroke="#0a4a2a" />
+      <rect x="6" y="7" width="9" height="2" fill="#33ff66" /><rect x="6" y="11" width="16" height="2" fill="#33ff66" opacity="0.8" />
+      <rect x="6" y="15" width="12" height="2" fill="#33ff66" opacity="0.6" />
+      <rect x="11" y="24" width="10" height="2" fill="#0a4a2a" /><rect x="9" y="26" width="14" height="2" rx="1" fill="#0a4a2a" />
+    </svg>
+  )
+}

@@ -82,6 +82,15 @@ A **source switcher** in the Media Library panel toggles between libraries; **ea
   sources could slot in later. The UI never special-cases a source.
 
 ### 2.2 The Wavlake library (optional listening room — reframed, no label/zap agenda)
+> **STATUS (Section 3 landed):** `src/apps/foobar/wavlake.ts` implements a `WavlakeSource` against
+> Wavlake's public HTTP API (`wavlake.com/api/v1`, no key/wallet). It seeds a browsable tree from
+> Wavlake's trending rankings (artist → release → track under a "Trending on Wavlake" wrapper), rendered
+> in the same tree/columns/transport as Discography; tracks stream via their `mediaUrl` (audio element
+> set `crossOrigin="anonymous"` so the Web-Audio spectrum works where CORS allows). **No zap/chart/tip
+> UI.** Any network/CORS failure → the source throws and foobar shows a graceful empty/"unavailable"
+> state (the player keeps working). Reference: `derekross/zaptrax` (MIT, credited). Zaps (NIP-57) remain
+> deferred (§3 below).
+
 - **Build:** a `WavlakeSource` that fetches Wavlake catalog/track data (Wavlake NOM / kind-32123 events
   via `relay.wavlake.com`, or Wavlake's API) and exposes it through the `LibrarySource` interface;
   `resolveStreamUrl` returns the track's stream URL for the existing `<audio>` transport. **Reference

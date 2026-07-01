@@ -140,12 +140,20 @@ export function Foobar() {
     setCurrent(t)
     setElapsed(0)
     setDur(0)
-    // A track carries its own src (Discography/R2); otherwise ask the source to
-    // resolve one (Wavlake, §2.2). Either may be null → ready/empty, no fake audio.
-    const url = t.src ?? (await source.resolveStreamUrl(t))
+    // A track carries its own src (Discography/R2); otherwise ask the source it
+    // came from to resolve one (Wavlake, §2.2) — a playlist can mix sources.
+    // Either may be null → ready/empty, no fake audio.
+    const from = SOURCES.find((s) => s.id === t.sourceId) ?? source
+    const url = t.src ?? (await from.resolveStreamUrl(t))
     if (!url) {
       setPlaying(false)
-      setStatus(HAS_AUDIO ? 'No audio for this track.' : 'No audio yet — run the ingest to self-host this catalog.')
+      setStatus(
+        t.sourceId === 'wavlake'
+          ? 'No stream available for this track.'
+          : HAS_AUDIO
+            ? 'No audio for this track.'
+            : 'No audio yet — run the ingest to self-host this catalog.',
+      )
       return
     }
     const el = audioRef.current!
@@ -387,6 +395,10 @@ export function Foobar() {
 
       <audio
         ref={audioRef}
+        // Cross-origin streams (Wavlake CDN, R2) need CORS for both playback via
+        // the Web Audio analyser and to avoid a tainted graph. Hosts that allow
+        // CORS play with the spectrum; ones that don't fail cleanly (caught).
+        crossOrigin="anonymous"
         onPlay={onAudioPlay}
         onPause={onAudioPause}
         onEnded={() => step(1)}

@@ -1,5 +1,6 @@
 import disco from '../../../data/discography.json'
 import manifest from '../../../data/audio-manifest.json'
+import { wavlakeSource } from './wavlake'
 
 // Joins the METADATA SPINE (discography.json) with the GENERATED audio manifest
 // (audio-manifest.json) into a browsable library: label -> band -> album -> tracks.
@@ -19,6 +20,8 @@ export interface Track {
   /** R2 URL — empty until ingest populates the manifest. */
   src?: string | null
   bandcamp?: string
+  /** Which LibrarySource this track came from (routes stream resolution). */
+  sourceId?: string
 }
 interface SpineLabel { id: string; name: string; founded?: number; url?: string }
 interface SpineBand { name: string; year?: number | null; era?: string | null; labels?: string[]; url?: string }
@@ -122,8 +125,10 @@ export const discographySource: LibrarySource = {
   resolveStreamUrl: async (t) => t.src ?? null,
 }
 
-// The registered sources, in switcher order. Wavlake is appended in §2.2.
-export const SOURCES: LibrarySource[] = [discographySource]
+// The registered sources, in switcher order. Wavlake (§2.2) renders identically
+// through the same LibrarySource shape (its back-ref to these types is type-only,
+// so there's no runtime import cycle).
+export const SOURCES: LibrarySource[] = [discographySource, wavlakeSource]
 
 // Sum a track list's known durations (unknowns count as 0).
 export const totalLength = (tracks: Track[]) =>

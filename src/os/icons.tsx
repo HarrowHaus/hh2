@@ -678,3 +678,16 @@ export function BlogIcon({ size = 30, style, className }: IconProps) {
     </svg>
   )
 }
+
+// iPodder/Juice-style podcatcher: the podcast broadcast glyph (a dot with
+// radiating waves) on a dark cast — the Podcast app.
+export function PodcastIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="5" fill="#20141f" stroke="#0a060a" />
+      <circle cx="16" cy="19.5" r="3" fill="#e08a2f" />
+      <path d="M11 15.5 a7 7 0 0 1 10 0" fill="none" stroke="#e08a2f" stroke-width="2.2" stroke-linecap="round" />
+      <path d="M8 12.5 a11 11 0 0 1 16 0" fill="none" stroke="#c76f22" stroke-width="2.2" stroke-linecap="round" opacity="0.8" />
+    </svg>
+  )
+}

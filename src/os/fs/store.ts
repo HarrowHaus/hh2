@@ -170,11 +170,11 @@ export const useFS = create<FSState>()(
     }),
     {
       name: 'hmd.fs',
-      // v24: + My Documents/Blog Posts (.whtml writable-HTML posts). v23: + Emulators/EmulatorJS
+      // v25: + Program Files/iPodder (podcatcher). v24: + My Documents/Blog Posts (.whtml writable-HTML posts). v23: + Emulators/EmulatorJS
       // (console). v22: + Macromedia/Flash Player (Ruffle). v21: + Internet Explorer/iexplore.exe. v20: +
       // TIC-80 (moth.tic). v19: + v86. v18: + Code (Monaco). (v16: keygen/sigil + .nfo routing; v15:
       // FreeCell/Spider; v14: easter eggs; v13: Accessories/GAMES.) Bumping discards the old dev seed.
-      version: 24,
+      version: 25,
       storage: createJSONStorage(() => idbStorage),
     },
   ),

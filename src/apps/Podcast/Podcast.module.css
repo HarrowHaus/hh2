@@ -1,0 +1,67 @@
+/* Podcast (iPodder/Juice-style) — dark client on the shared foobar palette. */
+.pod { display: flex; flex-direction: column; height: 100%; background: #0c0c0f; color: #cfcfd4; font-size: 11px; }
+.menubar { display: flex; gap: 12px; padding: 3px 8px; background: #16161a; border-bottom: 1px solid #000; }
+.menubar span { opacity: 0.8; }
+
+.transport { display: flex; align-items: center; gap: 7px; padding: 6px 9px; background: linear-gradient(180deg, #1d1d23, #111114); border-bottom: 1px solid #000; box-shadow: inset 0 1px 0 #2a2a31; }
+.tbtn { width: 26px; height: 21px; display: grid; place-items: center; background: linear-gradient(180deg, #2c2c33, #222228); color: #d8d8dc; border: 1px solid #000; border-radius: 3px; font-size: 10px; cursor: pointer; }
+.tbtn:hover { background: linear-gradient(180deg, #38383f, #2a2a30); }
+.tbtn:active { background: #1c1c21; }
+.seek { flex: 1; height: 7px; background: #050506; border: 1px solid #000; box-shadow: inset 0 1px 2px rgba(0,0,0,0.6); border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; }
+.seekfill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #fff 0%), var(--accent)); box-shadow: 0 0 4px color-mix(in srgb, var(--accent) 60%, transparent); }
+.time { font-variant-numeric: tabular-nums; opacity: 0.85; min-width: 92px; text-align: right; letter-spacing: 0.3px; }
+.vol { width: 64px; height: 14px; accent-color: var(--accent); cursor: pointer; }
+
+.now { display: flex; align-items: center; gap: 9px; padding: 6px 10px; background: linear-gradient(180deg, #0b0b0e, #08080a); border-bottom: 1px solid #000; min-height: 40px; }
+.nowArt { width: 30px; height: 30px; object-fit: cover; border: 1px solid #000; border-radius: 2px; flex: 0 0 auto; }
+.nowText { min-width: 0; }
+.nowTitle { font-weight: 700; color: #ededf2; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.nowShow { color: var(--accent); filter: brightness(1.5); font-size: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.body { flex: 1; display: flex; min-height: 0; }
+
+.shows { width: 232px; flex: 0 0 232px; display: flex; flex-direction: column; background: #101014; border-right: 1px solid #000; min-height: 0; }
+.paneHead { display: flex; align-items: center; gap: 6px; color: #8a8a92; text-transform: uppercase; font-size: 9px; font-weight: 700; letter-spacing: 1px; padding: 6px 8px; background: linear-gradient(180deg, #1a1a1f, #131317); border-bottom: 1px solid #000; }
+.count { margin-left: auto; opacity: 0.5; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.epHeadTitle { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.showScroll { flex: 1; overflow: auto; min-height: 0; }
+.show { display: flex; align-items: center; gap: 7px; width: 100%; padding: 5px 8px; border: none; background: none; color: inherit; text-align: left; cursor: pointer; }
+.show:hover { background: #1c1c22; }
+.showOn { background: color-mix(in srgb, var(--accent) 40%, #1c1c22); color: #fff; }
+.showIcon { flex: 0 0 auto; opacity: 0.8; }
+.showName { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.episodes { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.refresh { margin-left: 6px; width: 20px; height: 18px; display: grid; place-items: center; background: linear-gradient(180deg, #26262d, #1a1a20); color: #cfcfd4; border: 1px solid #000; border-radius: 3px; cursor: pointer; font-size: 11px; }
+.refresh:hover { background: #33333b; }
+.epScroll { flex: 1; overflow: auto; min-height: 0; }
+.msg { padding: 16px; opacity: 0.55; }
+
+.ep { display: flex; align-items: flex-start; gap: 8px; padding: 7px 8px; border-bottom: 1px solid #131318; }
+.ep:hover { background: #16161c; }
+.epCur { background: color-mix(in srgb, var(--accent) 22%, #16161c); }
+.epPlayed { opacity: 0.55; }
+.epPlay { flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; background: linear-gradient(180deg, #2c2c33, #222228); color: #d8d8dc; border: 1px solid #000; border-radius: 50%; cursor: pointer; font-size: 10px; }
+.epPlay:hover { background: linear-gradient(180deg, #38383f, #2a2a30); }
+.epMain { flex: 1; min-width: 0; }
+.epTitle { font-weight: 600; color: #e8e8ee; cursor: default; }
+.epMeta { font-size: 10px; opacity: 0.55; margin-top: 1px; }
+.notesToggle { margin-top: 3px; background: none; border: none; color: var(--accent); filter: brightness(1.4); font-size: 10px; cursor: pointer; padding: 0; }
+.notes { margin-top: 4px; font-size: 10px; line-height: 1.5; opacity: 0.8; max-height: 160px; overflow: auto; white-space: pre-wrap; }
+.epActions { display: flex; flex-direction: column; gap: 4px; flex: 0 0 auto; }
+.epBtn { width: 22px; height: 20px; display: grid; place-items: center; background: linear-gradient(180deg, #26262d, #1a1a20); color: #cfcfd4; border: 1px solid #000; border-radius: 3px; cursor: pointer; font-size: 11px; }
+.epBtn:hover { background: #33333b; }
+
+.statusbar { background: #16161a; border-top: 1px solid #000; padding: 3px 8px; font-size: 10px; color: #9a9aa2; }
+
+/* Mobile / narrow */
+.mviews { display: flex; gap: 2px; padding: 4px; background: #0a0a0d; border-bottom: 1px solid #000; }
+.mview { flex: 1; padding: 6px 4px; font-size: 11px; color: #a9a9b2; background: linear-gradient(180deg, #191920, #141419); border: 1px solid #000; border-radius: 3px; cursor: pointer; }
+.mviewOn { background: color-mix(in srgb, var(--accent) 42%, #191920); color: #fff; }
+.body[data-narrow='true'] .shows,
+.body[data-narrow='true'] .episodes { display: none; }
+.body[data-narrow='true'] .shows { width: auto; flex: 1 1 auto; border-right: none; }
+.body[data-narrow='true'][data-view='shows'] .shows { display: flex; }
+.body[data-narrow='true'][data-view='episodes'] .episodes { display: flex; }
+.body[data-narrow='true'] .show { padding: 9px 10px; }
+.body[data-narrow='true'] .ep { padding: 10px 8px; }

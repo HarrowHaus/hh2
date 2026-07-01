@@ -54,6 +54,7 @@ export type AppId =
   | 'zzt'
   | 'eliza'
   | 'blog'
+  | 'podcast'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

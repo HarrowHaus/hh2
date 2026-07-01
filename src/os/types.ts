@@ -51,6 +51,7 @@ export type AppId =
   | 'darkroom'
   | 'quake3'
   | 'boxedwine'
+  | 'zzt'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

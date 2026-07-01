@@ -42,6 +42,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'tic80', label: 'moth' },
       { appId: 'darkroom', label: 'A Dark Room' },
       { appId: 'quake3', label: 'Quake III' },
+      { appId: 'zzt', label: 'ZZT' },
     ],
   },
   {

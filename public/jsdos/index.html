@@ -49,6 +49,18 @@
       var f = e.target.files && e.target.files[0];
       if (f) boot(URL.createObjectURL(f));
     });
+    // ?bundle=<url> auto-boots a bundled game (e.g. the ZZT app) and hides the
+    // open-a-game toolbar; without it this stays the plain MS-DOS Prompt.
+    (function () {
+      var bundle = new URLSearchParams(location.search).get("bundle");
+      if (bundle) {
+        var bar = document.getElementById("bar");
+        if (bar) bar.style.display = "none";
+        var dos = document.getElementById("dos");
+        if (dos) dos.style.top = "0";
+        boot(bundle);
+      }
+    })();
   </script>
 </body>
 </html>

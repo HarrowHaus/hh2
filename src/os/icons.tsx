@@ -641,3 +641,14 @@ export function BoxedWineIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function ZztIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#000" stroke="#5a5a5e" />
+      <text x="16" y="22" textAnchor="middle" fontFamily="Lucida Console, monospace" fontWeight="700" fontSize="15" fill="#4bf">ZZT</text>
+      <rect x="6" y="6" width="3" height="3" fill="#f44" /><rect x="23" y="6" width="3" height="3" fill="#4f4" />
+      <rect x="6" y="23" width="3" height="3" fill="#ff4" /><rect x="23" y="23" width="3" height="3" fill="#f4f" />
+    </svg>
+  )
+}

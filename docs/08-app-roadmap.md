@@ -209,14 +209,12 @@ fallback when the vendor copy is absent.
 
 **Tier C — ADOPT+DATA games + emulation (engine now, data loader)** — *in progress*
 - ✅ **A Dark Room** (doublespeakgames/adarkroom, MPL-2.0) — DONE, vendored offline.
-- ⏳ **ZZT** — a dedicated **Zeta** app is emscripten-blocked (asie/zeta ships no
-  prebuilt web build). ZZT is a DOS program, so it's **playable in the MS-DOS
-  Prompt** now; a dedicated auto-boot ZZT app (bundle freeware ZZT — Epic freed it
-  2020) or a Zeta CI build is the follow-up. **Default: DOS-Prompt-playable.**
-- ⛔ **Space Cadet Pinball** — engine (4.5MB) is clean, but it only boots with the
-  original **MS-copyrighted** game data (2.18MB `.data`), which our rules forbid
-  rehosting, and the emscripten build won't run without it. A user-data shell is
-  impractical (emscripten preload packaging). **Default: DEFER (owner decision).**
+- ✅ **ZZT** (Epic MegaGames, freely-distributable shareware) — DONE. The complete
+  package is vendored as a `.jsdos` bundle (`public/zzt/zzt.jsdos`) that auto-boots
+  `ZZT.EXE` in our DOSBox (js-dos); the host gained a `?bundle=` auto-boot param.
+- ⛔ **Space Cadet Pinball** — **SKIPPED (owner ruled).** Only boots with the
+  original **MS-copyrighted** game data, which our rules forbid rehosting, and the
+  emscripten build won't run without it (a user-data shell is impractical). Not shipped.
 - 🔧 **Quake III** + **BoxedWine** — **WIRED for R2** (owner ruled: Cloudflare R2 +
   runtime fetch, immutable cache; NOT Git LFS/skip). Engines + data are self-hosted
   on R2 (too big to commit); the apps read `data/{quake3,boxedwine}-manifest.json`
@@ -230,10 +228,9 @@ fallback when the vendor copy is absent.
     glue (`?base` loading, OpenArena args, BoxedWine root wiring) is best-effort and
     couldn't be run here — confirm/tune once R2 is populated + deployed.
 
-**Outstanding Tier-C owner decisions:** (1) Space Cadet Pinball — accept a
-user-supplied-data shell vs. skip (copyrighted data); (2) ZZT — bundle freeware
-ZZT for the DOS Prompt now vs. hold for a Zeta CI build. *(ClassiCube — skipped;
-Cave Story — deferred; both owner-ruled.)*
+**Tier C resolved:** A Dark Room ✅ · ZZT ✅ · Quake III + BoxedWine 🔧 (R2-wired,
+owner uploads/deploys) · Space Cadet Pinball ⛔ skipped (copyrighted data) ·
+ClassiCube ⛔ skipped · Cave Story ⏸ deferred — all owner-ruled.
 
 **Tier D — Phase-6 realtime spine (Durable-Objects / WebSockets)**
 **Messenger** (Nostr + NIP-04, auto keypair) · **IRC** (KiwiIRC over WebSockets) ·

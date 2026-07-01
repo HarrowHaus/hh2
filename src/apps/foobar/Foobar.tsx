@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import {
   SOURCES, discographySource, fmtTime, codecReadout, totalLength,
-  HAS_AUDIO, LABELS, TRACKS, type Track, type LabelNode,
+  HAS_AUDIO, LABELS, TRACKS, type Track, type LabelNode, type BandNode,
 } from './catalog'
 import { usePlaylists } from './playlists'
 import { MusicIcon } from '../../os/icons'
@@ -21,13 +21,24 @@ export function Foobar() {
   const [treeError, setTreeError] = useState('')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [selNode, setSelNode] = useState('')
+  // Browse controls for networked sources (Wavlake): a mode/genre chip + search.
+  const [mode, setMode] = useState('')
+  const [term, setTerm] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+
+  // Reset browse state when the source changes (default to its first mode).
+  useEffect(() => {
+    setMode(source.modes?.[0]?.id ?? '')
+    setTerm('')
+    setSearchInput('')
+  }, [source])
 
   useEffect(() => {
     let alive = true
     setTreeLoading(true)
     setTreeError('')
     source
-      .getTree()
+      .getTree({ mode, term })
       .then((t) => {
         if (!alive) return
         setTree(t)
@@ -37,7 +48,31 @@ export function Foobar() {
       .catch(() => alive && setTreeError('This library is unavailable right now.'))
       .finally(() => alive && setTreeLoading(false))
     return () => { alive = false }
-  }, [source])
+  }, [source, mode, term])
+
+  // Lazy drill-in: expanding a Wavlake artist fetches its FULL catalog and
+  // replaces the trending stub in place (graceful — keeps the stub on failure).
+  async function expandBand(labelId: string, band: BandNode, bandKey: string) {
+    const willExpand = !expanded.has(bandKey)
+    toggle(bandKey)
+    setSelNode(bandKey)
+    if (!willExpand || band.loaded || !band.artistId || !source.loadArtist) return
+    const full = await source.loadArtist(band.artistId)
+    setTree((prev) =>
+      prev.map((lab) =>
+        lab.id !== labelId
+          ? lab
+          : {
+              ...lab,
+              bands: lab.bands.map((b) =>
+                b.artistId === band.artistId && b.name === band.name
+                  ? { ...(full ?? b), name: b.name, loaded: true } // keep name → stable expand key
+                  : b,
+              ),
+            },
+      ),
+    )
+  }
 
   // ── Playlists (persisted, tabbed) ────────────────────────────────────────
   const playlists = usePlaylists((s) => s.playlists)
@@ -68,6 +103,23 @@ export function Foobar() {
   const analyserRef = useRef<AnalyserNode | null>(null)
   const peaksRef = useRef<number[]>([])
   const rafRef = useRef<number>(0)
+
+  // ── Responsive layout ────────────────────────────────────────────────────
+  // The 3-pane desktop layout can't fit a phone; below a threshold we show one
+  // pane at a time behind a Library / Playlist / Now Playing switcher. Measured
+  // on the app root (a window can be any width, independent of the viewport).
+  const rootRef = useRef<HTMLDivElement>(null)
+  const [narrow, setNarrow] = useState(false)
+  const [mview, setMview] = useState<'library' | 'playlist' | 'np'>('library')
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver((entries) => {
+      for (const e of entries) setNarrow(e.contentRect.width < 620)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   const total = dur || current?.durationSec || 0
   const progress = total > 0 ? Math.min(1, elapsed / total) : 0
@@ -185,6 +237,7 @@ export function Foobar() {
     if (!active || !tracks.length) return
     const added = addTracks(active.id, tracks)
     setStatus(added ? `Added ${added} track${added === 1 ? '' : 's'} to ${active.name}` : 'Already in this playlist')
+    if (narrow) setMview('playlist')
     void playTrack(tracks[0])
   }
 
@@ -216,7 +269,7 @@ export function Foobar() {
     : `${queue.length} track${queue.length === 1 ? '' : 's'}`
 
   return (
-    <div className={styles.fb}>
+    <div className={styles.fb} ref={rootRef}>
       <div className={styles.menubar}>
         <span>File</span><span>Edit</span><span>View</span><span>Playback</span><span>Library</span><span>Help</span>
       </div>
@@ -279,7 +332,25 @@ export function Foobar() {
         <button type="button" className={styles.tabAdd} aria-label="New playlist" onClick={addPlaylist}>＋</button>
       </div>
 
-      <div className={styles.body}>
+      {/* Mobile pane switcher (narrow widths only) */}
+      {narrow && (
+        <div className={styles.mviews} role="tablist" aria-label="View">
+          {([['library', 'Library'], ['playlist', 'Playlist'], ['np', 'Now Playing']] as const).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={mview === id}
+              className={`${styles.mview} ${mview === id ? styles.mviewOn : ''}`}
+              onClick={() => setMview(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className={styles.body} data-narrow={narrow} data-view={mview}>
         {/* Media Library panel: source switcher + album-list tree */}
         <div className={styles.tree}>
           <div className={styles.sourceSwitch} role="tablist" aria-label="Library source">
@@ -296,7 +367,45 @@ export function Foobar() {
               </button>
             ))}
           </div>
-          <div className={styles.treeHead}>Album List</div>
+          {(source.searchable || source.modes) && (
+            <div className={styles.browse}>
+              {source.searchable && (
+                <div className={styles.searchRow}>
+                  <input
+                    className={styles.search}
+                    placeholder={`Search ${source.label}…`}
+                    value={searchInput}
+                    spellCheck={false}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') setTerm(searchInput.trim())
+                      else if (e.key === 'Escape') { setSearchInput(''); setTerm('') }
+                    }}
+                  />
+                  {term ? (
+                    <button type="button" className={styles.searchBtn} aria-label="Clear search" onClick={() => { setSearchInput(''); setTerm('') }}>×</button>
+                  ) : (
+                    <button type="button" className={styles.searchBtn} aria-label="Search" onClick={() => setTerm(searchInput.trim())}>⌕</button>
+                  )}
+                </div>
+              )}
+              {source.modes && !term && (
+                <div className={styles.chips}>
+                  {source.modes.map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      className={`${styles.chip} ${m.id === mode ? styles.chipOn : ''}`}
+                      onClick={() => setMode(m.id)}
+                    >
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          <div className={styles.treeHead}>{term ? 'Results' : 'Album List'}</div>
           <div className={styles.treeScroll}>
             {treeLoading && <div className={styles.treeMsg}>Loading…</div>}
             {!treeLoading && treeError && <div className={styles.treeMsg}>{treeError}</div>}
@@ -317,7 +426,7 @@ export function Foobar() {
                       <div key={bandKey}>
                         <div
                           className={`${styles.node} ${styles.band} ${selNode === bandKey ? styles.nodeSel : ''}`}
-                          onClick={() => { toggle(bandKey); setSelNode(bandKey) }}
+                          onClick={() => void expandBand(label.id, band, bandKey)}
                           onDoubleClick={() => sendToActive(bandTracks)}
                           title="Double-click to add to the active playlist"
                         >

@@ -35,7 +35,17 @@ export const TRACKS: Track[] = audio.tracks ?? []
 export const HAS_AUDIO = TRACKS.length > 0
 
 export interface AlbumNode { key: string; album: string; year?: number | null; tracks: Track[] }
-export interface BandNode { name: string; year?: number | null; era?: string | null; albums: AlbumNode[] }
+export interface BandNode {
+  name: string
+  year?: number | null
+  era?: string | null
+  albums: AlbumNode[]
+  /** For lazy drill-in: a networked source's artist id + whether its full
+   *  catalog has been fetched yet (Wavlake — §2.2). */
+  artistId?: string
+  sourceId?: string
+  loaded?: boolean
+}
 export interface LabelNode { id: string; name: string; founded?: number; bands: BandNode[] }
 
 const ROSTER_ID = '__roster'
@@ -108,13 +118,22 @@ export const fmtTime = (sec?: number | null) => {
 // Wavlake (streaming) slots in as a second implementation in §2.2 with no UI
 // change. getTree()/resolveStreamUrl() are async-ready so a networked source
 // can fetch lazily and degrade to an empty tree without breaking the player.
+/** A browse category a source exposes as a chip (Trending, a genre, …). */
+export interface BrowseMode { id: string; label: string }
+
 export interface LibrarySource {
   id: string
   label: string
-  /** label → band → album → track tree. May fetch; may return [] (graceful empty). */
-  getTree(): Promise<LabelNode[]>
+  /** label → band → album → track tree. May fetch; may return [] (graceful empty).
+   *  opts lets a networked source pick a browse mode or run a search. */
+  getTree(opts?: { mode?: string; term?: string }): Promise<LabelNode[]>
   /** The playable stream URL for a track, or null if none is available yet. */
   resolveStreamUrl(track: Track): Promise<string | null>
+  /** Optional browse controls (Discography has none; Wavlake does). */
+  searchable?: boolean
+  modes?: BrowseMode[]
+  /** Lazily fetch an artist's full catalog (drill-in), or null on failure. */
+  loadArtist?(artistId: string): Promise<BandNode | null>
 }
 
 // Discography: the existing local spine + R2 audio manifest, unchanged behavior.

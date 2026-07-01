@@ -82,14 +82,20 @@ A **source switcher** in the Media Library panel toggles between libraries; **ea
   sources could slot in later. The UI never special-cases a source.
 
 ### 2.2 The Wavlake library (optional listening room — reframed, no label/zap agenda)
-> **STATUS (Section 3 landed):** `src/apps/foobar/wavlake.ts` implements a `WavlakeSource` against
-> Wavlake's public HTTP API (`wavlake.com/api/v1`, no key/wallet). It seeds a browsable tree from
-> Wavlake's trending rankings (artist → release → track under a "Trending on Wavlake" wrapper), rendered
-> in the same tree/columns/transport as Discography; tracks stream via their `mediaUrl` (audio element
-> set `crossOrigin="anonymous"` so the Web-Audio spectrum works where CORS allows). **No zap/chart/tip
-> UI.** Any network/CORS failure → the source throws and foobar shows a graceful empty/"unavailable"
-> state (the player keeps working). Reference: `derekross/zaptrax` (MIT, credited). Zaps (NIP-57) remain
-> deferred (§3 below).
+> **STATUS (Section 3 landed; expanded per owner feedback):** `src/apps/foobar/wavlake.ts` implements a
+> `WavlakeSource` against Wavlake's public HTTP API (`wavlake.com/api/v1`, no key/wallet), rendered in
+> the same tree/columns/transport as Discography. It's a **real, navigable library, not just trending**:
+> a **search box** (Wavlake search), **browse-mode chips** (Trending + genres: Rock/Hip-Hop/Electronic/
+> Pop/Folk/Jazz/Metal/Country/Classical/Reggae/Blues/Ambient), and **lazy per-artist catalog drill-in**
+> (expanding a Wavlake artist fetches its full album/track catalog via `/content/artist/<id>`). Tracks
+> stream via `mediaUrl` (audio element `crossOrigin="anonymous"` so the Web-Audio spectrum works where
+> CORS allows). Your own **playlists** (the multi-playlist tabs from §2.3) are curated from any source.
+> **No zap/chart/tip UI** (zaps/NIP-57 deferred, §3). Any network/CORS failure → graceful empty/
+> "unavailable" state (the player keeps working). Reference: `derekross/zaptrax` (MIT, credited).
+>
+> **Mobile:** the 3-pane desktop layout now reflows below ~620px into a **Library / Playlist / Now
+> Playing** switcher (one pane at a time, roomier touch targets) so nothing gets squeezed to zero on a
+> phone. Measured on the app root via `ResizeObserver` (works at any window width, not just viewport).
 
 - **Build:** a `WavlakeSource` that fetches Wavlake catalog/track data (Wavlake NOM / kind-32123 events
   via `relay.wavlake.com`, or Wavlake's API) and exposes it through the `LibrarySource` interface;

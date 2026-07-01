@@ -2,6 +2,7 @@ import { useRef, useState, type ChangeEvent } from 'react'
 import { useOS } from '../../os/store'
 import { PACK_LIST, type VisualStyle } from '../../os/themes'
 import { SAVERS, WALLPAPERS, SaverCanvas } from '../../components/ScreenSaver/ScreenSaver'
+import { Slideshow } from '../../components/Desktop/Slideshow'
 import type { AppProps } from '../../os/types'
 import styles from './DisplayProperties.module.css'
 
@@ -90,7 +91,9 @@ export function DisplayProperties({ winId }: AppProps) {
         ) : showDesktop ? (
           <>
             <div className={styles.saverPreview} aria-label="Wallpaper preview">
-              <SaverCanvas id={wallpaper} className={styles.saverCanvas} />
+              {wallpaper === 'slideshow'
+                ? <Slideshow />
+                : <SaverCanvas id={wallpaper} className={styles.saverCanvas} />}
             </div>
             <div className={styles.field}>
               <label htmlFor="wallpaper">Background:</label>

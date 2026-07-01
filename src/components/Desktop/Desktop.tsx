@@ -21,6 +21,7 @@ import { ContextMenu } from '../ContextMenu/ContextMenu'
 import { CrtOverlay } from '../CrtOverlay/CrtOverlay'
 import { Oneko } from '../Oneko/Oneko'
 import { ScreenSaver, SaverCanvas } from '../ScreenSaver/ScreenSaver'
+import { Slideshow } from './Slideshow'
 import styles from './Desktop.module.css'
 
 const ICON_W = 76
@@ -226,7 +227,7 @@ export function Desktop() {
     <main className={styles.desktop} aria-label="Desktop">
       {wallpaper !== 'none' && (
         <div className={styles.wallpaper} aria-hidden="true">
-          <SaverCanvas id={wallpaper} />
+          {wallpaper === 'slideshow' ? <Slideshow /> : <SaverCanvas id={wallpaper} />}
         </div>
       )}
       <div

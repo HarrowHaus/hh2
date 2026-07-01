@@ -333,6 +333,18 @@ const FILES: FSNode[] = [
     ].join('\n'),
   ),
   text(
+    `${DESKTOP_PATH}/read me.txt`,
+    'read me.txt',
+    C,
+    [
+      'back up before you reinstall. the good stuff is in My Documents.',
+      'foobar for the music, the blog folder for the writing.',
+      "don't touch the CODECS folder. you'll regret it.",
+      '',
+      '- B',
+    ].join('\n'),
+  ),
+  text(
     `${PF}/Emulators/ZSNES/gamegenie_codes.txt`,
     'gamegenie_codes.txt',
     A2,

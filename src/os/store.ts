@@ -26,6 +26,11 @@ interface OSState {
   /** oneko desktop pet on/off. Persisted. */
   neko: boolean
   setNeko: (on: boolean) => void
+  /** Desktop icon arrangement (docs/10 §5.1). Persisted. */
+  autoArrange: boolean
+  setAutoArrange: (on: boolean) => void
+  alignToGrid: boolean
+  setAlignToGrid: (on: boolean) => void
   /** Selected screen saver id (Display Properties → Screen Saver), or 'none'. */
   screensaver: string
   setScreensaver: (id: string) => void
@@ -106,6 +111,10 @@ export const useOS = create<OSState>()(
       setCrt: (crt) => set({ crt }),
       neko: false,
       setNeko: (neko) => set({ neko }),
+      autoArrange: false,
+      setAutoArrange: (autoArrange) => set({ autoArrange }),
+      alignToGrid: true,
+      setAlignToGrid: (alignToGrid) => set({ alignToGrid }),
       muted: false,
       volume: 0.8,
       setMuted: (muted) => { setSoundPrefs({ muted, volume: get().volume }); set({ muted }) },
@@ -307,6 +316,8 @@ export const useOS = create<OSState>()(
         visualStyle: state.visualStyle,
         crt: state.crt,
         neko: state.neko,
+        autoArrange: state.autoArrange,
+        alignToGrid: state.alignToGrid,
         screensaver: state.screensaver,
         wallpaper: state.wallpaper,
         wallpaperImage: state.wallpaperImage,

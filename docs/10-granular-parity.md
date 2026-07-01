@@ -123,7 +123,13 @@ Current: Arrange [disabled], Refresh, Paste, New Folder, New Text Document, Prop
 - **[OPTIONAL] View page source / Inspect** — see §7.4.
 - **Accept:** desktop menu matches the screenshot's items; Sort by reorders desktop icons and persists; Background changes wallpaper; close-effect visibly changes the close animation.
 
-### 5.1 Grid-snap on drop  **[GAP — docs/12-adjacent work item §7]**
+> **STATUS (§7 landed):** desktop icons snap to an invisible grid on drop; **Auto Arrange** +
+> **Align to Grid** toggles in the desktop context menu (persisted, `alignToGrid` default on). Icons
+> render with a 2-line clamped label + **shortcut-arrow overlay** on launchers/folder shortcuts. A
+> **curated default loadout** ships (My Computer · My Documents · Recycle Bin · Internet Explorer · Blog
+> · foobar · games · read me.txt), laid out via a tidy column-major grid flow — not a random pile.
+
+### 5.1 Grid-snap on drop  **[DONE]**
 - **Build:** snap desktop icons to an **invisible XP grid** on drop. Define a grid cell (~76×92px matching the icon box + label) anchored top-left; on drag-end, convert the icon's `desktopPos` to the **nearest grid cell** (round `x/cellW`, `y/cellH`, clamp to the desktop rect, avoid stacking two icons in one cell — probe outward for the next free cell). Persist the snapped positions.
 - **Auto Arrange** (toggle): when on, icons flow into grid order automatically (column-major, top-left origin) and free-drag is disabled (drops re-flow). **Align to Grid** (toggle): free-drag allowed but every drop snaps to the nearest cell. Both live in the desktop context menu (§5) and persist in the OS store.
 - **Ref:** daedalOS desktop icon grid + Auto Arrange / Align to Grid.

@@ -17,6 +17,11 @@ export type SoundEvent =
   | 'minimize'
   | 'menu'
   | 'error'
+  // AIM: sign-on/off (door open/slam) + IM in/out — silent slots (Phase 8).
+  | 'aim-signon'
+  | 'aim-signoff'
+  | 'aim-in'
+  | 'aim-out'
 
 // Phase 8 fills these with `${import.meta.env.BASE_URL}sounds/<name>.wav`.
 const SLOTS: Record<SoundEvent, string | null> = {
@@ -27,6 +32,10 @@ const SLOTS: Record<SoundEvent, string | null> = {
   minimize: null,
   menu: null,
   error: null,
+  'aim-signon': null,
+  'aim-signoff': null,
+  'aim-in': null,
+  'aim-out': null,
 }
 
 let muted = false

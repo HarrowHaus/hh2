@@ -59,6 +59,18 @@ Under the hood it's Nostr (real, encrypted, uncensorable). On the surface it's A
 casual visitor chats with bot buddies immediately; a visitor who wants real messaging has a working
 encrypted Nostr DM client.
 
+> **STATUS (Section 5 landed):** local **bot buddies** (`bots.ts`, six in-world characters) driven by
+> the §1 bot-voice service — the list is alive and chattable **offline**, transcripts persisted. Full
+> AIM chrome: **buddy groups** (collapsible, online/total counts), **status states** (online/away/idle/
+> invisible) with graying + "(Away)", a **self status selector** + away message, **idle auto-status**
+> after inactivity, working **away auto-responses** (messaging an away bot returns its away message),
+> **typing indicator**, **timestamps**, **warning %**, **profile quote** panel, and **sign-on/off + IM
+> sounds** wired to the silent `sound.ts` seam. A one-time **auto-key caveat** with copy-npub / back-up-
+> key. Real npub contacts still use encrypted **NIP-04** DMs over public relays. An optional "smarter
+> bots" toggle routes bot replies through WebLLM when WebGPU is present. *Deferred: NIP-17/44 gift-wrap
+> privacy upgrade (NIP-04 remains the working default); multiple simultaneous IM windows (single
+> switchable pane for now); kind-0 profile avatars for real contacts.*
+
 ### 2.1 Nostr core
 - **Library:** `nostr-tools` (keys, events, relays, nip19, encryption).
 - **Identity:** auto-generate a per-visitor keypair on first run, stored in IndexedDB (their screen-name

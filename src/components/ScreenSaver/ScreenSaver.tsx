@@ -181,6 +181,64 @@ function initPipes(ctx: Ctx) {
   }
 }
 
+// ── Waves (ambient, wallpaper-friendly) ──────────────────────────────────────
+function initWaves(ctx: Ctx) {
+  let t = 0
+  return function tick() {
+    const { width: W, height: H } = ctx.canvas
+    t += 0.02
+    const bg = ctx.createLinearGradient(0, 0, 0, H)
+    bg.addColorStop(0, '#0a0a1e'); bg.addColorStop(1, '#1a0a2a')
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H)
+    for (let layer = 0; layer < 4; layer++) {
+      const amp = 24 + layer * 10
+      const yBase = H * 0.5 + layer * 42
+      ctx.beginPath(); ctx.moveTo(0, yBase)
+      for (let x = 0; x <= W; x += 8) {
+        const y = yBase + Math.sin(x * 0.008 + t + layer) * amp + Math.sin(x * 0.02 - t * 1.3) * amp * 0.4
+        ctx.lineTo(x, y)
+      }
+      ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath()
+      ctx.fillStyle = `hsla(${260 - layer * 20}, 70%, ${20 + layer * 8}%, 0.5)`
+      ctx.fill()
+    }
+  }
+}
+
+// ── Aurora (ambient, wallpaper-friendly) ─────────────────────────────────────
+function initAurora(ctx: Ctx) {
+  let t = 0
+  const blobs = Array.from({ length: 5 }, (_, i) => ({ hue: 140 + i * 40, ph: i * 1.3 }))
+  return function tick() {
+    const { width: W, height: H } = ctx.canvas
+    t += 0.006
+    ctx.fillStyle = '#050510'; ctx.fillRect(0, 0, W, H)
+    ctx.globalCompositeOperation = 'lighter'
+    for (const b of blobs) {
+      const x = W * (0.5 + 0.4 * Math.sin(t + b.ph))
+      const y = H * (0.4 + 0.3 * Math.cos(t * 1.3 + b.ph))
+      const r = Math.min(W, H) * 0.4
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r)
+      g.addColorStop(0, `hsla(${b.hue},80%,55%,0.22)`)
+      g.addColorStop(1, `hsla(${b.hue},80%,55%,0)`)
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill()
+    }
+    ctx.globalCompositeOperation = 'source-over'
+  }
+}
+
+// Live-wallpaper options (Display Properties → Desktop). Reuses the saver
+// renderers plus the two ambient effects above.
+export const WALLPAPERS: { id: string; label: string }[] = [
+  { id: 'none', label: '(Theme default)' },
+  { id: 'waves', label: 'Waves' },
+  { id: 'aurora', label: 'Aurora' },
+  { id: 'starfield', label: 'Starfield' },
+  { id: 'matrix', label: 'Matrix' },
+  { id: 'mystify', label: 'Mystify' },
+  { id: 'pipes', label: '3D Pipes' },
+]
+
 // ---------------------------------------------------------------------------
 // SaverCanvas — presentational, fills its parent
 // ---------------------------------------------------------------------------
@@ -220,6 +278,8 @@ export function SaverCanvas({ id, className }: { id: string; className?: string 
       case 'mystify':   tick = initMystify(ctx);   break
       case 'matrix':    tick = initMatrix(ctx);     break
       case 'pipes':     tick = initPipes(ctx);      break
+      case 'waves':     tick = initWaves(ctx);      break
+      case 'aurora':    tick = initAurora(ctx);     break
       default:
         ctx.fillStyle = '#000'
         ctx.fillRect(0, 0, canvas.width, canvas.height)

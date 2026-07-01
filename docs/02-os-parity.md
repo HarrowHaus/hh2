@@ -61,7 +61,7 @@ fullscreen via **Win key**, **Win+R** (Run). Esc closes menus; Alt+Tab cycles.
 - **Web worker + OffscreenCanvas** render; **NTP** time; **sync**; **date tooltip**; **calendar popup**. *(ours today: live taskbar clock — extend to worker/NTP/calendar.)*
 
 ## 9. Background + Screensaver
-- **Animated backgrounds:** Waves, **Hexells** (znah/hexells, Apache-2.0), **Matrix** (jcubic/cmatrix, MIT), Coastal. Wallpaper engines via Vanta-style three.js effects (MIT; avoid p5.js LGPL).
+- **Animated backgrounds:** ✅ **DONE** — live desktop wallpapers selectable in Display Properties ▸ Desktop (Waves, Aurora, Starfield, Matrix, Mystify, 3D Pipes), our own canvas renderers (shared with the screensavers), persisted + reduced-motion aware. *(Image/video wallpaper with Fill/Fit/Stretch/Tile/Center + slideshow from NASA APOD/Met/Picsum remain to add.)*
 - **Image/video wallpaper** with **Fill / Fit / Stretch / Tile / Center**.
 - **Slideshow sources:** NASA APOD, Art Institute of Chicago, The Met, Lorem Picsum (all free/open APIs).
 - **Custom screensavers:** **3D FlowerBox**, **3D Maze**, **Pipes** (1j01/pipes, MIT) — the MS names are nominative; FlowerBox/Maze are **built original** (the unlicensed repos with MS bitmaps are NOT used). *(ours today: original Starfield/Mystify/Matrix/3D-Pipes savers + CRT/VHS overlay.)*

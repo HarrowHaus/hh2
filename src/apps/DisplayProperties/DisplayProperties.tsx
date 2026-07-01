@@ -1,7 +1,7 @@
 import { useRef, useState, type ChangeEvent } from 'react'
 import { useOS } from '../../os/store'
 import { PACK_LIST, type VisualStyle } from '../../os/themes'
-import { SAVERS, SaverCanvas } from '../../components/ScreenSaver/ScreenSaver'
+import { SAVERS, WALLPAPERS, SaverCanvas } from '../../components/ScreenSaver/ScreenSaver'
 import type { AppProps } from '../../os/types'
 import styles from './DisplayProperties.module.css'
 
@@ -14,6 +14,8 @@ export function DisplayProperties({ winId }: AppProps) {
   const setVisualStyle = useOS((s) => s.setVisualStyle)
   const screensaver = useOS((s) => s.screensaver)
   const setScreensaver = useOS((s) => s.setScreensaver)
+  const wallpaper = useOS((s) => s.wallpaper)
+  const setWallpaper = useOS((s) => s.setWallpaper)
   const crt = useOS((s) => s.crt)
   const setCrt = useOS((s) => s.setCrt)
   const neko = useOS((s) => s.neko)
@@ -37,6 +39,7 @@ export function DisplayProperties({ winId }: AppProps) {
   }
 
   const showSaver = tab === 'Screen Saver'
+  const showDesktop = tab === 'Desktop'
 
   return (
     <div className={styles.sheet}>
@@ -83,6 +86,26 @@ export function DisplayProperties({ winId }: AppProps) {
                 Desktop pet
               </label>
             </div>
+          </>
+        ) : showDesktop ? (
+          <>
+            <div className={styles.saverPreview} aria-label="Wallpaper preview">
+              <SaverCanvas id={wallpaper} className={styles.saverCanvas} />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="wallpaper">Background:</label>
+              <select
+                id="wallpaper"
+                className={styles.select}
+                value={wallpaper}
+                onChange={(e) => setWallpaper(e.target.value)}
+              >
+                {WALLPAPERS.map((w) => (
+                  <option key={w.id} value={w.id}>{w.label}</option>
+                ))}
+              </select>
+            </div>
+            <p className={styles.hint}>Animated backgrounds respect reduced-motion. Choose “(Theme default)” for the skin’s wallpaper.</p>
           </>
         ) : (
           <>

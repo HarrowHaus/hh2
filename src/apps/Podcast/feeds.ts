@@ -47,12 +47,16 @@ export function loadSubscriptions(): Show[] {
 }
 
 // ── Feed fetch (CORS strategy, docs/11 §3.2) ────────────────────────────────
-// Read-only GET proxies for feeds whose host blocks cross-origin: a couple of
-// public CORS relays plus the Browser's sanctioned Old-Net seam. Episode audio
-// (the enclosure) streams fine cross-origin from the <audio> element regardless.
+// Read-only GET proxies for feeds whose host blocks cross-origin. Primary is our
+// own Cloudflare Pages Function (`functions/api/feed.js`) — same-origin, edge-
+// side fetch, no CORS, reliable; it deploys with the normal Pages build. Public
+// relays + the Browser's Old-Net seam are backups (and cover local `vite` dev
+// where the Function isn't running). Episode audio (the enclosure) streams fine
+// cross-origin from the <audio> element regardless.
 const PROXIES: ((u: string) => string)[] = [
-  (u) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+  (u) => `/api/feed?url=${encodeURIComponent(u)}`,
   (u) => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(u)}`,
+  (u) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
   (u) => `https://theoldnet.com/get?url=${encodeURIComponent(u)}`,
 ]
 

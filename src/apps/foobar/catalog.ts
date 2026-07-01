@@ -98,3 +98,48 @@ export const fmtTime = (sec?: number | null) => {
   const s = Math.floor(sec % 60)
   return `${m}:${s.toString().padStart(2, '0')}`
 }
+
+// ── Library sources (docs/11 §2.1) ─────────────────────────────────────────
+// A media library is a SOURCE of tracks the UI browses identically regardless
+// of where it comes from. Discography (local R2 spine) is the first source;
+// Wavlake (streaming) slots in as a second implementation in §2.2 with no UI
+// change. getTree()/resolveStreamUrl() are async-ready so a networked source
+// can fetch lazily and degrade to an empty tree without breaking the player.
+export interface LibrarySource {
+  id: string
+  label: string
+  /** label → band → album → track tree. May fetch; may return [] (graceful empty). */
+  getTree(): Promise<LabelNode[]>
+  /** The playable stream URL for a track, or null if none is available yet. */
+  resolveStreamUrl(track: Track): Promise<string | null>
+}
+
+// Discography: the existing local spine + R2 audio manifest, unchanged behavior.
+export const discographySource: LibrarySource = {
+  id: 'discography',
+  label: 'Discography',
+  getTree: async () => buildLibrary(),
+  resolveStreamUrl: async (t) => t.src ?? null,
+}
+
+// The registered sources, in switcher order. Wavlake is appended in §2.2.
+export const SOURCES: LibrarySource[] = [discographySource]
+
+// Sum a track list's known durations (unknowns count as 0).
+export const totalLength = (tracks: Track[]) =>
+  tracks.reduce((n, t) => n + (t.durationSec ?? 0), 0)
+
+// A foobar-style codec/samplerate readout for the status bar, derived from the
+// real file extension + live AudioContext sample rate (no fabricated bitrate).
+export function codecReadout(track: Track | null, sampleRate?: number): string {
+  if (!track) return ''
+  const src = track.src ?? ''
+  const ext = src.split('?')[0].split('.').pop()?.toLowerCase() ?? ''
+  const codec: Record<string, string> = {
+    mp3: 'MP3', flac: 'FLAC', ogg: 'Vorbis', oga: 'Vorbis', opus: 'Opus',
+    m4a: 'AAC', aac: 'AAC', wav: 'PCM', webm: 'Opus',
+  }
+  const name = codec[ext] ?? (src ? ext.toUpperCase() : 'stream')
+  const hz = sampleRate ? ` · ${(sampleRate / 1000).toFixed(1)} kHz` : ''
+  return `${name}${hz}`
+}

@@ -16,10 +16,30 @@
 
 .banner { background: #2a210f; color: #e8d9a8; border-bottom: 1px solid #000; padding: 4px 8px; font-size: 10px; }
 
+/* Playlist tabs row */
+.tabs { display: flex; align-items: stretch; gap: 1px; background: #0a0a0d; border-bottom: 1px solid #000; padding: 3px 4px 0; overflow-x: auto; }
+.tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; max-width: 180px; background: linear-gradient(180deg, #17171c, #121216); color: #a9a9b2; border: 1px solid #000; border-bottom: none; border-radius: 4px 4px 0 0; cursor: pointer; white-space: nowrap; }
+.tab:hover { color: #d8d8dc; }
+.tabActive { background: linear-gradient(180deg, #26262d, #1a1a20); color: #fff; box-shadow: inset 0 1px 0 #34343d; }
+.tabName { overflow: hidden; text-overflow: ellipsis; }
+.tabCount { font-variant-numeric: tabular-nums; opacity: 0.45; font-size: 9px; }
+.tabClose { width: 14px; height: 14px; display: grid; place-items: center; background: none; border: none; color: inherit; opacity: 0.5; cursor: pointer; border-radius: 2px; font-size: 12px; line-height: 1; }
+.tabClose:hover { opacity: 1; background: rgba(255,255,255,0.14); }
+.tabInput { width: 96px; font-size: 11px; background: #000; color: #fff; border: 1px solid var(--accent); border-radius: 2px; padding: 1px 3px; }
+.tabAdd { align-self: center; margin-left: 3px; width: 20px; height: 20px; display: grid; place-items: center; background: linear-gradient(180deg, #26262d, #1a1a20); color: #cfcfd4; border: 1px solid #000; border-radius: 3px; cursor: pointer; font-size: 11px; }
+.tabAdd:hover { background: #33333b; }
+
 .body { flex: 1; display: flex; min-height: 0; }
 
-.tree { width: 220px; flex: 0 0 220px; background: #101014; border-right: 1px solid #000; overflow: auto; padding: 4px 0; }
-.treeHead { color: #8a8a92; text-transform: uppercase; font-size: 9px; font-weight: 700; letter-spacing: 1px; padding: 5px 8px; background: linear-gradient(180deg, #1a1a1f, #131317); border-bottom: 1px solid #000; position: sticky; top: 0; z-index: 1; }
+.tree { width: 220px; flex: 0 0 220px; background: #101014; border-right: 1px solid #000; display: flex; flex-direction: column; min-height: 0; }
+/* Media Library source switcher (Discography / Wavlake / …) */
+.sourceSwitch { display: flex; gap: 2px; padding: 4px; background: #0d0d11; border-bottom: 1px solid #000; }
+.sourceBtn { flex: 1; padding: 3px 6px; font-size: 10px; color: #a9a9b2; background: linear-gradient(180deg, #191920, #141419); border: 1px solid #000; border-radius: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sourceBtn:hover { color: #e4e4ea; }
+.sourceActive { background: color-mix(in srgb, var(--accent) 42%, #191920); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
+.treeScroll { flex: 1; overflow: auto; padding: 4px 0; min-height: 0; }
+.treeMsg { padding: 12px 10px; opacity: 0.5; font-size: 10px; }
+.treeHead { color: #8a8a92; text-transform: uppercase; font-size: 9px; font-weight: 700; letter-spacing: 1px; padding: 5px 8px; background: linear-gradient(180deg, #1a1a1f, #131317); border-bottom: 1px solid #000; }
 .node { display: flex; align-items: center; gap: 4px; padding: 2px 8px; cursor: default; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .node:hover { background: #1c1c22; }
 .nodeSel { background: color-mix(in srgb, var(--accent) 40%, #1c1c22); color: #fff; }
@@ -34,7 +54,9 @@
 .row { display: grid; grid-template-columns: 28px minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,1fr) 52px; gap: 6px; padding: 3px 8px; border-bottom: 1px solid #131318; cursor: default; }
 .head { position: sticky; top: 0; z-index: 1; background: linear-gradient(180deg, #1a1a1f, #131317); color: #8a8a92; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #000; }
 .row:not(.head):hover { background: #1a1a20; }
+.rowSel { background: #24242c; }
 .rowActive { background: color-mix(in srgb, var(--accent) 45%, #1a1a20) !important; color: #fff; }
+.playlist:focus { outline: none; }
 .col { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .num { text-align: right; opacity: 0.5; }
 .dur { text-align: right; opacity: 0.7; font-variant-numeric: tabular-nums; }

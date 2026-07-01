@@ -45,6 +45,15 @@ personal content lives.
 `src/apps/foobar/Foobar.tsx` (+ `catalog.ts`). Current: menu bar, single Album-List tree over the
 discography, a single implicit playlist (columns), art + now-playing, transport, status bar.
 
+> **STATUS (Section 2 landed):** rebuilt to the Columns-UI model. `catalog.ts` now exposes a
+> `LibrarySource` interface (`id`/`label`/`getTree()`/`resolveStreamUrl()`) with **Discography** as the
+> first source; the Media Library panel has a **source switcher** (Wavlake slots in at §2.2 with no UI
+> change). Playlists are now **multiple, named, tabbed and persisted** (`playlists.ts`, localStorage
+> `hmd.foobar`): ＋ add / ✕ close / double-click rename; double-clicking a library band/album sends its
+> tracks to the active playlist. Columns are Artist · Title · Album · Length (＋ track #); the status bar
+> shows selection-aware track/time counts + a real codec/sample-rate readout. Skin unchanged. **§2.2
+> Wavlake is the next section.**
+
 ### 2.0 The foobar2000 mental model Claude Code MUST build to (Columns-UI parity)
 Real foobar2000 separates two distinct things — the current build conflates them:
 - **Media Library = your whole collection**, browsable (the Album List / library tree). A *source* of tracks.

@@ -1,76 +1,39 @@
-/* mIRC prop — classic light IRC client, its own skin. Static (Phase 6 = real). */
+/* mIRC — real IRC via an embedded KiwiIRC client. */
 .mirc {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #d6d3c8;
-  color: #1a1a1a;
+  background: var(--winbody);
+  color: var(--wintext);
   font-size: 11px;
 }
-.toolbar {
+.bar {
   display: flex;
-  gap: 4px;
-  padding: 3px 6px;
-  background: linear-gradient(180deg, #efece2, #d6d3c8);
-  border-bottom: 1px solid #a8a496;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--winborder);
 }
-.tbtn { font-size: 11px; padding: 1px 8px; cursor: default; }
-.tbtn:hover { background: #c4c0b2; }
-
-.body { flex: 1; display: flex; min-height: 0; }
-.tree {
-  width: 150px;
-  flex: 0 0 150px;
-  background: #fff;
-  border-right: 1px solid #a8a496;
-  overflow: auto;
-  padding: 4px 0;
+.net { margin-right: auto; font-weight: 600; }
+.via { opacity: 0.6; font-weight: 400; }
+.tbtn {
+  font: inherit;
+  font-size: 11px;
+  text-decoration: none;
+  color: inherit;
+  background: var(--field);
+  border: 1px solid var(--winborder);
+  border-radius: 3px;
+  padding: 1px 8px;
+  cursor: pointer;
 }
-.server { font-weight: 700; font-size: 10px; padding: 3px 6px; color: #1a3a6a; }
-.chan { padding: 2px 6px 2px 16px; cursor: default; }
-.chanOn { background: #1c5fae; color: #fff; font-weight: 700; }
-
-.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
-.topic {
-  font-size: 10px;
+.tbtn:hover { filter: brightness(1.12); }
+.body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.frame { flex: 1; width: 100%; border: 0; background: #1a1a22; }
+.fallback {
   padding: 3px 8px;
-  background: #efece2;
-  border-bottom: 1px solid #a8a496;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  font-size: 10px;
+  opacity: 0.6;
+  border-top: 1px solid var(--winborder);
+  text-align: center;
 }
-.chat {
-  flex: 1;
-  overflow: auto;
-  background: #fff;
-  padding: 5px 8px;
-  font-family: 'Lucida Console', 'Consolas', monospace;
-  font-size: 11px;
-  line-height: 1.45;
-}
-.line { white-space: pre-wrap; word-break: break-word; }
-.nick { font-weight: 700; color: #14306a; }
-.sysText { color: #2f7d2f; }
-.me .nick { color: #b01818; }
-.op .nick { color: #9a5a00; }
-.bot { color: #7a2aa0; }
-.bot .nick { color: #7a2aa0; }
-
-.inputRow { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-top: 1px solid #a8a496; background: #efece2; }
-.youNick { font-size: 10px; color: #14306a; font-weight: 700; }
-.input { flex: 1; height: 18px; background: #fff; border: 1px solid #a8a496; }
-
-.names {
-  width: 120px;
-  flex: 0 0 120px;
-  background: #fff;
-  border-left: 1px solid #a8a496;
-  overflow: auto;
-  font-size: 11px;
-  font-family: 'Lucida Console', 'Consolas', monospace;
-}
-.namesHead { font-size: 9px; color: #777; padding: 2px 6px; border-bottom: 1px solid #d0cdc2; }
-.name { padding: 1px 6px; }
-.opName { color: #9a5a00; font-weight: 700; }
-.botName { color: #7a2aa0; }

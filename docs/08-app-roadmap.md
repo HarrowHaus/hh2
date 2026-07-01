@@ -54,7 +54,7 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | **Browser** (full: CORS load, bookmark bar+favicons, Wayback+The Old Net proxy, back/fwd/reload, address search, IPFS, chrome://dino t-rex-runner) | **placeholder** (in-world prop) → was wrongly EXTEND'd | **ADOPT-his — ✅ DONE** | **Corrected ruling (no "already have it" skips):** ported from DustinBrett/daedalOS `components/apps/Browser` (MIT, credited) onto our stack — real sandboxed CORS iframe browsing, his proxy model (Wayback + Old Net by year; allOrigins open-proxy dropped per ruling E), history, bookmark bar w/real favicons, address search, ipfs://, chrome://dino (original sprite). Our webring + in-world pages folded in as bookmarks/start page. |
 | **DevTools** (liriliri/eruda, MIT) | missing | **ADOPT** | Console/Elements/Network/etc.; bind **SHIFT+F12**. |
 | **EmulatorJS** (EmulatorJS/EmulatorJS, GPL-3.0) | have-real | **KEEP** | Engine isolated; verified-clean homebrew carts + drop-your-own loader already shipped. |
-| **IRC** (kiwiirc/kiwiirc, Apache-2.0) | have-placeholder (mIRC diorama) | **REPLACE** | KiwiIRC over WebSockets becomes our **real mIRC**. Rides Phase-6 realtime. |
+| **IRC** (kiwiirc/kiwiirc, Apache-2.0) | have-placeholder (mIRC diorama) → **DONE ✅** | **REPLACE** | mIRC now embeds KiwiIRC's hosted client → real IRC (Libera.Chat) over its public WS gateway; no Cloudflare. External dep; new-tab fallback. |
 | **js-dos** (caiiyycuk/js-dos, GPL-2.0) | have-placeholder (dep `js-dos@^8.4.0` installed, no app) | **ADOPT** | Reverses the earlier drop — Dustin ships **both** js-dos and v86; keep both. DOS emulator + **auto save-states**; content user-supplied/shareware. |
 | **Marked** (markedjs/marked, MIT) | have-real | **KEEP** | Markdown viewer (with DOMPurify). |
 | **Messenger** (Nostr + NIP-04, automatic keypair) | have-placeholder (AIM diorama) → **DONE ✅** | **REPLACE** | Real encrypted DM shipped: the AIM app is now Nostr + NIP-04 + auto keypair over public relays (nostr-tools) — no backend/Cloudflare. Add buddy by npub; keys in-browser. |
@@ -238,7 +238,10 @@ ClassiCube ⛔ skipped · Cave Story ⏸ deferred — all owner-ruled.
   MIT). No backend of ours. Add a buddy by npub; keys live in the browser. Flips
   the AIM diorama. *(Runtime relay flow couldn't be verified headless — needs a
   live spot-check: two browsers, swap npubs, message.)*
-- ⏳ **IRC** (KiwiIRC / a public IRC WebSocket gateway) — public infra, no Cloudflare.
+- ✅ **IRC** — DONE. The mIRC app embeds KiwiIRC's hosted client → a real IRC
+  network (Libera.Chat) over its public WebSocket gateway (no Cloudflare). Flips
+  the mIRC diorama. *(External dependency, not offline; can't verify framing
+  headless — an "Open in new tab" fallback ships if KiwiIRC blocks embedding.)*
 - ✅ **ELIZA** — DONE. Original 1966 keyword/reflection implementation (no LLM,
   no upstream), pure client-side — the named non-AI substitute for the AI Chat
   Agent. New app under Internet ▸ ELIZA.

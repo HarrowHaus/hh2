@@ -619,3 +619,25 @@ export function DarkRoomIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function Quake3Icon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="2" fill="#1a0d08" stroke="#5a3a2a" />
+      <path d="M8 24 L16 7 L24 24 L16 19 Z" fill="#c8501e" />
+      <path d="M16 7 L24 24 L16 19 Z" fill="#e8823e" />
+      <circle cx="16" cy="21" r="1.6" fill="#ffd24a" />
+    </svg>
+  )
+}
+
+export function BoxedWineIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="4" y="4" width="24" height="24" rx="3" fill="#141428" stroke="#4a4a6a" />
+      <path d="M12 9 h8 l-1 7 a3 3 0 0 1 -6 0 Z" fill="#7a1030" />
+      <rect x="15" y="18" width="2" height="5" fill="#9a9aa0" />
+      <rect x="12" y="23" width="8" height="2" rx="1" fill="#9a9aa0" />
+    </svg>
+  )
+}

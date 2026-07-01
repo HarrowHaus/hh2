@@ -66,4 +66,6 @@ export const APP_META: Record<AppId, AppMeta> = {
   wordpad: { title: 'WordPad', width: 720, height: 540, single: false, resizable: true },
   webamp: { title: 'Winamp', width: 295, height: 376, single: true, frameless: true },
   darkroom: { title: 'A Dark Room', width: 720, height: 560, single: true, resizable: true },
+  quake3: { title: 'Quake III (OpenArena)', width: 720, height: 540, single: true, resizable: true },
+  boxedwine: { title: 'BoxedWine', width: 720, height: 540, single: true, resizable: true },
 }

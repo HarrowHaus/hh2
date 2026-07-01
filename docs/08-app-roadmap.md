@@ -217,14 +217,21 @@ fallback when the vendor copy is absent.
   original **MS-copyrighted** game data (2.18MB `.data`), which our rules forbid
   rehosting, and the emscripten build won't run without it. A user-data shell is
   impractical (emscripten preload packaging). **Default: DEFER (owner decision).**
-- ⛔ **Quake III (38MB data)** + **BoxedWine (57MB Wine env)** — engines are small
-  but the data is **~95MB combined**, 10× anything we've vendored; committing that
-  to git bloats every clone. Needs a **large-asset strategy** (Git LFS, a CDN/R2
-  bucket, or fetch-on-first-use). **Default: DEFER (owner decision).**
+- 🔧 **Quake III** + **BoxedWine** — **WIRED for R2** (owner ruled: Cloudflare R2 +
+  runtime fetch, immutable cache; NOT Git LFS/skip). Engines + data are self-hosted
+  on R2 (too big to commit); the apps read `data/{quake3,boxedwine}-manifest.json`
+  and iframe an R2-loading host page (`public/{quake3,boxedwine}/index.html?base=…`),
+  showing a "not configured — run the ingest" state until populated.
+  - **Quake III** uses **OpenArena FREE data only** (never retail paks) — credited.
+  - **BoxedWine** is a **ready shell**: only the **LGPL Wine** env is hosted (free);
+    **no proprietary software** — users run their own apps.
+  - Upload via `scripts/ingest-r2-assets.mjs` (owner, with R2 creds — not available
+    in the build sandbox). ⚠️ **OWNER-VERIFY after upload:** the emscripten host
+    glue (`?base` loading, OpenArena args, BoxedWine root wiring) is best-effort and
+    couldn't be run here — confirm/tune once R2 is populated + deployed.
 
-**Outstanding Tier-C owner decisions:** (1) large-asset strategy for Quake III +
-BoxedWine — Git LFS vs. CDN/R2 vs. skip; (2) Space Cadet Pinball — accept a
-user-supplied-data shell vs. skip (copyrighted data); (3) ZZT — bundle freeware
+**Outstanding Tier-C owner decisions:** (1) Space Cadet Pinball — accept a
+user-supplied-data shell vs. skip (copyrighted data); (2) ZZT — bundle freeware
 ZZT for the DOS Prompt now vs. hold for a Zeta CI build. *(ClassiCube — skipped;
 Cave Story — deferred; both owner-ruled.)*
 

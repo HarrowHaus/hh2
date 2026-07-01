@@ -41,6 +41,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'runner', label: 'Crypt Runner' },
       { appId: 'tic80', label: 'moth' },
       { appId: 'darkroom', label: 'A Dark Room' },
+      { appId: 'quake3', label: 'Quake III' },
     ],
   },
   {
@@ -49,6 +50,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'emulatorjs', label: 'Game Console' },
       { appId: 'v86', label: 'Virtual Machine' },
       { appId: 'dos', label: 'MS-DOS Prompt' },
+      { appId: 'boxedwine', label: 'BoxedWine' },
     ],
   },
   {

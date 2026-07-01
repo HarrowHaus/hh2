@@ -49,6 +49,8 @@ export type AppId =
   | 'wordpad'
   | 'webamp'
   | 'darkroom'
+  | 'quake3'
+  | 'boxedwine'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

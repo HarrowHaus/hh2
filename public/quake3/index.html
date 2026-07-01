@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- Quake III host (docs/08 Tier C). Engine + OpenArena FREE data are self-hosted
+     on Cloudflare R2 (too big to commit); this tiny page loads them from the R2
+     public base passed as ?base=... (from data/quake3-manifest.json). NO retail
+     Quake paks — OpenArena data only. First launch fetches from R2 (immutable
+     cache), then the browser caches it. OWNER-VERIFY: the emscripten arguments
+     for OpenArena (e.g. +set fs_game baseoa) may need tuning for the engine build
+     you upload. See /CREDITS.md. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quake III (OpenArena)</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    #canvas { display: block; width: 100%; height: 100%; background: #000; }
+    #msg { position: absolute; inset: 0; display: grid; place-items: center; color: #bbb; font: 13px Tahoma, sans-serif; text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" tabindex="-1"></canvas>
+  <div id="msg">Loading engine + data from R2…</div>
+  <script>
+    var base = (new URLSearchParams(location.search).get('base') || '.').replace(/\/$/, '');
+    var msg = document.getElementById('msg');
+    var Module = {
+      canvas: document.getElementById('canvas'),
+      locateFile: function (p) { return base + '/' + p; },
+      // OpenArena free game. Tune per your engine build if needed.
+      arguments: [],
+      setStatus: function (s) { if (msg) msg.textContent = s || ''; if (!s) msg.style.display = 'none'; },
+      printErr: function (m) { try { console.error(m); } catch (e) {} },
+    };
+    var s = document.createElement('script');
+    s.src = base + '/Quake3Game.js';
+    s.onerror = function () { if (msg) msg.textContent = 'Failed to load the Quake III engine from R2. Is the asset host configured?'; };
+    document.body.appendChild(s);
+  </script>
+</body>
+</html>

@@ -40,6 +40,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'breakout', label: 'Brick Breaker' },
       { appId: 'runner', label: 'Crypt Runner' },
       { appId: 'tic80', label: 'moth' },
+      { appId: 'darkroom', label: 'A Dark Room' },
     ],
   },
   {

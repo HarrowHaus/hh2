@@ -48,6 +48,7 @@ export type AppId =
   | 'dos'
   | 'wordpad'
   | 'webamp'
+  | 'darkroom'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

@@ -608,3 +608,14 @@ export function WebampIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+export function DarkRoomIcon({ size = 32, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="2" y="2" width="28" height="28" rx="2" fill="#050505" stroke="#3a3a3a" />
+      <circle cx="16" cy="17" r="6" fill="#ff8a3a" opacity="0.9" />
+      <circle cx="16" cy="17" r="9" fill="#ff8a3a" opacity="0.18" />
+      <rect x="14.5" y="9" width="3" height="9" fill="#7a5a2a" />
+    </svg>
+  )
+}

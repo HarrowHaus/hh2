@@ -65,4 +65,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   dos: { title: 'MS-DOS Prompt', width: 700, height: 520, single: false, resizable: true },
   wordpad: { title: 'WordPad', width: 720, height: 540, single: false, resizable: true },
   webamp: { title: 'Winamp', width: 295, height: 376, single: true, frameless: true },
+  darkroom: { title: 'A Dark Room', width: 720, height: 560, single: true, resizable: true },
 }

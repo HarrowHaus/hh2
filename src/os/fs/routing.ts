@@ -28,6 +28,9 @@ export function routeOpen(node: FSNode): OpenTarget | null {
   }
   // Extension wins over generic kind (.md/.pdf may be stored as text/file kinds).
   const ext = node.name.toLowerCase().split('.').pop()
+  // Writable-HTML blog posts open in the Blog viewer by default (edit → Monaco
+  // from inside it). daedalOS-parity .whtml handling (docs/11 §1).
+  if (ext === 'whtml' || node.kind === 'whtml') return { appId: 'blog', args: { path: node.path, title: node.name } }
   if (ext === 'md') return { appId: 'markdown', args: { path: node.path, title: node.name } }
   if (ext === 'pdf') return { appId: 'pdf', args: { path: node.path, title: node.name } }
   if (ext === 'nfo' || ext === 'ans' || ext === 'asc') {

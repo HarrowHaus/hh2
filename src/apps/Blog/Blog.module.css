@@ -1,0 +1,60 @@
+/* Blog / .whtml viewer — a thin XP chrome around a sandboxed post iframe. */
+.blog {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--winbody, #1c1c22);
+  color: var(--wintext, #e8e8e8);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  height: 28px;
+  padding: 0 8px;
+  background: color-mix(in srgb, var(--winbody, #1c1c22) 80%, #000);
+  border-bottom: 1px solid var(--winborder, #000);
+}
+.title {
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.badge {
+  font-size: 10px;
+  font-family: monospace;
+  opacity: 0.6;
+  padding: 1px 5px;
+  border: 1px solid color-mix(in srgb, var(--accent, #2a6fd6) 45%, transparent);
+  border-radius: 2px;
+}
+.edit {
+  margin-left: auto;
+  font-size: 11px;
+  color: inherit;
+  background: color-mix(in srgb, var(--accent, #2a6fd6) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #2a6fd6) 60%, #000);
+  border-radius: 2px;
+  padding: 2px 12px;
+  cursor: pointer;
+}
+.edit:hover { filter: brightness(1.15); }
+
+.frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #fff;
+}
+
+.empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  opacity: 0.6;
+  font-size: 12px;
+}

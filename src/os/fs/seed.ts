@@ -24,6 +24,7 @@ const PICS = `${MYDOCS}/My Pictures`
 const MOVIES = `${MYDOCS}/MOVIES`
 const READING = `${MYDOCS}/reading`
 const WORK = `${MYDOCS}/WORK`
+const BLOG = `${MYDOCS}/Blog Posts`
 const PF = `${C_DRIVE}/Program Files`
 
 function folder(path: string, name: string, ts: number): FSNode {
@@ -48,6 +49,11 @@ function image(path: string, name: string, ts: number, artId: string): FSNode {
 // they sit in the disk as texture (docs/07), opening does nothing.
 function blob(path: string, name: string, ts: number): FSNode {
   return { path, name, type: 'file', kind: 'file', ts }
+}
+// A writable-HTML blog post (docs/11 §1). Stores a full HTML document; opens in
+// the Blog viewer, edits raw in Monaco, hero image drives the Explorer thumbnail.
+function whtml(path: string, name: string, ts: number, content: string): FSNode {
+  return { path, name, type: 'file', kind: 'whtml', ts, content }
 }
 
 const FOLDERS: [string, string, number][] = [
@@ -104,6 +110,7 @@ const FOLDERS: [string, string, number][] = [
   [`${MOVIES}/Spectral Corridor (1986)`, 'Spectral Corridor (1986)', B],
   [READING, 'reading', B2],
   [WORK, 'WORK', C],
+  [BLOG, 'Blog Posts', B2],
   [`${MYDOCS}/winmx_shared`, 'winmx_shared', A],
   [`${MYDOCS}/soulseek_dl`, 'soulseek_dl', A2],
 ]
@@ -690,6 +697,115 @@ const LAUNCHERS: FSNode[] = [
   launcher(`${READING}/sigilizer.exe`, 'sigilizer.exe', B2, 'sigil'),
 ]
 
+// ── Blog Posts (docs/11 §1) ────────────────────────────────────────────────
+// Bug-authored PLACEHOLDER `.whtml` posts so the blog system is populated and
+// testable; the owner replaces the prose later via the in-OS editor (Blog ▸ Edit
+// → Monaco writes back to the FS). Full HTML documents with an inline-SVG hero
+// (self-contained, no lifted assets); the hero drives the Explorer thumbnail.
+// In-voice, non-narrating (CLAUDE.md Rule 2) — they read as real posts, never as
+// commentary on the machine or the site.
+const heroUri = (bg: string, fg: string, motif: string): string =>
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">` +
+      `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">` +
+      `<stop offset="0" stop-color="${bg}"/><stop offset="1" stop-color="${fg}"/></linearGradient></defs>` +
+      `<rect width="800" height="300" fill="url(#g)"/>${motif}</svg>`,
+  )
+
+const page = (title: string, date: string, hero: string, body: string): string =>
+  `<!doctype html><html lang="en"><head><meta charset="utf-8">` +
+  `<meta name="viewport" content="width=device-width, initial-scale=1"><title>${title}</title><style>` +
+  `:root{color-scheme:dark}` +
+  `body{margin:0;background:#14141a;color:#dfe0e6;font:15px/1.65 Georgia,'Times New Roman',serif}` +
+  `.wrap{max-width:640px;margin:0 auto;padding:0 22px 56px}` +
+  `img.hero{display:block;width:100%;height:auto;margin:0 0 24px;border-bottom:1px solid #2a2a34}` +
+  `h1{font-family:Verdana,Geneva,sans-serif;font-size:22px;letter-spacing:.2px;margin:22px 0 4px}` +
+  `.date{color:#7a7b86;font:11px Verdana,sans-serif;text-transform:uppercase;letter-spacing:1px;margin:0 0 22px}` +
+  `p{margin:0 0 15px}a{color:#8fb7e6}hr{border:0;border-top:1px solid #2a2a34;margin:24px 0}` +
+  `.sig{color:#7a7b86;font-style:italic}</style></head><body><div class="wrap">` +
+  `<img class="hero" src="${hero}" alt=""><h1>${title}</h1><div class="date">${date}</div>${body}</div></body></html>`
+
+const POSTS: FSNode[] = [
+  whtml(
+    `${BLOG}/tape-hiss.whtml`,
+    'tape-hiss.whtml',
+    B2,
+    page(
+      'tape hiss',
+      'August 2011',
+      heroUri('#1b2a3a', '#0a1119',
+        '<circle cx="280" cy="150" r="66" fill="none" stroke="#0006" stroke-width="28"/>' +
+        '<circle cx="520" cy="150" r="66" fill="none" stroke="#0006" stroke-width="28"/>' +
+        '<rect x="280" y="140" width="240" height="20" fill="#0005"/>'),
+      '<p>i ripped the demo again last night. third time, better drive. secure mode, ' +
+        'log or it didn’t happen. the CRC lined up on every track and i sat there ' +
+        'grinning at a text file like it owed me money.</p>' +
+        '<p>people ask why lossless if you can’t hear it. you can’t hear it because ' +
+        'it’s <em>not there to be heard</em> — it’s there so the copy after the copy ' +
+        'still has somewhere to fall from. you only rip once. do it right and the hiss ' +
+        'is the room, not the loss.</p>' +
+        '<hr><p class="sig">(placeholder — real version lives in my head, this is just where it goes.)</p>',
+    ),
+  ),
+  whtml(
+    `${BLOG}/the-long-way-around.whtml`,
+    'the-long-way-around.whtml',
+    T('2012-11-02T23:40:00'),
+    page(
+      'the long way around',
+      'November 2012',
+      heroUri('#241a2e', '#0c0912',
+        '<rect x="384" y="0" width="34" height="300" fill="#0004"/>' +
+        '<circle cx="620" cy="66" r="38" fill="#ffdf9e" opacity="0.45"/>' +
+        '<rect x="0" y="250" width="800" height="50" fill="#0004"/>'),
+      '<p>there’s a short way to the practice space and a long way, and i always ' +
+        'take the long one. past the shut laundromat, the light that never went green, ' +
+        'the wall somebody keeps painting over and somebody keeps painting back.</p>' +
+        '<p>the short way is just distance. the long way is the part i actually keep. ' +
+        'i don’t know how to explain that to people who drive.</p>' +
+        '<hr><p class="sig">(notes for later. fill this in properly.)</p>',
+    ),
+  ),
+  whtml(
+    `${BLOG}/things-in-the-one-drawer.whtml`,
+    'things-in-the-one-drawer.whtml',
+    T('2013-05-19T18:05:00'),
+    page(
+      'things in the one drawer',
+      'May 2013',
+      heroUri('#22261a', '#0d0f09',
+        '<g fill="#0004"><rect x="130" y="70" width="540" height="30"/>' +
+        '<rect x="130" y="125" width="540" height="30"/><rect x="130" y="180" width="540" height="30"/></g>'),
+      '<p>everyone has the drawer. mine has: a folded show flyer soft as cloth, ' +
+        'a dead minidisc, three picks i don’t use, a ticket stub from a set that ' +
+        'got shut down before the second band, and a battery i’m afraid is leaking.</p>' +
+        '<p>i can’t throw any of it out and i can’t tell you why each one earns the space. ' +
+        'ask me about any single object and i’ve got the whole night attached to it.</p>' +
+        '<hr><p class="sig">(list is longer. this is the short version.)</p>',
+    ),
+  ),
+  whtml(
+    `${BLOG}/notes-to-nobody.whtml`,
+    'notes-to-nobody.whtml',
+    C,
+    page(
+      'notes to nobody',
+      'May 2026',
+      heroUri('#1a1a22', '#0b0b10',
+        '<g fill="#ffffff" opacity="0.05">' +
+        '<rect x="120" y="80" width="12" height="12"/><rect x="300" y="140" width="12" height="12"/>' +
+        '<rect x="480" y="60" width="12" height="12"/><rect x="600" y="200" width="12" height="12"/>' +
+        '<rect x="220" y="220" width="12" height="12"/><rect x="520" y="150" width="12" height="12"/></g>'),
+      '<p>half-thought i keep having: everything i archive is a letter to whoever ' +
+        'has to sort this out after me. hope they like noise.</p>' +
+        '<p>keeping this one short. it’s a real page in a real folder — that’s the ' +
+        'whole point of writing it down instead of losing it.</p>' +
+        '<hr><p class="sig">(more when there’s more.)</p>',
+    ),
+  ),
+]
+
 export function seedFS(): Record<string, FSNode> {
   const nodes: FSNode[] = [
     ...FOLDERS.map(([p, n, ts]) => folder(p, n, ts)),
@@ -700,6 +816,7 @@ export function seedFS(): Record<string, FSNode> {
     ...IMAGES,
     ...SPECIAL,
     ...LAUNCHERS,
+    ...POSTS,
   ]
   return Object.fromEntries(nodes.map((n) => [n.path, n]))
 }

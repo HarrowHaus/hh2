@@ -83,7 +83,9 @@ Current item menu: Open, Cut, Copy, Rename, Delete, Properties. Add the rest. Bu
 
 ---
 
-## 3 · `.whtml` BLOG SYSTEM  (`src/os/fs/types.ts`, `routing.ts`, new `src/apps/Blog` or reuse a viewer)
+## 3 · `.whtml` BLOG SYSTEM  **[DONE]**  (`src/os/fs/types.ts`, `routing.ts`, `src/apps/Blog`)
+
+**Landed:** FSKind `whtml` + `.whtml` routing → the new **Blog** viewer (sandboxed `srcDoc` iframe, scripts disabled), an **Edit** button that opens the raw HTML in Monaco (writes back to the FS, viewer re-renders live), Monaco `whtml→html` highlighting, hero-image-driven Explorer thumbnails (`src/os/fs/whtml.ts`), and a seeded `My Documents/Blog Posts/` folder with **four Bug-authored placeholder posts** (self-contained inline-SVG heroes; zero upstream prose). FS seed → v24. Credited daedalOS (MIT) in CREDITS.md.
 
 daedalOS blog posts are **writable-HTML** files: first-class FS docs with thumbnail previews, opened in a viewer, **editable in Monaco/Vim**.
 - **Build:**

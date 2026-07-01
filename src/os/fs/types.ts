@@ -2,7 +2,7 @@
 // directory listings are derived by parent path. Kept flat so persistence and
 // path ops stay trivial.
 
-export type FSKind = 'folder' | 'text' | 'image' | 'audio' | 'exe' | 'file' | 'markdown' | 'pdf'
+export type FSKind = 'folder' | 'text' | 'image' | 'audio' | 'exe' | 'file' | 'markdown' | 'pdf' | 'whtml'
 
 export interface FSNode {
   /** Full path. '/' is the root (My Computer). */

@@ -6,7 +6,8 @@ import { ROOT, baseName, listDir, parentOf } from '../../os/fs/path'
 import { routeOpen } from '../../os/fs/routing'
 import type { FSNode } from '../../os/fs/types'
 import { APPS } from '../../os/apps'
-import { FolderIcon, NoteIcon, MusicIcon, ImageIcon } from '../../os/icons'
+import { FolderIcon, NoteIcon, MusicIcon, ImageIcon, BlogIcon } from '../../os/icons'
+import { heroImage } from '../../os/fs/whtml'
 import type { AppProps } from '../../os/types'
 import styles from './Explorer.module.css'
 
@@ -15,6 +16,7 @@ function iconFor(node: FSNode) {
   if (node.type === 'folder') return FolderIcon
   if (node.kind === 'audio') return MusicIcon
   if (node.kind === 'image') return ImageIcon
+  if (node.kind === 'whtml') return BlogIcon
   return NoteIcon
 }
 
@@ -313,6 +315,8 @@ export function Explorer({ winId, args }: AppProps) {
         {items.length === 0 && <div className={styles.empty}>This folder is empty.</div>}
         {items.map((node, index) => {
           const Icon = iconFor(node)
+          // .whtml posts show their hero image as the thumbnail (daedalOS parity).
+          const thumb = node.kind === 'whtml' ? heroImage(node.content) : null
           const isCut = clipboard?.op === 'cut' && clipboard.paths.includes(node.path)
           const dropFolder = node.type === 'folder' && !node.locked ? node.path : undefined
           return (
@@ -326,7 +330,7 @@ export function Explorer({ winId, args }: AppProps) {
               onDoubleClick={() => onOpen(node)}
               onContextMenu={(e) => itemMenu(e, node)}
             >
-              <Icon size={32} />
+              {thumb ? <img className={styles.thumb} src={thumb} alt="" draggable={false} /> : <Icon size={32} />}
               {renaming === node.path ? (
                 <input
                   className={styles.renameInput}

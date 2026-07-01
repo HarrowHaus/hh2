@@ -663,3 +663,18 @@ export function ElizaIcon({ size = 32, style, className }: IconProps) {
     </svg>
   )
 }
+
+// A writable-HTML blog post: a document page with a hero image band + text
+// lines — the .whtml file kind (docs/11 §1). Distinct from Markdown/Notepad.
+export function BlogIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <path d="M7 3 H22 L26 7 V29 H7 Z" fill="#fdfdfd" stroke="#8a8a8a" />
+      <path d="M22 3 V7 H26 Z" fill="#cfcfcf" stroke="#8a8a8a" />
+      <rect x="10" y="9" width="12" height="7" rx="1" fill="#2b5c8a" stroke="#1c3f63" />
+      <circle cx="14" cy="12.5" r="1.4" fill="#ffd36b" />
+      <path d="M11 15 L15 11.5 L18 14 L21 12 V15 Z" fill="#5a8fb8" />
+      <path d="M10 19 H22 M10 22 H22 M10 25 H18" stroke="#9098a0" strokeWidth="1.3" />
+    </svg>
+  )
+}

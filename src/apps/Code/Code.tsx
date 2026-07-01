@@ -41,7 +41,7 @@ function langFor(name: string): string {
   const map: Record<string, string> = {
     js: 'javascript', jsx: 'javascript', mjs: 'javascript',
     ts: 'typescript', tsx: 'typescript',
-    json: 'json', css: 'css', scss: 'scss', html: 'html', htm: 'html',
+    json: 'json', css: 'css', scss: 'scss', html: 'html', htm: 'html', whtml: 'html',
     md: 'markdown', py: 'python', sh: 'shell', bat: 'bat', xml: 'xml',
     ini: 'ini', cfg: 'ini', cue: 'ini', sql: 'sql', c: 'c', cpp: 'cpp',
   }

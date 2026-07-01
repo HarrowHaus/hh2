@@ -70,4 +70,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   boxedwine: { title: 'BoxedWine', width: 720, height: 540, single: true, resizable: true },
   zzt: { title: 'ZZT', width: 640, height: 480, single: true, resizable: true },
   eliza: { title: 'ELIZA', width: 460, height: 380, single: true, resizable: true },
+  blog: { title: 'Blog', width: 660, height: 560, single: false, resizable: true },
 }

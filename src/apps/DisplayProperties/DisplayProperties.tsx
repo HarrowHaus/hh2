@@ -116,25 +116,25 @@ export function DisplayProperties({ winId }: AppProps) {
               </select>
             </div>
             {wallpaper === 'image' && (
-              <>
-                <div className={styles.field}>
-                  <label htmlFor="wpurl">Image URL:</label>
-                  <input
-                    id="wpurl"
-                    className={styles.select}
-                    value={wallpaperImage}
-                    placeholder="https://…/photo.jpg"
-                    spellCheck={false}
-                    onChange={(e) => setWallpaperImage(e.target.value.trim())}
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label htmlFor="wpfit">Position:</label>
-                  <select id="wpfit" className={styles.select} value={wallpaperFit} onChange={(e) => setWallpaperFit(e.target.value)}>
-                    {FIT_MODES.map((f) => <option key={f.id} value={f.id}>{f.label}</option>)}
-                  </select>
-                </div>
-              </>
+              <div className={styles.field}>
+                <label htmlFor="wpurl">Image URL:</label>
+                <input
+                  id="wpurl"
+                  className={styles.select}
+                  value={wallpaperImage}
+                  placeholder="https://…/photo.jpg"
+                  spellCheck={false}
+                  onChange={(e) => setWallpaperImage(e.target.value.trim())}
+                />
+              </div>
+            )}
+            {(wallpaper === 'image' || wallpaper.startsWith('slideshow')) && (
+              <div className={styles.field}>
+                <label htmlFor="wpfit">Position:</label>
+                <select id="wpfit" className={styles.select} value={wallpaperFit} onChange={(e) => setWallpaperFit(e.target.value)}>
+                  {FIT_MODES.map((f) => <option key={f.id} value={f.id}>{f.label}</option>)}
+                </select>
+              </div>
             )}
             <p className={styles.hint}>Animated backgrounds respect reduced-motion. Slideshows fetch from public sources (Picsum / NASA APOD / Art Institute). Choose “(Theme default)” for the skin’s wallpaper.</p>
           </>

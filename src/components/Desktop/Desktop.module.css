@@ -28,6 +28,11 @@
   display: block;
   animation: slideFade 1.2s ease;
 }
+.slideBg {
+  width: 100%;
+  height: 100%;
+  animation: slideFade 1.2s ease;
+}
 .slideLoading { width: 100%; height: 100%; background: #000; }
 .imageWall { width: 100%; height: 100%; }
 @keyframes slideFade { from { opacity: 0; } to { opacity: 1; } }

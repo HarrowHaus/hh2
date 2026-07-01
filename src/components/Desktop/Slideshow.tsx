@@ -28,7 +28,7 @@ async function nextUrl(source: SlideSource, n: number): Promise<string> {
   }
 }
 
-export function Slideshow({ source }: { source: SlideSource }) {
+export function Slideshow({ source, fit = 'fill' }: { source: SlideSource; fit?: WallFit }) {
   const [url, setUrl] = useState('')
   useEffect(() => {
     let alive = true
@@ -39,7 +39,9 @@ export function Slideshow({ source }: { source: SlideSource }) {
     return () => { alive = false; clearInterval(t) }
   }, [source])
   if (!url) return <div className={styles.slideLoading} />
-  return <img key={url} className={styles.slideImg} src={url} alt="" draggable={false} />
+  // Render through the same fit engine as single-image wallpapers so the
+  // Position setting (Fill/Fit/Stretch/Tile/Center) applies to slideshows too.
+  return <div key={url} className={styles.slideBg} style={fitToStyle(url, fit)} />
 }
 
 // Map a fit mode to background CSS for a single-image wallpaper.
@@ -64,8 +66,8 @@ export function ImageWallpaper({ url, fit }: { url: string; fit: WallFit }) {
 // and the Display Properties preview).
 export function WallpaperView({ id, image, fit }: { id: string; image: string; fit: WallFit }) {
   if (id === 'image') return <ImageWallpaper url={image} fit={fit} />
-  if (id === 'slideshow') return <Slideshow source="photos" />
-  if (id === 'slideshow-space') return <Slideshow source="space" />
-  if (id === 'slideshow-art') return <Slideshow source="art" />
+  if (id === 'slideshow') return <Slideshow source="photos" fit={fit} />
+  if (id === 'slideshow-space') return <Slideshow source="space" fit={fit} />
+  if (id === 'slideshow-art') return <Slideshow source="art" fit={fit} />
   return <SaverCanvas id={id} />
 }

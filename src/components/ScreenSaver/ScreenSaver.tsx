@@ -231,7 +231,10 @@ function initAurora(ctx: Ctx) {
 // renderers plus the two ambient effects above.
 export const WALLPAPERS: { id: string; label: string }[] = [
   { id: 'none', label: '(Theme default)' },
+  { id: 'image', label: 'Image / URL…' },
   { id: 'slideshow', label: 'Slideshow (photos)' },
+  { id: 'slideshow-space', label: 'Slideshow (space)' },
+  { id: 'slideshow-art', label: 'Slideshow (art)' },
   { id: 'waves', label: 'Waves' },
   { id: 'aurora', label: 'Aurora' },
   { id: 'starfield', label: 'Starfield' },

@@ -33,6 +33,11 @@ interface OSState {
   /** Selected live desktop wallpaper id (Display Properties → Desktop), or 'none'. */
   wallpaper: string
   setWallpaper: (id: string) => void
+  /** Single-image wallpaper URL + fit mode (used when wallpaper === 'image'). */
+  wallpaperImage: string
+  setWallpaperImage: (url: string) => void
+  wallpaperFit: string
+  setWallpaperFit: (fit: string) => void
 
   /** Tray volume: system sounds are muted / scaled by this (0..1). Persisted.
       The sound pack itself is Phase 8 — these gate the silent seam today. */
@@ -111,6 +116,10 @@ export const useOS = create<OSState>()(
 
       wallpaper: 'none',
       setWallpaper: (wallpaper) => set({ wallpaper }),
+      wallpaperImage: '',
+      setWallpaperImage: (wallpaperImage) => set({ wallpaperImage }),
+      wallpaperFit: 'fill',
+      setWallpaperFit: (wallpaperFit) => set({ wallpaperFit }),
 
       booted: false,
       setBooted: (booted) => set({ booted }),
@@ -300,6 +309,8 @@ export const useOS = create<OSState>()(
         neko: state.neko,
         screensaver: state.screensaver,
         wallpaper: state.wallpaper,
+        wallpaperImage: state.wallpaperImage,
+        wallpaperFit: state.wallpaperFit,
         muted: state.muted,
         volume: state.volume,
         windows: state.windows,

@@ -2,7 +2,12 @@ import { useRef, useState, type ChangeEvent } from 'react'
 import { useOS } from '../../os/store'
 import { PACK_LIST, type VisualStyle } from '../../os/themes'
 import { SAVERS, WALLPAPERS, SaverCanvas } from '../../components/ScreenSaver/ScreenSaver'
-import { Slideshow } from '../../components/Desktop/Slideshow'
+import { WallpaperView, type WallFit } from '../../components/Desktop/Slideshow'
+
+const FIT_MODES: { id: WallFit; label: string }[] = [
+  { id: 'fill', label: 'Fill' }, { id: 'fit', label: 'Fit' }, { id: 'stretch', label: 'Stretch' },
+  { id: 'tile', label: 'Tile' }, { id: 'center', label: 'Center' },
+]
 import type { AppProps } from '../../os/types'
 import styles from './DisplayProperties.module.css'
 
@@ -17,6 +22,10 @@ export function DisplayProperties({ winId }: AppProps) {
   const setScreensaver = useOS((s) => s.setScreensaver)
   const wallpaper = useOS((s) => s.wallpaper)
   const setWallpaper = useOS((s) => s.setWallpaper)
+  const wallpaperImage = useOS((s) => s.wallpaperImage)
+  const setWallpaperImage = useOS((s) => s.setWallpaperImage)
+  const wallpaperFit = useOS((s) => s.wallpaperFit)
+  const setWallpaperFit = useOS((s) => s.setWallpaperFit)
   const crt = useOS((s) => s.crt)
   const setCrt = useOS((s) => s.setCrt)
   const neko = useOS((s) => s.neko)
@@ -91,9 +100,7 @@ export function DisplayProperties({ winId }: AppProps) {
         ) : showDesktop ? (
           <>
             <div className={styles.saverPreview} aria-label="Wallpaper preview">
-              {wallpaper === 'slideshow'
-                ? <Slideshow />
-                : <SaverCanvas id={wallpaper} className={styles.saverCanvas} />}
+              <WallpaperView id={wallpaper} image={wallpaperImage} fit={wallpaperFit as WallFit} />
             </div>
             <div className={styles.field}>
               <label htmlFor="wallpaper">Background:</label>
@@ -108,7 +115,28 @@ export function DisplayProperties({ winId }: AppProps) {
                 ))}
               </select>
             </div>
-            <p className={styles.hint}>Animated backgrounds respect reduced-motion. Choose “(Theme default)” for the skin’s wallpaper.</p>
+            {wallpaper === 'image' && (
+              <>
+                <div className={styles.field}>
+                  <label htmlFor="wpurl">Image URL:</label>
+                  <input
+                    id="wpurl"
+                    className={styles.select}
+                    value={wallpaperImage}
+                    placeholder="https://…/photo.jpg"
+                    spellCheck={false}
+                    onChange={(e) => setWallpaperImage(e.target.value.trim())}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="wpfit">Position:</label>
+                  <select id="wpfit" className={styles.select} value={wallpaperFit} onChange={(e) => setWallpaperFit(e.target.value)}>
+                    {FIT_MODES.map((f) => <option key={f.id} value={f.id}>{f.label}</option>)}
+                  </select>
+                </div>
+              </>
+            )}
+            <p className={styles.hint}>Animated backgrounds respect reduced-motion. Slideshows fetch from public sources (Picsum / NASA APOD / Art Institute). Choose “(Theme default)” for the skin’s wallpaper.</p>
           </>
         ) : (
           <>

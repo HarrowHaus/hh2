@@ -20,8 +20,8 @@ import { Window } from '../Window/Window'
 import { ContextMenu } from '../ContextMenu/ContextMenu'
 import { CrtOverlay } from '../CrtOverlay/CrtOverlay'
 import { Oneko } from '../Oneko/Oneko'
-import { ScreenSaver, SaverCanvas } from '../ScreenSaver/ScreenSaver'
-import { Slideshow } from './Slideshow'
+import { ScreenSaver } from '../ScreenSaver/ScreenSaver'
+import { WallpaperView, type WallFit } from './Slideshow'
 import styles from './Desktop.module.css'
 
 const ICON_W = 76
@@ -67,6 +67,8 @@ export function Desktop() {
   const crt = useOS((s) => s.crt)
   const neko = useOS((s) => s.neko)
   const wallpaper = useOS((s) => s.wallpaper)
+  const wallpaperImage = useOS((s) => s.wallpaperImage)
+  const wallpaperFit = useOS((s) => s.wallpaperFit)
 
   const openMenu = useMenu((s) => s.openMenu)
 
@@ -227,7 +229,7 @@ export function Desktop() {
     <main className={styles.desktop} aria-label="Desktop">
       {wallpaper !== 'none' && (
         <div className={styles.wallpaper} aria-hidden="true">
-          {wallpaper === 'slideshow' ? <Slideshow /> : <SaverCanvas id={wallpaper} />}
+          <WallpaperView id={wallpaper} image={wallpaperImage} fit={wallpaperFit as WallFit} />
         </div>
       )}
       <div

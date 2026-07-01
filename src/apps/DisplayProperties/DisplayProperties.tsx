@@ -3,6 +3,7 @@ import { useOS } from '../../os/store'
 import { PACK_LIST, type VisualStyle } from '../../os/themes'
 import { SAVERS, WALLPAPERS, SaverCanvas } from '../../components/ScreenSaver/ScreenSaver'
 import { WallpaperView, type WallFit } from '../../components/Desktop/Slideshow'
+import { hasWebGPU, generateImage, type SDProgress } from '../../os/websd'
 
 const FIT_MODES: { id: WallFit; label: string }[] = [
   { id: 'fill', label: 'Fill' }, { id: 'fit', label: 'Fit' }, { id: 'stretch', label: 'Stretch' },
@@ -33,6 +34,23 @@ export function DisplayProperties({ winId }: AppProps) {
   const closeWindow = useOS((s) => s.closeWindow)
 
   const [tab, setTab] = useState<(typeof TABS)[number]>('Appearance')
+  // AI Generated Wallpaper (WebSD, docs/10 §4 / docs/12 §1.1) — WebGPU-gated, opt-in.
+  const [aiPrompt, setAiPrompt] = useState('a dark scene-kid desktop wallpaper, abstract, moody')
+  const [aiProg, setAiProg] = useState<SDProgress | null>(null)
+  const [aiErr, setAiErr] = useState('')
+  async function genWallpaper() {
+    setAiErr('')
+    setAiProg({ text: 'Preparing image model…', progress: 0 })
+    try {
+      const url = await generateImage(aiPrompt, { onProgress: setAiProg })
+      setWallpaperImage(url)
+      setWallpaper('image')
+    } catch {
+      setAiErr('Could not generate (needs WebGPU + a one-time model download).')
+    } finally {
+      setAiProg(null)
+    }
+  }
 
   // Remember the style when the sheet opened (or last Apply) so Cancel reverts.
   const baseline = useRef<VisualStyle>(visualStyle)
@@ -134,6 +152,24 @@ export function DisplayProperties({ winId }: AppProps) {
                 <select id="wpfit" className={styles.select} value={wallpaperFit} onChange={(e) => setWallpaperFit(e.target.value)}>
                   {FIT_MODES.map((f) => <option key={f.id} value={f.id}>{f.label}</option>)}
                 </select>
+              </div>
+            )}
+            {hasWebGPU() && (
+              <div className={styles.effects}>
+                <div className={styles.effectsHead}>AI Generated Wallpaper (WebGPU · on-device · $0)</div>
+                <input
+                  className={styles.select}
+                  value={aiPrompt}
+                  spellCheck={false}
+                  placeholder="Describe a wallpaper…"
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                />
+                <button type="button" className={styles.button} disabled={!!aiProg} onClick={() => void genWallpaper()} style={{ marginTop: 6 }}>
+                  {aiProg ? 'Generating…' : 'Generate'}
+                </button>
+                {aiProg && <p className={styles.hint}>{aiProg.text} {Math.round(aiProg.progress * 100)}%</p>}
+                {aiErr && <p className={styles.hint}>{aiErr}</p>}
+                {!aiProg && !aiErr && <p className={styles.hint}>First use downloads the model (~1–2&nbsp;GB), then generates locally. Result is applied as your wallpaper.</p>}
               </div>
             )}
             <p className={styles.hint}>Animated backgrounds respect reduced-motion. Slideshows fetch from public sources (Picsum / NASA APOD / Art Institute). Choose “(Theme default)” for the skin’s wallpaper.</p>

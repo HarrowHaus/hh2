@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { hasPromptAPI, promptAPIReady, promptAPIAsk } from '../../os/promptapi'
 import { hasWebGPU, webLLMChat, type LLMProgress } from '../../os/webllm'
+import { generateImage } from '../../os/websd'
 import { elizaReply } from '../Eliza/eliza'
 import type { AppProps } from '../../os/types'
 import styles from './AIChat.module.css'
@@ -11,7 +12,7 @@ import styles from './AIChat.module.css'
 // Summarize. (Image generation via WebSD lands in the next Section-4 step.)
 
 type Engine = 'promptapi' | 'webllm' | 'eliza'
-interface Msg { role: 'user' | 'bot'; text: string }
+interface Msg { role: 'user' | 'bot'; text: string; image?: string }
 
 const CHAT_SYSTEM = 'You are a helpful, friendly assistant living inside a retro desktop. Answer concisely.'
 const SUMMARY_SYSTEM = 'You are a concise summarizer. Summarize the user text in 2–4 plain sentences.'
@@ -26,6 +27,7 @@ export function AIChat(_props: AppProps) {
   const [busy, setBusy] = useState(false)
   const [dl, setDl] = useState<LLMProgress | null>(null)
   const [summarize, setSummarize] = useState(false)
+  const [imageMode, setImageMode] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   // Pick the best available engine on mount (Prompt API wins if a model is ready).
@@ -79,13 +81,21 @@ export function AIChat(_props: AppProps) {
     setMsgs((m) => [...m, { role: 'user', text }])
     setBusy(true)
     try {
-      const reply = await ask(text)
-      setMsgs((m) => [...m, { role: 'bot', text: reply || '…' }])
+      if (imageMode) {
+        setDl({ text: 'Preparing image model…', progress: 0 })
+        const image = await generateImage(text, { onProgress: setDl })
+        setMsgs((m) => [...m, { role: 'bot', text: `Here's “${text}”.`, image }])
+      } else {
+        const reply = await ask(text)
+        setMsgs((m) => [...m, { role: 'bot', text: reply || '…' }])
+      }
     } catch {
-      setMsgs((m) => [...m, { role: 'bot', text: 'Something went wrong answering that.' }])
+      setMsgs((m) => [...m, { role: 'bot', text: imageMode ? "Image generation isn't available in this browser (needs WebGPU)." : 'Something went wrong answering that.' }])
     } finally {
       setBusy(false)
       setSummarize(false)
+      setImageMode(false)
+      setDl(null)
     }
   }
 
@@ -107,7 +117,10 @@ export function AIChat(_props: AppProps) {
       <div className={styles.log} ref={scrollRef}>
         {msgs.map((m, i) => (
           <div key={i} className={`${styles.msg} ${m.role === 'user' ? styles.user : styles.bot}`}>
-            <span className={styles.bubble}>{m.text}</span>
+            <span className={styles.bubble}>
+              {m.text}
+              {m.image && <img className={styles.genImg} src={m.image} alt="generated" />}
+            </span>
           </div>
         ))}
         {busy && <div className={`${styles.msg} ${styles.bot}`}><span className={styles.bubble}>…</span></div>}
@@ -124,14 +137,24 @@ export function AIChat(_props: AppProps) {
           type="button"
           className={`${styles.mode} ${summarize ? styles.modeOn : ''}`}
           title="Summarize the next message instead of chatting"
-          onClick={() => setSummarize((s) => !s)}
+          onClick={() => { setSummarize((s) => !s); setImageMode(false) }}
         >
           Summarize
         </button>
+        {hasWebGPU() && (
+          <button
+            type="button"
+            className={`${styles.mode} ${imageMode ? styles.modeOn : ''}`}
+            title="Generate an image from your prompt (WebGPU, on-device)"
+            onClick={() => { setImageMode((s) => !s); setSummarize(false) }}
+          >
+            Image
+          </button>
+        )}
         <textarea
           className={styles.input}
           value={input}
-          placeholder={summarize ? 'Paste text to summarize…' : 'Message'}
+          placeholder={imageMode ? 'Describe an image…' : summarize ? 'Paste text to summarize…' : 'Message'}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); void send() } }}
           rows={2}

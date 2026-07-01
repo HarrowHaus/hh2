@@ -18,9 +18,12 @@ A single service drives every bot mouth (AIM buddies + MySpace profiles). Zero A
 > (`src/apps/Eliza/eliza.ts`, always-on, offline). Tier B = **WebLLM** (`src/os/webllm.ts`,
 > `@mlc-ai/web-llm`, WebGPU, lazy, opt-in ~1 GB download) — silently degrades to ELIZA when WebGPU is
 > absent or a call fails. The **AI Chat Agent** (`src/apps/AIChat/`) ships with chat + Summarize, engine
-> priority **Chrome Prompt API → WebLLM (opt-in) → ELIZA** (`src/os/promptapi.ts`). **Remaining Section-4
-> piece:** WebSD image generation + the AI-Generated-Wallpaper option (§1.1) — next step; WebGPU-only and
-> unverifiable in CI, so being built defensively.
+> priority **Chrome Prompt API → WebLLM (opt-in) → ELIZA** (`src/os/promptapi.ts`). **WebSD image
+> generation** (`src/os/websd.ts`) now powers the chat agent's **Image** action and the **AI Generated
+> Wallpaper** option in Display Properties — in-browser Stable Diffusion (diffusers.js) loaded from CDN
+> at opt-in time (kept out of the bundle → zero build risk), **WebGPU-gated**, graceful failure. *WebSD
+> generation is experimental / unverifiable in CI (no GPU): the UI + gating + safe degradation are
+> solid; the actual model call may need a model/endpoint tweak once tested on a real GPU.*
 
 - **Tier A — ELIZA-class (default, always works):** `elizabot.js` (or an AIML-lite engine), pure in-
   browser, instant, no network. A 2003 AIM bot (SmarterChild-era) *should* feel like a clunky pattern

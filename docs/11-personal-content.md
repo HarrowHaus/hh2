@@ -77,8 +77,9 @@ portrait (what Bug actually listens to), alongside foobar (music) and the blog (
 
 > **STATUS:** `src/apps/Podcast/` — a lean RSS podcatcher skinned as **iPodder** on `bug.msstyles`,
 > reusing a foobar-style transport + now-playing. All **57 feeds** subscribed on open from
-> `data/podcasts.opml`. Parsing via `@podverse/podcast-feed-parser` (ISC, credited) with a native
-> DOMParser fallback. CORS: direct fetch first, then read-only proxies (incl. the Browser's Old-Net
+> `data/podcasts.opml`. Parsing via the browser-native **DOMParser** (zero deps — `@podverse/podcast-feed-parser`
+> was dropped after it dragged `xml2js`/`sax` Node deps that crashed the app chunk; §3.1 allows the
+> parser choice). CORS: direct fetch first, then read-only proxies (incl. the Browser's Old-Net
 > `theoldnet.com/get` seam). Per-show **episode list** (title/date/duration/notes/art), **play via the
 > transport**, **resume position** + **mark played/unplayed** (persisted, `hmd.podcast`), a per-show
 > **refresh** (new-episode check), and best-effort **download**. *Feeds are fetched lazily per selected

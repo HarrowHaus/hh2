@@ -1,11 +1,16 @@
-import podcastParser from '@podverse/podcast-feed-parser'
 import opmlRaw from '../../../data/podcasts.opml?raw'
 
 // Podcast feed layer (docs/11 §3). Parses the seeded OPML subscription list,
 // fetches each feed's XML (direct where CORS allows, else a read-only proxy —
 // incl. the Browser's Old-Net seam), and turns it into shows → episodes for the
-// shared transport. Parsing uses @podverse/podcast-feed-parser (ISC), with a
-// native DOMParser fallback so an odd feed still lists.
+// shared transport.
+//
+// Parsing uses the browser-native DOMParser (zero deps). We originally wired
+// @podverse/podcast-feed-parser (ISC) per docs/11 §3.1, but it pulls
+// xml2js → sax, which reference Node's stream/events/timers; Vite externalizes
+// those to stubs that throw at module-eval, crashing the app chunk. DOMParser is
+// the daedalOS-style native path and is fully browser-safe. (docs/11 §3.1
+// explicitly allows the parser choice; the credit is dropped since none ships.)
 
 export interface Show {
   title: string
@@ -93,36 +98,7 @@ function parseDuration(v: string | number | undefined | null): number | null {
   return parts.reduce((acc, n) => acc * 60 + n, 0)
 }
 
-interface PvEpisode {
-  title?: string
-  description?: string
-  summary?: string
-  duration?: number | string
-  enclosure?: { url?: string }
-  guid?: string
-  imageURL?: string
-  pubDate?: string
-}
-interface PvResult { meta?: { title?: string; imageURL?: string }; episodes?: PvEpisode[] }
-
-function mapPodverse(xml: string): FeedResult {
-  const parsed = (podcastParser as { getPodcastFromFeed: (f: string) => PvResult }).getPodcastFromFeed(xml)
-  const meta = parsed.meta ?? {}
-  const episodes: Episode[] = (parsed.episodes ?? [])
-    .map((e) => ({
-      id: e.guid || e.enclosure?.url || e.title || '',
-      title: e.title || 'Untitled',
-      date: e.pubDate ? Date.parse(e.pubDate) || undefined : undefined,
-      durationSec: parseDuration(e.duration),
-      notes: stripHtml(e.summary || e.description || ''),
-      art: e.imageURL || meta.imageURL || null,
-      enclosure: e.enclosure?.url || '',
-    }))
-    .filter((e) => e.enclosure)
-  return { title: meta.title || 'Podcast', art: meta.imageURL ?? null, episodes }
-}
-
-// Native fallback — resilient to feeds the library rejects.
+// Native RSS/Atom parse (browser DOMParser, zero deps).
 function mapNative(xml: string): FeedResult {
   const doc = new DOMParser().parseFromString(xml, 'text/xml')
   const first = (parent: Element | Document, tag: string) => parent.getElementsByTagName(tag)[0]?.textContent?.trim() || ''
@@ -161,9 +137,5 @@ function mapNative(xml: string): FeedResult {
 
 export async function loadShow(feedUrl: string): Promise<FeedResult> {
   const xml = await fetchFeedXml(feedUrl)
-  try {
-    const r = mapPodverse(xml)
-    if (r.episodes.length) return r
-  } catch { /* fall back to native */ }
   return mapNative(xml)
 }

@@ -45,8 +45,9 @@ export function DisplayProperties({ winId }: AppProps) {
       const url = await generateImage(aiPrompt, { onProgress: setAiProg })
       setWallpaperImage(url)
       setWallpaper('image')
-    } catch {
-      setAiErr('Could not generate (needs WebGPU + a one-time model download).')
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      setAiErr(`Could not generate: ${msg}`)
     } finally {
       setAiProg(null)
     }

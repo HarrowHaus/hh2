@@ -53,9 +53,10 @@ export function AIChat(_props: AppProps) {
       setEngine('webllm')
       setDl(null)
       setMsgs((m) => [...m, { role: 'bot', text: 'Local AI loaded. Chatting on-device now.' }])
-    } catch {
+    } catch (e) {
       setDl(null)
-      setMsgs((m) => [...m, { role: 'bot', text: "Couldn't load the local model. Staying on the basic chat." }])
+      const msg = e instanceof Error ? e.message : String(e)
+      setMsgs((m) => [...m, { role: 'bot', text: `Couldn't load the local model — staying on basic chat.\n(${msg})` }])
     }
   }
 
@@ -89,8 +90,9 @@ export function AIChat(_props: AppProps) {
         const reply = await ask(text)
         setMsgs((m) => [...m, { role: 'bot', text: reply || '…' }])
       }
-    } catch {
-      setMsgs((m) => [...m, { role: 'bot', text: imageMode ? "Image generation isn't available in this browser (needs WebGPU)." : 'Something went wrong answering that.' }])
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      setMsgs((m) => [...m, { role: 'bot', text: imageMode ? `Image generation failed.\n(${msg})` : `Something went wrong answering that.\n(${msg})` }])
     } finally {
       setBusy(false)
       setSummarize(false)

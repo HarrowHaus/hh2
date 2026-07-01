@@ -9,8 +9,13 @@ and each must be **named per item**:
 
 - **(a) data/asset-license blocker** → adopt the **ENGINE** + free / user-supplied
   data. Never drop the engine; ship a data loader instead.
-- **(b) policy line** → the **AI Chat Agent** (Prompt API / WebLLM) and **Stable
-  Diffusion / WebSD** are substituted/skipped (owner anti-LLM). Nothing else.
+- **(b) policy line** → ~~the **AI Chat Agent** (Prompt API / WebLLM) and **Stable
+  Diffusion / WebSD** are substituted/skipped (owner anti-LLM)~~. **REVERSED (2026-07,
+  per docs/12 §1.1):** the only objection was **API cost**, and daedalOS's AI features
+  all run **in-browser at $0** — so **WebLLM, the AI Chat Agent (Prompt API + WebLLM),
+  and WebSD / Stable-Diffusion are now ADOPTED to full free-LLM parity.** In-browser /
+  on-device only; no paid API, no server inference, ever. Nothing else is skipped for
+  policy — line (b) no longer skips anything.
 
 This supersedes the SKIP rulings recorded in earlier revisions of this doc (Quake3,
 Vim.js, TinyMCE, codecbox, BoxedWine, js-dos, Space Cadet Pinball, proxied browser).
@@ -82,12 +87,19 @@ gap from upstream) · **ADOPT+DATA** (engine now, free/user data) · **FLAG**
 | **ClassiCube** (UnknownShadow200/ClassiCube, BSD-3) | missing | **SKIP** (owner ruled) | Pulls **Minecraft Classic** assets at runtime (Mojang/MS) → owner ruled **SKIP**. Not adopted. |
 | **Cave Story** (NXEngine, GPL) — our addition | missing | **DEFER** (owner ruled) | Engine clean; Cave Story freeware data would be user-supplied/never-rehosted — owner ruled **defer til later** (revisit after the core tiers). |
 
-### SUBSTITUTE / SKIP (named policy — owner anti-LLM)
+### AI — ADOPT (reversed 2026-07; was SUBSTITUTE/SKIP under owner anti-LLM)
 
-| Item | Ruling | Named reason |
+The earlier anti-LLM rulings are **REVERSED** — see the governing rule (b) above and docs/12 §1.1.
+All three run **in-browser / on-device at $0** (no paid API, no server inference, ever), so they are now
+adopted from daedalOS source (credited). Feature-detect + explicit opt-in for big downloads; degrade
+silently where unsupported.
+
+| Item | Ruling | Note |
 |---|---|---|
-| **AI Chat Agent** (Prompt API / WebLLM) | **SUBSTITUTE** | Owner anti-LLM (policy line b) → a **non-AI search/run menu** (optional ELIZA, no LLM). |
-| **Stable Diffusion / WebSD** (AI wallpapers) | **SKIP** | Owner anti-LLM (policy line b) → **keep all NON-AI wallpapers** (animated + slideshow + custom screensavers in `docs/02 §9`). |
+| **WebLLM** (`@mlc-ai/web-llm`, WebGPU) | **ADOPT** | Small model in the visitor's browser via WebGPU; **$0 to us**. Tier-B "smarter" bot voice (docs/12 §1) and the AI Chat Agent fallback. Opt-in gates the one-time model download; WebGPU-absent → degrade to ELIZA (Tier A) silently. |
+| **AI Chat Agent** (Chrome Prompt API `window.ai` + WebLLM) | **ADOPT** | Taskbar agent incl. **Summarize** + **Image Generation** actions. Prompt API (on-device Gemini Nano) → WebLLM fallback → hide if neither. |
+| **Stable Diffusion / WebSD** (WebGPU) | **ADOPT** | In-browser image generation for the chat agent's image action **and** the **AI Generated Wallpaper** option in Display Properties (re-enabled in docs/10 §4). WebGPU-gate + explicit opt-in for the model download; hide where unsupported. Non-AI wallpapers (animated + slideshow + custom, `docs/02 §9`) still ship alongside. |
+| **ELIZA** (Tier A floor) | **KEEP** | Original 1966 pattern bot stays as the always-works, period-accurate baseline every bot falls back to — no longer a *substitute* for AI, but the floor beneath it. |
 
 ### ADOPT — GAMES
 
@@ -127,8 +139,10 @@ Keyboard set · Windows (react-rnd/Framer-Motion) · Start Menu (sidebar/spotlig
   (save-states/auto-resize), and the OS subsystems in `docs/02`.
 - **GAMES batch:** ZZT, A Dark Room now; DOOM/ROTT/Wolf3D/Duke3D/OpenTyrian on the
   CI-wasm batch.
-- **SUBSTITUTE/SKIP (named):** AI Chat Agent → non-AI run/search (optional ELIZA);
-  Stable Diffusion → skip, keep non-AI wallpapers.
+- **AI — ADOPT (reversed):** WebLLM, the AI Chat Agent (Prompt API + WebLLM, incl.
+  Summarize + Image Generation), and WebSD/Stable-Diffusion (image-gen + AI wallpaper)
+  are now adopted to full free-LLM parity — all in-browser/$0. ELIZA stays as the
+  Tier-A floor. Nothing is skipped for policy anymore.
 
 ---
 
@@ -243,8 +257,10 @@ ClassiCube ⛔ skipped · Cave Story ⏸ deferred — all owner-ruled.
   the mIRC diorama. *(External dependency, not offline; can't verify framing
   headless — an "Open in new tab" fallback ships if KiwiIRC blocks embedding.)*
 - ✅ **ELIZA** — DONE. Original 1966 keyword/reflection implementation (no LLM,
-  no upstream), pure client-side — the named non-AI substitute for the AI Chat
-  Agent. New app under Internet ▸ ELIZA.
+  no upstream), pure client-side. New app under Internet ▸ ELIZA. **Reframed
+  (2026-07):** no longer a *substitute* for the AI Chat Agent — it's now the **Tier-A
+  floor** (docs/12 §1) beneath the newly-adopted in-browser LLM layer (WebLLM / Prompt
+  API / WebSD), the always-works baseline every bot degrades to.
 - ⛔ **BBS** — needs an original ws↔telnet bridge (a backend) → **deferred** with the
   other infra-gated work.
 

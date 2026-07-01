@@ -6,11 +6,12 @@ import type { MLCEngine, ChatCompletionMessageParam, InitProgressReport } from '
 // only fetched when the visitor explicitly asks for it, and nothing imports the
 // web-llm bundle until first use (its own async chunk).
 
-// Small instruct models — a one-time opt-in download. The f16 build is smaller
-// but needs the WebGPU `shader-f16` feature; the f32 build works on any WebGPU
-// device. We pick per-device at load time.
-const MODEL_F16 = 'Llama-3.2-1B-Instruct-q4f16_1-MLC'
-const MODEL_F32 = 'Llama-3.2-1B-Instruct-q4f32_1-MLC'
+// Small instruct models — a one-time opt-in download. Qwen2.5-0.5B is light on
+// GPU memory (a 1B model triggered "GPUBuffer unmapped" init crashes on modest
+// GPUs). The f16 build is smaller but needs the WebGPU `shader-f16` feature; the
+// f32 build works on any WebGPU device. We pick per-device at load time.
+const MODEL_F16 = 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC'
+const MODEL_F32 = 'Qwen2.5-0.5B-Instruct-q4f32_1-MLC'
 
 export type LLMProgress = { text: string; progress: number }
 export type LLMMessage = ChatCompletionMessageParam

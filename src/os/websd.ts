@@ -15,7 +15,8 @@ export type SDProgress = { text: string; progress: number }
 
 // diffusers.js (@aislamov/diffusers.js, MIT) — an in-browser Stable Diffusion
 // pipeline over onnxruntime-web + WebGPU. Loaded from CDN at opt-in time.
-const CDN = 'https://cdn.jsdelivr.net/npm/@aislamov/diffusers.js@0.5.1/+esm'
+// esm.sh resolves the dependency graph (jsdelivr's +esm 404'd / mis-resolved).
+const CDN = 'https://esm.sh/@aislamov/diffusers.js@0.9.3'
 const MODEL = 'aislamov/stable-diffusion-2-1-base-onnx'
 
 interface Pipeline {

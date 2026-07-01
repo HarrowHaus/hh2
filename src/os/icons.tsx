@@ -702,3 +702,18 @@ export function AiChatIcon({ size = 30, style, className }: IconProps) {
     </svg>
   )
 }
+
+// MySpace — a blue profile card with a little avatar; the local social app.
+export function MySpaceIcon({ size = 30, style, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" style={style} className={className} aria-hidden="true">
+      <rect x="3" y="4" width="26" height="24" rx="2" fill="#fff" stroke="#3b5998" />
+      <rect x="3" y="4" width="26" height="6" rx="2" fill="#3b5998" />
+      <text x="6" y="8.7" font-size="4.4" fill="#fff" font-family="Verdana,sans-serif" font-weight="bold">myspace</text>
+      <circle cx="10" cy="18" r="4" fill="#6699cc" />
+      <rect x="16" y="15" width="10" height="2" rx="1" fill="#ff9900" />
+      <rect x="16" y="19" width="10" height="1.6" rx="0.8" fill="#c9d4e8" />
+      <rect x="6" y="24" width="20" height="1.6" rx="0.8" fill="#c9d4e8" />
+    </svg>
+  )
+}

@@ -73,4 +73,5 @@ export const APP_META: Record<AppId, AppMeta> = {
   blog: { title: 'Blog', width: 660, height: 560, single: false, resizable: true },
   podcast: { title: 'iPodder', width: 720, height: 520, single: true, resizable: true },
   aichat: { title: 'AI Assistant', width: 420, height: 520, single: true, resizable: true },
+  myspace: { title: 'MySpace', width: 820, height: 580, single: true, resizable: true },
 }

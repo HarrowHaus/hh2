@@ -62,6 +62,7 @@ export const PROGRAMS: ProgramGroup[] = [
       { appId: 'mirc', label: 'mIRC' },
       { appId: 'eliza', label: 'ELIZA' },
       { appId: 'aichat', label: 'AI Assistant' },
+      { appId: 'myspace', label: 'MySpace' },
       { appId: 'bt', label: 'µTorrent' },
     ],
   },

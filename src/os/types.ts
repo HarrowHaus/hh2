@@ -56,6 +56,7 @@ export type AppId =
   | 'blog'
   | 'podcast'
   | 'aichat'
+  | 'myspace'
 
 /** Optional launch arguments (e.g. Explorer's starting path). */
 export type AppArgs = Record<string, unknown>

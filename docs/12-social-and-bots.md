@@ -116,6 +116,16 @@ encrypted Nostr DM client.
 
 ## 3 · LOCAL MYSPACE  (local-fake first, Nostr-ready later)
 Self-contained in-OS MySpace circa 2005–07.
+
+> **STATUS (Section 6 landed):** `src/apps/MySpace/` — profiles, **Top 8**, comments, **bulletins**,
+> **blogs**, and **custom-CSS profiles** (SpaceHey-style, scoped to the profile card so it can't touch
+> the OS). Everything is local + **persisted to IndexedDB** behind a **`SocialStore` interface**
+> (`social.ts`) so a Nostr-backed impl can replace it without a UI rewrite. **Eight bot profiles** (the
+> AIM characters + Moldmouth/Couch Nap) seeded with content, Top-8'd on your profile; commenting on a
+> bot's page earns a **bot reply on yours** via the §1 bot-voice service. Editable profile (name/
+> tagline/mood/about/interests/pic/background/**profile song**/custom CSS/Top 8), Browse, Bulletins, and
+> Blog views. **Parity reference: superswan/anyspace — GPL-3.0, so STUDIED ONLY (no code ported);** our
+> implementation is original TS/React and the OS stays MIT (CREDITS.md).
 - **Parity reference:** `superswan/anyspace` (open-source MySpace-2005 clone) — study its **data model +
   layout**: profiles with background image + profile song + custom layout, **Top 8**, comments, blogs,
   bulletins, friends/requests, groups. **VERIFY its license; reimplement client-side (do NOT port its

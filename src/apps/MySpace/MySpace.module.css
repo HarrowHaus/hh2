@@ -1,0 +1,85 @@
+/* Local MySpace — classic 2005 white/blue skin, Verdana, blue header bars. */
+.ms { display: flex; flex-direction: column; height: 100%; background: #e8eef7; color: #222; font: 11px Verdana, Tahoma, Geneva, sans-serif; }
+
+.nav { display: flex; align-items: center; gap: 4px; padding: 5px 8px; background: linear-gradient(180deg, #6699cc, #3b5998); border-bottom: 1px solid #26375f; }
+.brand { font-weight: 700; color: #fff; font-size: 15px; margin-right: 8px; }
+.brand .dot { color: #ff9900; }
+.nav button { font: inherit; color: #fff; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 3px; padding: 2px 9px; cursor: pointer; }
+.nav button:hover { background: rgba(255,255,255,0.24); }
+.nav button.on { background: #ff9900; border-color: #cc7a00; color: #fff; font-weight: 700; }
+
+.scroll { flex: 1; overflow: auto; padding: 10px; }
+.card { max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid #b8c4d9; border-radius: 3px; padding: 12px; }
+
+.head { display: flex; gap: 12px; align-items: center; padding-bottom: 10px; border-bottom: 2px solid #3b5998; }
+.avatar { width: 96px; height: 96px; object-fit: cover; border: 1px solid #666; }
+.name { margin: 0; font-size: 20px; color: #003399; }
+.tagline { color: #555; font-style: italic; margin: 2px 0; }
+.status { font-size: 10px; color: #888; }
+.onNow { color: #2a8a00; font-weight: 700; }
+
+.cols { display: flex; gap: 12px; margin-top: 10px; align-items: flex-start; }
+.left { width: 210px; flex: 0 0 210px; display: flex; flex-direction: column; gap: 10px; }
+.main { flex: 1; min-width: 0; }
+.box { border: 1px solid #b8c4d9; border-radius: 3px; overflow: hidden; }
+.boxHead { background: #3b5998; color: #fff; font-weight: 700; padding: 3px 7px; font-size: 10px; }
+.mood, .stat { padding: 3px 7px; border-bottom: 1px solid #eee; word-break: break-word; }
+.song { width: 100%; height: 30px; padding: 5px; }
+.contact { display: block; width: calc(100% - 14px); margin: 5px 7px; font: inherit; background: #eef2fb; border: 1px solid #9fb3d6; border-radius: 3px; padding: 3px; cursor: pointer; text-align: center; }
+.contact:hover { background: #dfe8f8; }
+
+.section { margin-bottom: 14px; }
+.section h2 { font-size: 12px; color: #fff; background: #ff9900; margin: 0 0 6px; padding: 3px 8px; border-radius: 2px; }
+.section p { margin: 0; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+
+.top8 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.friend { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font: inherit; color: #003399; }
+.friend img { width: 72px; height: 72px; object-fit: cover; border: 1px solid #888; }
+.friend span { font-size: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 78px; }
+.friend:hover span { text-decoration: underline; }
+.muted { color: #999; font-size: 10px; padding: 4px 0; }
+
+.commentForm { display: flex; gap: 6px; margin-bottom: 8px; }
+.commentInput { flex: 1; font: inherit; border: 1px solid #9fb3d6; border-radius: 3px; padding: 4px; resize: vertical; }
+.postBtn { font: inherit; font-weight: 700; color: #fff; background: linear-gradient(180deg, #6699cc, #3b5998); border: 1px solid #26375f; border-radius: 3px; padding: 4px 14px; cursor: pointer; align-self: flex-start; }
+.postBtn:hover { filter: brightness(1.08); }
+.postBtn:disabled { opacity: 0.6; cursor: default; }
+
+.comment, .bulletin { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid #eee; }
+.commentPic { width: 44px; height: 44px; object-fit: cover; border: 1px solid #888; flex: 0 0 auto; }
+.commentBody { min-width: 0; flex: 1; line-height: 1.4; word-break: break-word; }
+.commentAuthor { font-weight: 700; color: #003399; background: none; border: none; padding: 0; cursor: pointer; font: inherit; }
+.commentAuthor:hover { text-decoration: underline; }
+.commentTime { color: #aaa; font-size: 9px; margin-left: 6px; }
+.bulletinSubject { font-weight: 700; margin-top: 2px; }
+
+/* browse */
+.browse { flex: 1; overflow: auto; padding: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; align-content: start; }
+.browseItem { background: #fff; border: 1px solid #b8c4d9; border-radius: 3px; padding: 8px; cursor: pointer; font: inherit; text-align: center; }
+.browseItem:hover { border-color: #3b5998; }
+.browsePic { width: 72px; height: 72px; object-fit: cover; border: 1px solid #888; }
+.browseName { font-weight: 700; color: #003399; margin-top: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.browseTag { font-size: 9px; color: #777; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+/* feeds */
+.feedHead { font-size: 14px; color: #003399; margin: 0 0 10px; border-bottom: 2px solid #3b5998; padding-bottom: 5px; }
+.postbox { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; padding: 8px; background: #f2f6fc; border: 1px solid #cdd8ea; border-radius: 3px; }
+.postInput { font: inherit; border: 1px solid #9fb3d6; border-radius: 3px; padding: 4px; }
+.postArea { font: inherit; border: 1px solid #9fb3d6; border-radius: 3px; padding: 4px; resize: vertical; }
+.blogPost { padding: 10px 0; border-bottom: 1px solid #eee; }
+.blogMeta { font-size: 9px; color: #999; }
+.blogTitle { margin: 3px 0 5px; color: #003399; font-size: 14px; }
+.blogPost p { margin: 0; line-height: 1.55; white-space: pre-wrap; }
+.hiddenAnchor { display: none; }
+
+/* edit */
+.form { display: flex; flex-direction: column; gap: 8px; }
+.form label { display: flex; flex-direction: column; gap: 3px; font-weight: 700; color: #333; }
+.form input, .form textarea { font: inherit; font-weight: 400; border: 1px solid #9fb3d6; border-radius: 3px; padding: 4px 6px; }
+.css { font-family: 'Courier New', monospace !important; }
+.top8Edit { border: 1px solid #cdd8ea; border-radius: 3px; padding: 8px; background: #f2f6fc; }
+.top8Pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 6px; }
+.pick { display: flex; align-items: center; gap: 4px; font-weight: 400; font-size: 10px; }
+.pickOn { color: #003399; font-weight: 700; }
+.formBtns { display: flex; gap: 8px; }
+.cancelBtn { font: inherit; background: #eee; border: 1px solid #bbb; border-radius: 3px; padding: 4px 14px; cursor: pointer; }

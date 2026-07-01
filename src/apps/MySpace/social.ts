@@ -62,7 +62,8 @@ function avatar(seed: string): string {
   return 'data:image/svg+xml,' + encodeURIComponent(svg)
 }
 
-const persona = (id: string, name: string, blurb: string): BotPersona => ({ id, name, blurb, era: '2006' })
+const persona = (id: string, name: string, blurb: string, model?: string, randomFree?: boolean): BotPersona =>
+  ({ id, name, blurb, era: '2006', model, randomFree })
 
 // A glittery custom-CSS sample so the paste-your-CSS feature is visible on a couple
 // of profiles (SpaceHey-style). Scoped to the profile card iframe, so it's safe.
@@ -84,49 +85,49 @@ function seed(): Pick<SocialStore, 'meId' | 'profiles' | 'comments' | 'bulletins
       id: 'tapehiss_kelly', name: 'tapehiss_kelly', tagline: 'the hiss is the room, not the loss',
       mood: 'crate-digging', about: 'i rip lossless and mail CD-Rs to strangers. do not send me a 320 and call it a FLAC.',
       meet: 'anyone with a Dead Snakes live tape.', interests: 'noise, tape trading, EAC logs, TDK CD-Rs',
-      pic: avatar('tapehiss'), top8: [], views: 4211, online: true, bot: true, persona: persona('tapehiss_kelly', 'tapehiss_kelly', 'A noise/tape-trading friend who rips lossless and argues about transcodes.'),
+      pic: avatar('tapehiss'), top8: [], views: 4211, online: true, bot: true, persona: persona('tapehiss_kelly', 'tapehiss_kelly', 'A noise/tape-trading friend who rips lossless and argues about transcodes.', 'deepseek/deepseek-chat-v3-0324:free'),
     },
     {
       id: 'DialUpDoom', name: 'DialUpDoom', tagline: 'still seeding. good lad.',
       mood: 'nostalgic', about: 'i remember when the whole scene fit on a 56k line. hub is up, do not close it.',
       meet: 'sysops and couriers.', interests: 'BBS, warez scene, ANSI art, dial-up', css: NOISE_CSS,
-      pic: avatar('dialup'), top8: [], views: 9031, online: true, bot: true, persona: persona('DialUpDoom', 'DialUpDoom', 'An old-net/BBS relic who talks in warez-scene cadence and misses 56k.'),
+      pic: avatar('dialup'), top8: [], views: 9031, online: true, bot: true, persona: persona('DialUpDoom', 'DialUpDoom', 'An old-net/BBS relic who talks in warez-scene cadence and misses 56k.', 'meta-llama/llama-3.3-70b-instruct:free'),
     },
     {
       id: 'grimwax', name: 'grimwax', tagline: 'one bad ratio climbs back up the tree to you',
       mood: 'suspicious', about: 'ratio police. i vouched for you once. do not make me regret it.',
       meet: 'people who seed.', interests: 'private trackers, FLAC, spectral analysis',
-      pic: avatar('grimwax'), top8: [], views: 1337, online: false, bot: true, persona: persona('grimwax', 'grimwax', 'The invite-tree friend — ratio police, cryptic, protective of private trackers.'),
+      pic: avatar('grimwax'), top8: [], views: 1337, online: false, bot: true, persona: persona('grimwax', 'grimwax', 'The invite-tree friend — ratio police, cryptic, protective of private trackers.', 'qwen/qwen-2.5-72b-instruct:free'),
     },
     {
       id: 'MoltenMoth', name: 'MoltenMoth', tagline: 'the numbers station changed its pattern again',
       mood: 'awake at 3am', about: 'i listen to shortwave and read the threads that 404 by morning.',
       meet: 'the person on the other end of 4625 kHz.', interests: 'occult, shortwave, conspiracy podcasts, moths', css: GLITTER_CSS,
-      pic: avatar('moltenmoth'), top8: [], views: 666, online: true, bot: true, persona: persona('MoltenMoth', 'MoltenMoth', 'A horror/occult-podcast head who speaks in half-riddles about symbols and late-night radio.'),
+      pic: avatar('moltenmoth'), top8: [], views: 666, online: true, bot: true, persona: persona('MoltenMoth', 'MoltenMoth', 'A horror/occult-podcast head who speaks in half-riddles about symbols and late-night radio.', undefined, true),
     },
     {
       id: 'VHS_Reverend', name: 'VHS_Reverend', tagline: 'the uglier the transfer the holier the film',
       mood: 'reverent', about: 'i keep the church of the bad transfer. tracking lines are stigmata.',
       meet: 'giallo heads and video store survivors.', interests: 'giallo, VHS, horror, ex-rental tapes',
-      pic: avatar('vhsrev'), top8: [], views: 2013, online: true, bot: true, persona: persona('VHS_Reverend', 'VHS_Reverend', 'A giallo/VHS-rip evangelist who rates films by how ugly the transfer is.'),
+      pic: avatar('vhsrev'), top8: [], views: 2013, online: true, bot: true, persona: persona('VHS_Reverend', 'VHS_Reverend', 'A giallo/VHS-rip evangelist who rates films by how ugly the transfer is.', 'mistralai/mistral-small-3.1-24b-instruct:free'),
     },
     {
       id: 'helperbot9000', name: 'helperbot9000', tagline: 'ask me something! (results may vary)',
       mood: 'eager', about: 'HELLO! i am a friendly helper bot. i know FACTS. some of them are TRUE!',
       meet: 'users with QUESTIONS.', interests: 'answering, beeping, being helpful',
-      pic: avatar('helperbot'), top8: [], views: 100000, online: true, bot: true, persona: persona('helperbot9000', 'helperbot9000', 'A clunky early instant-messenger helper bot — eager, robotic, offers facts.'),
+      pic: avatar('helperbot'), top8: [], views: 100000, online: true, bot: true, persona: persona('helperbot9000', 'helperbot9000', 'A clunky early instant-messenger helper bot — eager, robotic, offers facts.', 'eliza'),
     },
     {
       id: 'moldmouth', name: 'Moldmouth', tagline: 'basement noise since 2005',
       mood: 'feedback', about: 'three tracks, one demo, forty CD-Rs. we play your basement if the amp survives the drive.',
       meet: 'promoters with a PA and no rules.', interests: 'noise, harsh, power electronics, home recording', css: NOISE_CSS,
-      pic: avatar('moldmouth'), top8: [], views: 5540, online: false, bot: true, persona: persona('moldmouth', 'Moldmouth', 'A basement noise band — terse, feedback-drenched, DIY to the bone.'),
+      pic: avatar('moldmouth'), top8: [], views: 5540, online: false, bot: true, persona: persona('moldmouth', 'Moldmouth', 'A basement noise band — terse, feedback-drenched, DIY to the bone.', 'google/gemini-2.0-flash-exp:free'),
     },
     {
       id: 'couchnap', name: 'Couch Nap Records', tagline: 'tapes, not follows',
       mood: 'distro', about: 'a tape label run out of a closet. we trade, we do not sell out. add us, we add back.',
       meet: 'bands with a demo and a van.', interests: 'cassette culture, DIY labels, distros, trades',
-      pic: avatar('couchnap'), top8: [], views: 3120, online: true, bot: true, persona: persona('couchnap', 'Couch Nap Records', 'A DIY cassette label — friendly, scene-minded, all about trades.'),
+      pic: avatar('couchnap'), top8: [], views: 3120, online: true, bot: true, persona: persona('couchnap', 'Couch Nap Records', 'A DIY cassette label — friendly, scene-minded, all about trades.', 'deepseek/deepseek-chat-v3-0324:free'),
     },
   ]
 

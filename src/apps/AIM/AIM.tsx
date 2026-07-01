@@ -5,7 +5,7 @@ import {
   type Identity, type DM,
 } from './nostr'
 import { BOT_BUDDIES, type BotBuddy, type BuddyStatus } from './bots'
-import { getReply, type BotMode, type ChatTurn } from '../../os/botvoice'
+import { getReply, type ChatTurn } from '../../os/botvoice'
 import { hasWebGPU } from '../../os/webllm'
 import { playSound } from '../../os/sound'
 import styles from './AIM.module.css'
@@ -56,7 +56,6 @@ export function AIM() {
   const [caveat, setCaveat] = useState(() => !localStorage.getItem(CAVEAT_KEY))
   const endRef = useRef<HTMLDivElement>(null)
 
-  const mode: BotMode = smart && hasWebGPU() ? 'webllm' : 'eliza'
   const selBot = selected.startsWith('bot:') ? BOT_BUDDIES.find((b) => b.id === selected.slice(4)) : undefined
   const selContact = selected.startsWith('pk:') ? contacts.find((c) => c.pk === selected.slice(3)) : undefined
 
@@ -111,7 +110,7 @@ export function AIM() {
     setTyping(bot.id)
     const history: ChatTurn[] = (convos[bot.id] ?? []).slice(-8).map((l) => ({ role: l.mine ? 'user' : 'bot', text: l.text }))
     try {
-      const reply = await getReply(bot, history, text, mode)
+      const reply = await getReply(bot, history, text, { useWebLLM: smart, allowHosted: true })
       pushLine(bot.id, { id: lineId(), mine: false, text: reply, ts: Date.now() })
       playSound('aim-in')
     } catch {

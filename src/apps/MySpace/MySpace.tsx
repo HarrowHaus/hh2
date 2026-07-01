@@ -63,7 +63,7 @@ export function MySpace(_props: AppProps) {
     if (profile.bot && profile.persona) {
       setBusy(true)
       try {
-        const reply = await getReply(profile.persona, [], text, 'eliza')
+        const reply = await getReply(profile.persona, [], text)
         s.addComment(s.meId, profile.id, reply)
       } finally { setBusy(false) }
     }

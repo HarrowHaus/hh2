@@ -13,17 +13,143 @@ network for a casual visitor.
 ## 1 · FREE CHATBOT LAYER  (shared "bot voice" service)
 A single service drives every bot mouth (AIM buddies + MySpace profiles). Zero API cost — hard rule.
 
-> **STATUS (Section 4 — text core landed):** `src/os/botvoice.ts` exposes `getReply(persona, history,
-> userText, mode)` — the single entry point §2 (AIM) and §3 (MySpace) both call. Tier A = ELIZA
-> (`src/apps/Eliza/eliza.ts`, always-on, offline). Tier B = **WebLLM** (`src/os/webllm.ts`,
-> `@mlc-ai/web-llm`, WebGPU, lazy, opt-in ~1 GB download) — silently degrades to ELIZA when WebGPU is
-> absent or a call fails. The **AI Chat Agent** (`src/apps/AIChat/`) ships with chat + Summarize, engine
-> priority **Chrome Prompt API → WebLLM (opt-in) → ELIZA** (`src/os/promptapi.ts`). **WebSD image
-> generation** (`src/os/websd.ts`) now powers the chat agent's **Image** action and the **AI Generated
-> Wallpaper** option in Display Properties — in-browser Stable Diffusion (diffusers.js) loaded from CDN
-> at opt-in time (kept out of the bundle → zero build risk), **WebGPU-gated**, graceful failure. *WebSD
-> generation is experimental / unverifiable in CI (no GPU): the UI + gating + safe degradation are
-> solid; the actual model call may need a model/endpoint tweak once tested on a real GPU.*
+> **STATUS — tiered, provider-agnostic bot layer (ELIZA/WebLLM live; hosted tier dormant):**
+> `src/os/botvoice.ts` exposes `getReply(persona, history, userText, opts)` — the single entry §2 (AIM)
+> and §3 (MySpace) both call. Each persona carries `{ name, era, tone, model, randomFree }` where
+> **`model` = `'eliza'` | `'webllm'` | a hosted `'provider/model-id'`**. Per-call resolution:
+> **assigned hosted model (via proxy) → WebLLM (if WebGPU / opted-in / already loaded) → ELIZA** — never
+> breaks.
+> - **Tier A — ELIZA** (`src/apps/Eliza/eliza.ts`): always-on, offline, period-accurate floor.
+> - **Tier B — WebLLM** (`src/os/webllm.ts`, WebGPU): opt-in ~0.5 GB (Qwen2.5-0.5B), degrades to ELIZA.
+> - **Tier C/D — hosted** (`src/os/hostedllm.ts`): OpenRouter `:free` / Gemini Flash / optional Haiku via
+>   the proxy. **DORMANT** — `HOSTED_ENABLED = false`, so the proxy is never called; hosted bots fall back
+>   to WebLLM/ELIZA. Flip the flag after the proxy + secrets are set up (§1.0c).
+> - **Weirdness (§1.0a):** each buddy is assigned a distinct Tier-C model (helperbot9000 stays on ELIZA —
+>   a clunky 2003 bot is period-accurate); `MoltenMoth` uses `randomFree` (rolls a random `:free` model
+>   per session, drifting over time). All dormant until the hosted tier is on.
+> - The **AI Chat Agent** (`src/apps/AIChat/`, separate from bots): chat + Summarize + Image (WebSD),
+>   Chrome Prompt API → WebLLM → ELIZA (`src/os/promptapi.ts`). *WebSD (image) is experimental/WebGPU-only.*
+
+### 1.0c · THE PROXY — provider-agnostic Cloudflare Function  (BUILD WHEN SECRETS ARE SET; do NOT wire yet)
+One Cloudflare Pages Function, `functions/api/chat.js`, is the ONLY place provider keys live (Cloudflare
+**secrets**, never client-side). The client (`src/os/hostedllm.ts`) is already provider-agnostic — it
+POSTs `{ model, messages, max_tokens }` to `/api/chat`; the proxy routes by model id:
+- `claude-*` → **Anthropic** Messages API (`ANTHROPIC_API_KEY`).
+- `gemini-*` → **Gemini** `generateContent` (`GEMINI_API_KEY`).
+- everything else → **OpenRouter** (OpenAI-compatible base-URL swap, `OPENROUTER_API_KEY`).
+
+**Guardrails:** origin check; per-IP + per-session rate limit; a global **daily request/spend cap that
+hard-stops** (Workers KV / Durable Object counter); low `max_tokens`; and an **owner gate** — a secret
+flag (`OWNER_FLAG`) that unlocks the paid (Haiku) tier and, optionally, all hosted tiers while unlaunched
+(public gets ELIZA/WebLLM/free-hosted; owner gets everything). Free-tier caveat: free inputs may train the
+provider (banter only) and can be pulled without notice — so ELIZA is the floor and `model` is swappable
+config, never a hard-wired provider.
+
+**Activation (two steps, no client rewrite):** (1) add `functions/api/chat.js` (ready implementation
+below) + set the Cloudflare secrets; (2) set `HOSTED_ENABLED = true` in `src/os/hostedllm.ts`. Bots then
+immediately pick up their assigned Tier-C voices.
+
+<details><summary>Ready-to-deploy <code>functions/api/chat.js</code> (dormant until secrets exist)</summary>
+
+```js
+// Provider-agnostic hosted-LLM proxy (docs/12 §1.0c). Keys are Cloudflare
+// secrets — NEVER client-side. Returns 503 until configured, so it's inert.
+const DAILY_CAP = 2000            // hard stop: requests/day across everyone
+const PER_IP_PER_MIN = 20
+const MAX_TOKENS = 200
+
+export async function onRequestPost(context) {
+  const { request, env } = context
+  // Origin check — only our own site may call it.
+  const origin = request.headers.get('origin') || ''
+  if (env.ALLOWED_ORIGIN && origin && origin !== env.ALLOWED_ORIGIN) return json({ error: 'origin' }, 403)
+
+  let body
+  try { body = await request.json() } catch { return json({ error: 'bad json' }, 400) }
+  const model = String(body.model || '')
+  const messages = Array.isArray(body.messages) ? body.messages : []
+  const maxTokens = Math.min(Number(body.max_tokens) || 160, MAX_TOKENS)
+  if (!model || !messages.length) return json({ error: 'model + messages required' }, 400)
+
+  // Owner gate: paid (claude-*) and — if LOCK_ALL is set — every hosted tier
+  // require the owner flag while unlaunched.
+  const isOwner = env.OWNER_FLAG && (request.headers.get('x-owner') === env.OWNER_FLAG ||
+    (request.headers.get('cookie') || '').includes(`owner=${env.OWNER_FLAG}`))
+  const paid = model.startsWith('claude-')
+  if ((paid || env.LOCK_ALL === '1') && !isOwner) return json({ error: 'locked' }, 403)
+
+  // Rate limit + daily cap via KV (bind CHAT_KV). Best-effort if unbound.
+  if (env.CHAT_KV) {
+    const ip = request.headers.get('cf-connecting-ip') || 'anon'
+    const min = new Date().toISOString().slice(0, 16)
+    const day = min.slice(0, 10)
+    const [ipN, dayN] = await Promise.all([
+      env.CHAT_KV.get(`r:${ip}:${min}`).then(Number), env.CHAT_KV.get(`d:${day}`).then(Number),
+    ])
+    if ((ipN || 0) >= PER_IP_PER_MIN) return json({ error: 'rate' }, 429)
+    if ((dayN || 0) >= DAILY_CAP) return json({ error: 'daily cap' }, 429)
+    context.waitUntil(Promise.all([
+      env.CHAT_KV.put(`r:${ip}:${min}`, String((ipN || 0) + 1), { expirationTtl: 120 }),
+      env.CHAT_KV.put(`d:${day}`, String((dayN || 0) + 1), { expirationTtl: 172800 }),
+    ]))
+  }
+
+  try {
+    let text
+    if (paid) text = await anthropic(env, model, messages, maxTokens)
+    else if (model.startsWith('gemini-')) text = await gemini(env, model, messages, maxTokens)
+    else text = await openrouter(env, model, messages, maxTokens)
+    return json({ text })
+  } catch (e) {
+    return json({ error: String(e && e.message || e) }, 502)
+  }
+}
+
+const json = (o, status = 200) =>
+  new Response(JSON.stringify(o), { status, headers: { 'content-type': 'application/json' } })
+
+async function openrouter(env, model, messages, max_tokens) {
+  if (!env.OPENROUTER_API_KEY) throw new Error('not configured')
+  const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${env.OPENROUTER_API_KEY}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ model, messages, max_tokens }),
+  })
+  const j = await r.json()
+  if (!r.ok) throw new Error(j.error?.message || `openrouter ${r.status}`)
+  return j.choices?.[0]?.message?.content || ''
+}
+
+async function gemini(env, model, messages, maxOutputTokens) {
+  if (!env.GEMINI_API_KEY) throw new Error('not configured')
+  const sys = messages.filter((m) => m.role === 'system').map((m) => m.content).join('\n')
+  const contents = messages.filter((m) => m.role !== 'system').map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }],
+  }))
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`, {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ contents, systemInstruction: sys ? { parts: [{ text: sys }] } : undefined, generationConfig: { maxOutputTokens } }),
+  })
+  const j = await r.json()
+  if (!r.ok) throw new Error(j.error?.message || `gemini ${r.status}`)
+  return j.candidates?.[0]?.content?.parts?.[0]?.text || ''
+}
+
+async function anthropic(env, model, messages, max_tokens) {
+  if (!env.ANTHROPIC_API_KEY) throw new Error('not configured')
+  const system = messages.filter((m) => m.role === 'system').map((m) => m.content).join('\n')
+  const msgs = messages.filter((m) => m.role !== 'system').map((m) => ({ role: m.role, content: m.content }))
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+    body: JSON.stringify({ model, system, messages: msgs, max_tokens }),
+  })
+  const j = await r.json()
+  if (!r.ok) throw new Error(j.error?.message || `anthropic ${r.status}`)
+  return j.content?.[0]?.text || ''
+}
+```
+</details>
 
 - **Tier A — ELIZA-class (default, always works):** `elizabot.js` (or an AIML-lite engine), pure in-
   browser, instant, no network. A 2003 AIM bot (SmarterChild-era) *should* feel like a clunky pattern

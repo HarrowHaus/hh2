@@ -9,9 +9,11 @@ import styles from './IE.module.css'
 // Old Net (per year) — as our approved read-only / no-open-proxy path (his
 // allOrigins open-proxy mode is intentionally dropped, owner ruling E). Plus
 // back/forward/reload/stop history, a bookmark bar with real favicons, address-
-// bar search, ipfs:// via a gateway, and chrome://dino. Our Underground Noise
-// Webring and curated in-world pages are folded in as bookmarks/start page —
-// rendered locally, the rest of the web is live. No prop shell.
+// bar search, ipfs:// via a gateway, and chrome://dino. The default start page
+// is a plain, period-plausible personal portal (docs/14 §1) — the Underground
+// Noise Webring is demoted to a bookmark you reach by digging, no longer the
+// homepage. Our curated in-world pages are rendered locally; the rest of the
+// web is live. No prop shell.
 
 // ── In-world pages (our content, kept) ───────────────────────────────────────
 const HOME = 'http://www.geocities.com/sunsetstrip/basement/4127/'
@@ -20,8 +22,10 @@ const TAPEHISS = 'http://members.tripod.com/~tapehiss/'
 const VAULT = 'http://www.geocities.com/area51/vault/8806/'
 const RING_LIST = 'about:ring'
 const DINO = 'chrome://dino'
+// Default start page: a plain personal portal (docs/14 §1), NOT the webring.
+const PORTAL = 'about:start'
 const RING: string[] = [HOME, ROTBOX, TAPEHISS, VAULT]
-const IN_WORLD = new Set<string>([HOME, ROTBOX, TAPEHISS, VAULT, RING_LIST])
+const IN_WORLD = new Set<string>([PORTAL, HOME, ROTBOX, TAPEHISS, VAULT, RING_LIST])
 
 // Embeddable Google search (his getUrlOrSearch fallback), and an IPFS gateway.
 const GOOGLE_SEARCH = 'https://www.google.com/search?igu=1&q='
@@ -53,7 +57,7 @@ const BOOKMARKS: Bookmark[] = [
 // Resolve a raw address-bar entry → a target URL (his getUrlOrSearch logic).
 function resolve(raw: string): string {
   const u = raw.trim()
-  if (!u) return HOME
+  if (!u) return PORTAL
   if (u === DINO || u === RING_LIST || IN_WORLD.has(u)) return u
   if (/^ipfs:\/\//i.test(u)) return IPFS_GATEWAY + u.replace(/^ipfs:\/\//i, '')
   if (/^https?:\/\//i.test(u)) return u.replace(/\s+$/, '')
@@ -98,7 +102,7 @@ const Stop = memo(() => (
 ))
 
 export function IE({ args }: AppProps) {
-  const initial = typeof args?.url === 'string' ? resolve(args.url) : HOME
+  const initial = typeof args?.url === 'string' ? resolve(args.url) : PORTAL
   const [history, setHistory] = useState<string[]>([initial])
   const [pos, setPos] = useState(0)
   const [addr, setAddr] = useState(initial)
@@ -166,7 +170,7 @@ export function IE({ args }: AppProps) {
         <button type="button" className={styles.navbtn} onClick={() => (loading ? stop() : reload())} title={loading ? 'Stop' : 'Reload'}>
           {loading ? <Stop /> : <Refresh />}
         </button>
-        <button type="button" className={styles.navbtn} onClick={() => go(HOME)} title="Home">⌂</button>
+        <button type="button" className={styles.navbtn} onClick={() => go(PORTAL)} title="Home">⌂</button>
         <form className={styles.address} onSubmit={(e) => { e.preventDefault(); go(addr) }}>
           <input
             className={styles.addressbox}
@@ -270,13 +274,55 @@ function InWorldPage({
 }) {
   const ring = <RingBar onRing={onRing} onRandom={onRandom} onList={onList} />
   switch (url) {
+    case PORTAL: return <PortalPage onGo={onGo} />
     case HOME: return <HomePage ring={ring} />
     case ROTBOX: return <RotboxPage ring={ring} />
     case TAPEHISS: return <TapeHissPage ring={ring} />
     case VAULT: return <VaultPage ring={ring} onGo={onGo} />
     case RING_LIST: return <RingListPage onGo={onGo} />
-    default: return <HomePage ring={ring} />
+    default: return <PortalPage onGo={onGo} />
   }
+}
+
+// Default start page: a plain, period-plausible personal portal (docs/14 §1) —
+// a simple search box + a short personal links list, in the owner's voice. Not
+// the webring, no feature-announcing menus, no meta-narrative (CLAUDE.md Rule 2).
+function PortalPage({ onGo }: { onGo: (u: string) => void }) {
+  const [q, setQ] = useState('')
+  const links: { url: string; name: string }[] = [
+    { url: 'https://www.google.com/', name: 'google' },
+    { url: 'https://mail.yahoo.com/', name: 'mail' },
+    { url: 'https://en.wikipedia.org/', name: 'wikipedia' },
+    { url: 'https://www.last.fm/', name: 'last.fm' },
+    { url: 'https://archive.org/', name: 'internet archive' },
+  ]
+  return (
+    <div className={`${styles.page} ${styles.portal}`}>
+      <div className={styles.portalHead}>bug's homepage</div>
+      <form
+        className={styles.portalSearch}
+        onSubmit={(e) => { e.preventDefault(); if (q.trim()) onGo(q) }}
+      >
+        <input
+          className={styles.portalInput}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="search the web"
+          spellCheck={false}
+          aria-label="Search the web"
+        />
+        <button type="submit" className={styles.portalGo}>go</button>
+      </form>
+      <div className={styles.portalLinksHead}>my links</div>
+      <ul className={styles.portalLinks}>
+        {links.map((l) => (
+          <li key={l.url}>
+            <button type="button" className={styles.inlink} onClick={() => onGo(l.url)}>{l.name}</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }
 
 function RingBar({ onRing, onRandom, onList }: { onRing: (d: number) => void; onRandom: () => void; onList: () => void }) {

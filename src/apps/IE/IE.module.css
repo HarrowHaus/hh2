@@ -172,6 +172,31 @@
 }
 .intro { font-size: 12px; line-height: 1.6; color: #b8e0ff; margin: 0 0 14px; }
 
+/* ── Start page / portal (default homepage — plain, period-plausible) ─────── */
+.portal { text-align: center; }
+.portalHead { font-size: 18px; color: #b8e0ff; margin: 20px 0 16px; letter-spacing: 1px; }
+.portalSearch { display: flex; justify-content: center; gap: 6px; margin: 0 auto 22px; max-width: 420px; }
+.portalInput {
+  flex: 1;
+  background: #fff;
+  color: #111;
+  border: 2px inset #888;
+  padding: 3px 6px;
+  font-family: 'Tahoma', 'Verdana', sans-serif;
+  font-size: 12px;
+  min-width: 0;
+}
+.portalGo {
+  font-size: 11px;
+  padding: 3px 14px;
+  background: linear-gradient(180deg, #e8e8e8, #b8b8b8);
+  border: 2px outset #ddd;
+  color: #111;
+  cursor: pointer;
+}
+.portalLinksHead { color: #7fe0ff; font-size: 12px; margin-bottom: 6px; }
+.portalLinks { list-style: none; margin: 0 auto; padding: 0; font-size: 12px; line-height: 2; display: inline-block; text-align: left; }
+
 .webring {
   border: 2px outset #3a8ac0;
   background: #06121e;

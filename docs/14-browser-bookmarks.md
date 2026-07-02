@@ -17,13 +17,42 @@ And the NSFW handling is inverted from the old "name-only, never link" rule:
 
 ---
 
-## 1 · START PAGE  **[CHANGE — was webring]**
-- **Default start page:** a plain, in-world blank-ish page — a period-plausible personal
-  start/portal (a simple links list or a "MSN/Yahoo-ish" placeholder in Bug's voice), NOT the
-  webring, NOT any menu that announces features. Discovered-not-presented still governs (Rule 2).
-- The **webring** moves into the bookmarks as an entry under *Old-web / weird-web* (§3), and/or
-  lives as a page you reach by digging. Keep the webring content that already exists; just stop
-  making it the homepage.
+## 1 · START PAGE — a personalized portal (My Yahoo! mould)  **[CHANGE — was webring]**
+
+The default start page is a **parody of an early-2000s personalized portal** — the *My Yahoo! /
+iGoogle / Netvibes* format: a skinned page of modular boxes. This format is chosen deliberately:
+it's **instantly recognizable as "a homepage"** (surface familiarity — anyone expects it), and
+its whole premise is user-personalization, so **filling every box with Bug's own content isn't a
+violation of the parody, it IS the parody.** The modules also lay out the identity arc in one
+glance — the teenage stepping-stones (music, p2p), the collector middle, and where it all led
+(current interests) all sit on the same page. **Not Digg** (Digg is a destination, not a start
+page); Digg becomes a bookmark in §3.
+
+- **Skin:** the site's dark `bug.msstyles` palette; period portal chrome (boxed modules,
+  drag-to-arrange optional, a header greeting). Reads as a portal at a glance.
+- **No meta-narrative** (Rule 2): it never explains itself; it just IS his customized start page.
+
+### Modules (each does double duty: *expected on the surface / him underneath / a step on the path*)
+1. **Search bar** (top) — expected furniture, BUT the engines are **Wiby / Marginalia / FrogFind**
+   (the weird-web discovery tools already wired per §2). *Current him: still hunting the fringes.*
+2. **Now Playing / Recently Played** — reads the real catalog (`data/discography.json`), ties to
+   foobar. *The music stepping-stone, still humming under everything.*
+3. **Downloads** — a small torrent-status box nodding to the BitTorrent app. *The p2p
+   stepping-stone, shown not told.*
+4. **Headlines / "what I'm reading"** — curated from real sources already in the repo (the podcast
+   OPML feeds and/or the §3 weird-knowledge sites; if a live fetch is needed, fall back to a
+   curated static list — do not add backend). *Where the path led.*
+5. **Quick Links** — a handful of §3 bookmarks surfaced as tiles. *The map of the landscape.*
+6. **Furniture box** — date + a static "weather"-style widget + a **"transmission / quote of the
+   day"** line in Bug's voice. Period flavor; static, no API. *The ordinary-portal grounding, with
+   one line that gives the game away as his.*
+
+- **The webring** moves OUT of the homepage into the bookmarks under *Old-web / weird-web* (§3),
+  and/or a page reached by digging. Keep the existing webring content; just stop making it home.
+
+**Accept (start page):** the Browser opens to a skinned personalized-portal page (NOT the webring,
+NOT a self-describing menu); the modules above render from existing repo data where possible and
+period-static otherwise; the search box offers Wiby/Marginalia/FrogFind; nothing announces itself.
 
 ## 2 · BOOKMARK BAR — structure
 Load the Browser's bookmark bar / favorites with the curated set below, **in folders by
@@ -110,7 +139,8 @@ siblings the build-time check finds still live in this vein).
 - Fold this doc's stratum tags into the existing period-strata model (docs/07) so bookmarks
   carry era where the model supports it.
 
-**Accept:** Browser opens to a plain period start page (not the webring); the bookmark bar has the
-§3 folders with working/proxied links; the §4 hidden joke-folder exists with real working links to
-the fringe forums, set apart and never auto-loaded; Wiby/Marginalia/FrogFind are selectable search
-shortcuts; no guestbook exists; no dead links ship.
+**Accept:** Browser opens to the skinned personalized-portal start page (§1 — not the webring, not a
+self-describing menu), its modules rendering from existing repo data where possible; the bookmark
+bar has the §3 folders with working/proxied links; the §4 hidden joke-folder exists with real
+working links to the fringe forums, set apart and never auto-loaded; Wiby/Marginalia/FrogFind are
+selectable search shortcuts; no guestbook exists; no dead links ship.

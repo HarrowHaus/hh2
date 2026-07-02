@@ -1,6 +1,8 @@
 import { memo, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { AppProps } from '../../os/types'
 import styles from './IE.module.css'
+import { FOLDERS, JOKE_FOLDER, SEARCH_ENGINES, WEBRING_URL, type Folder, type Link as Bmk } from './bookmarks'
+import disco from '../../../data/discography.json'
 
 // Internet Explorer — a REAL browser, ported/adapted from DustinBrett/daedalOS's
 // Browser app (MIT — CREDITS.md): his integration code over standard web APIs,
@@ -20,15 +22,15 @@ const HOME = 'http://www.geocities.com/sunsetstrip/basement/4127/'
 const ROTBOX = 'http://www.angelfire.com/oh/rotbox/'
 const TAPEHISS = 'http://members.tripod.com/~tapehiss/'
 const VAULT = 'http://www.geocities.com/area51/vault/8806/'
-const RING_LIST = 'about:ring'
+const RING_LIST = WEBRING_URL // 'about:ring' — the demoted webring, now a bookmark
 const DINO = 'chrome://dino'
-// Default start page: a plain personal portal (docs/14 §1), NOT the webring.
+// Default start page: a personalized portal (docs/14 §1), NOT the webring.
 const PORTAL = 'about:start'
 const RING: string[] = [HOME, ROTBOX, TAPEHISS, VAULT]
 const IN_WORLD = new Set<string>([PORTAL, HOME, ROTBOX, TAPEHISS, VAULT, RING_LIST])
 
-// Embeddable Google search (his getUrlOrSearch fallback), and an IPFS gateway.
-const GOOGLE_SEARCH = 'https://www.google.com/search?igu=1&q='
+// An IPFS gateway. Address-bar search runs through the selectable weird-web
+// engine (Wiby/Marginalia/FrogFind, docs/14 §2) — see SEARCH_ENGINES.
 const IPFS_GATEWAY = 'https://dweb.link/ipfs/'
 
 // His Old Net supported years + proxy endpoints.
@@ -40,29 +42,16 @@ const WAYBACK_AVAILABLE = 'https://archive.org/wayback/available?url='
 type ProxyMode = 'CORS' | 'WAYBACK' | 'OLDNET'
 interface Proxy { mode: ProxyMode; year: number }
 
-interface Bookmark { url: string; name: string; glyph?: string }
-// Our webring + in-world pages first; then a few real, on-theme sites.
-const BOOKMARKS: Bookmark[] = [
-  { url: HOME, name: "moldmouth's corner", glyph: '★' },
-  { url: RING_LIST, name: 'the ring', glyph: '◉' },
-  { url: ROTBOX, name: 'ROTBOX vhs', glyph: '☠' },
-  { url: TAPEHISS, name: 'TAPE HISS', glyph: '♪' },
-  { url: VAULT, name: 'VAULT 8806', glyph: '⌂' },
-  { url: DINO, name: 'dino', glyph: '🦖' },
-  { url: 'https://archive.org/', name: 'Internet Archive' },
-  { url: 'https://en.wikipedia.org/', name: 'Wikipedia' },
-  { url: 'https://skins.webamp.org/', name: 'Winamp Skin Museum' },
-]
-
 // Resolve a raw address-bar entry → a target URL (his getUrlOrSearch logic).
-function resolve(raw: string): string {
+// A bare query routes to the selected weird-web search engine (docs/14 §2).
+function resolve(raw: string, searchPrefix: string = SEARCH_ENGINES[0].search): string {
   const u = raw.trim()
   if (!u) return PORTAL
   if (u === DINO || u === RING_LIST || IN_WORLD.has(u)) return u
   if (/^ipfs:\/\//i.test(u)) return IPFS_GATEWAY + u.replace(/^ipfs:\/\//i, '')
   if (/^https?:\/\//i.test(u)) return u.replace(/\s+$/, '')
   if (/^[^\s]+\.[^\s]+$/.test(u) && !u.includes(' ')) return 'http://' + u
-  return GOOGLE_SEARCH + encodeURIComponent(u)
+  return searchPrefix + encodeURIComponent(u)
 }
 function kindOf(url: string): 'dino' | 'inworld' | 'external' {
   if (url === DINO) return 'dino'
@@ -107,9 +96,11 @@ export function IE({ args }: AppProps) {
   const [pos, setPos] = useState(0)
   const [addr, setAddr] = useState(initial)
   const [proxy, setProxy] = useState<Proxy>({ mode: 'CORS', year: 2004 })
+  const [engine, setEngine] = useState(SEARCH_ENGINES[0].id)
   const [loading, setLoading] = useState(false)
   const [iframeSrc, setIframeSrc] = useState('')
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const searchPrefix = (SEARCH_ENGINES.find((e) => e.id === engine) ?? SEARCH_ENGINES[0]).search
 
   const url = history[pos]
   const kind = kindOf(url)
@@ -117,13 +108,20 @@ export function IE({ args }: AppProps) {
   const canFwd = pos < history.length - 1
 
   function go(raw: string) {
-    const next = resolve(raw)
+    const next = resolve(raw, searchPrefix)
     setAddr(next)
     if (next === url) { reload(); return }
     const trimmed = history.slice(0, pos + 1)
     trimmed.push(next)
     setHistory(trimmed)
     setPos(trimmed.length - 1)
+  }
+  // Open a bookmark. Archived entries (dead / hijacked / broken-TLS) load through
+  // the read-only Wayback proxy so no dead link ever renders (docs/14 §5).
+  function openBookmark(b: Bmk) {
+    if (b.archive) setProxy((p) => ({ ...p, mode: 'WAYBACK' }))
+    else if (!IN_WORLD.has(b.url)) setProxy((p) => (p.mode === 'WAYBACK' ? { ...p, mode: 'CORS' } : p))
+    go(b.url)
   }
   function move(step: number) {
     const p = pos + step
@@ -182,6 +180,15 @@ export function IE({ args }: AppProps) {
           />
           <button type="submit" className={styles.go}>Go</button>
         </form>
+        {/* Weird-web search engine (docs/14 §2): Wiby / Marginalia / FrogFind */}
+        <select
+          className={styles.proxy}
+          value={engine}
+          onChange={(e) => setEngine(e.target.value)}
+          title="Search engine"
+        >
+          {SEARCH_ENGINES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+        </select>
         {/* Proxy menu (his model): CORS / Wayback / Old Net by year */}
         <select
           className={styles.proxy}
@@ -205,21 +212,14 @@ export function IE({ args }: AppProps) {
         )}
       </nav>
 
-      {/* Bookmark bar with real favicons */}
+      {/* Bookmark bar — §3 category folders; the §4 joke folder set apart at the end */}
       <div className={styles.bookmarks}>
         <span className={styles.bmLabel}>Links</span>
-        {BOOKMARKS.map((b) => (
-          <button
-            key={b.url}
-            type="button"
-            className={`${styles.bookmark} ${url === b.url ? styles.bookmarkActive : ''}`}
-            onClick={() => go(b.url)}
-            title={b.url}
-          >
-            <Favicon url={b.url} glyph={b.glyph} />
-            {b.name}
-          </button>
+        {FOLDERS.map((f) => (
+          <BookmarkFolder key={f.name} folder={f} onOpen={openBookmark} />
         ))}
+        <span className={styles.bmSpacer} />
+        <BookmarkFolder folder={JOKE_FOLDER} onOpen={openBookmark} />
       </div>
 
       <div className={styles.viewport}>
@@ -254,15 +254,57 @@ function Favicon({ url, glyph }: { url: string; glyph?: string }) {
   return <img className={styles.faviconImg} src={`${origin}/favicon.ico`} alt="" onError={() => setFailed(true)} />
 }
 
-// ── In-world pages (kept verbatim from our content) ──────────────────────────
-interface Entry { name: string; date: string; msg: string }
-const GUESTBOOK: Entry[] = [
-  { name: 'grimwax', date: '08.14.2005', msg: 'tape arrived. dubbed it twice already. owe you a split.' },
-  { name: 'DialUpDoom', date: '07.30.2005', msg: 'webring brought me here. adding you to mine. stay ugly.' },
-  { name: '~*KELLY*~', date: '07.22.2005', msg: 'your away message made me cry at 2am thanks a lot' },
-  { name: 'no_master', date: '06.03.2005', msg: 'first.' },
-]
+// A Favorites folder in the bookmark bar: a click-to-open dropdown of links, with
+// real favicons. Nothing auto-loads — the §4 joke folder opens on purpose only.
+function BookmarkFolder({ folder, onOpen }: { folder: Folder; onOpen: (b: Bmk) => void }) {
+  const [menu, setMenu] = useState<{ left: number; top: number } | null>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  // Position the menu with fixed coords from the button — the bookmark bar has
+  // overflow-x:auto, which would otherwise clip an absolutely-positioned child.
+  function toggle() {
+    if (menu) { setMenu(null); return }
+    const r = btnRef.current?.getBoundingClientRect()
+    if (r) setMenu({ left: r.left, top: r.bottom })
+  }
+  const open = menu !== null
+  return (
+    <span
+      className={`${styles.folder} ${folder.joke ? styles.folderJoke : ''}`}
+      onMouseLeave={() => setMenu(null)}
+    >
+      <button
+        ref={btnRef}
+        type="button"
+        className={styles.folderBtn}
+        onClick={toggle}
+        title={folder.joke ? 'you were warned' : folder.stratum ? `stratum ${folder.stratum}` : folder.name}
+      >
+        <span className={styles.folderIcon} aria-hidden>{folder.joke ? '🙈' : '📁'}</span>
+        {folder.name}
+        {folder.stratum && !folder.joke && <span className={styles.folderStratum}>{folder.stratum}</span>}
+      </button>
+      {open && (
+        <div className={styles.folderMenu} style={{ left: menu.left, top: menu.top }}>
+          {folder.links.map((b) => (
+            <button
+              key={b.url}
+              type="button"
+              className={styles.folderItem}
+              onClick={() => { onOpen(b); setMenu(null) }}
+              title={b.archive ? `${b.url} — via Wayback (archived)` : b.url}
+            >
+              <Favicon url={b.url} />
+              <span className={styles.folderItemName}>{b.name}</span>
+              {b.archive && <span className={styles.folderArchive}>archived</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </span>
+  )
+}
 
+// ── In-world pages (kept verbatim from our content) ──────────────────────────
 function InWorldPage({
   url, onRing, onRandom, onList, onGo,
 }: {
@@ -284,43 +326,166 @@ function InWorldPage({
   }
 }
 
-// Default start page: a plain, period-plausible personal portal (docs/14 §1) —
-// a simple search box + a short personal links list, in the owner's voice. Not
-// the webring, no feature-announcing menus, no meta-narrative (CLAUDE.md Rule 2).
+// ── Default start page: a personalized portal (docs/14 §1) ───────────────────
+// A parody of an early-2000s My Yahoo!/iGoogle personalized homepage, skinned in
+// the dark bug.msstyles palette. Every box is filled with Bug's own content —
+// that IS the parody. Modules render from real repo data where possible and are
+// period-static otherwise. No meta-narrative; it never explains itself (Rule 2).
+
+// Module 6 — a rotating "transmission of the day" in Bug's voice (owner edits
+// these later). Chosen by day so it's stable within a day, no randomness/API.
+const TRANSMISSIONS = [
+  'dubbed three tapes before coffee. the deck is winning.',
+  'if it hisses, it\'s honest.',
+  'reminder: postage is real and it is not free. include it.',
+  'the good stuff never had a barcode.',
+  'slept four hours, ripped a whole discography. worth it.',
+  'trust the tape, not the tracklist.',
+  'everything worth hearing is out of print.',
+  'found a sealed clamshell in a box lot. today is good.',
+  'the recommendation engine has never once been right about me.',
+  'back up your floppies. i am begging you.',
+]
+
+// Module 4 — "what I'm reading": a curated static list (no backend / no live
+// fetch), drawn from the §3 weird-knowledge vein. Owner edits later.
+const HEADLINES: { url: string; blurb: string }[] = [
+  { url: 'https://www.damninteresting.com/', blurb: 'Damn Interesting — the one about the radium girls, again' },
+  { url: 'https://lostmediawiki.com/', blurb: 'Lost Media Wiki — a kids\' show nobody can find a tape of' },
+  { url: 'https://www.forteantimes.com/', blurb: 'Fortean Times — falls of frogs, this month' },
+  { url: 'https://scp-wiki.wikidot.com/', blurb: 'SCP — reading the ones marked "keter" at 3am' },
+  { url: 'https://publicdomainreview.org/', blurb: 'Public Domain Review — 1890s medical illustration' },
+]
+
+// Module 5 — Quick Links: a handful of §3 bookmarks surfaced as tiles.
+const QUICK_LINKS: { url: string; name: string }[] = [
+  { url: 'http://textfiles.com/', name: 'textfiles' },
+  { url: 'https://www.metal-archives.com/', name: 'Metallum' },
+  { url: 'https://www.bleedingskull.com/', name: 'Bleeding Skull' },
+  { url: 'https://everything2.com/', name: 'Everything2' },
+  { url: 'https://wiby.me/', name: 'Wiby' },
+  { url: 'https://tcrf.net/', name: 'TCRF' },
+]
+
+function PortalModule({ title, className, children }: { title: string; className?: string; children: ReactNode }) {
+  return (
+    <section className={`${styles.module} ${className ?? ''}`}>
+      <div className={styles.moduleHead}>{title}</div>
+      <div className={styles.moduleBody}>{children}</div>
+    </section>
+  )
+}
+
 function PortalPage({ onGo }: { onGo: (u: string) => void }) {
   const [q, setQ] = useState('')
-  const links: { url: string; name: string }[] = [
-    { url: 'https://www.google.com/', name: 'google' },
-    { url: 'https://mail.yahoo.com/', name: 'mail' },
-    { url: 'https://en.wikipedia.org/', name: 'wikipedia' },
-    { url: 'https://www.last.fm/', name: 'last.fm' },
-    { url: 'https://archive.org/', name: 'internet archive' },
+  const [eng, setEng] = useState(SEARCH_ENGINES[0].id)
+  const now = useMemo(() => new Date(), [])
+
+  // Module 2 — read the real catalog (data/discography.json).
+  const labels = (disco.labels as { name: string }[]).map((l) => l.name)
+  const bands = disco.bands as { name: string }[]
+  const recentPicks = ['Dead Snakes', 'Hung Eyes', 'Soft Torture', 'Project Sunshine', 'Wet Jesus']
+  const recently = recentPicks.filter((n) => bands.some((b) => b.name === n))
+
+  const dateLine = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+  const transmission = TRANSMISSIONS[
+    Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000) % TRANSMISSIONS.length
   ]
+
+  function runSearch() {
+    const s = (SEARCH_ENGINES.find((e) => e.id === eng) ?? SEARCH_ENGINES[0]).search
+    if (q.trim()) onGo(s + encodeURIComponent(q.trim()))
+  }
+
   return (
-    <div className={`${styles.page} ${styles.portal}`}>
-      <div className={styles.portalHead}>bug's homepage</div>
-      <form
-        className={styles.portalSearch}
-        onSubmit={(e) => { e.preventDefault(); if (q.trim()) onGo(q) }}
-      >
+    <div className={styles.portal}>
+      <div className={styles.portalHeader}>
+        <span className={styles.portalGreet}>welcome back, bug</span>
+        <span className={styles.portalDate}>{dateLine}</span>
+      </div>
+
+      {/* Module 1 — search bar (Wiby / Marginalia / FrogFind) */}
+      <form className={styles.portalSearch} onSubmit={(e) => { e.preventDefault(); runSearch() }}>
+        <select className={styles.portalEngine} value={eng} onChange={(e) => setEng(e.target.value)} aria-label="Search engine">
+          {SEARCH_ENGINES.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+        </select>
         <input
           className={styles.portalInput}
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="search the web"
+          placeholder="search"
           spellCheck={false}
-          aria-label="Search the web"
+          aria-label="Search"
         />
         <button type="submit" className={styles.portalGo}>go</button>
       </form>
-      <div className={styles.portalLinksHead}>my links</div>
-      <ul className={styles.portalLinks}>
-        {links.map((l) => (
-          <li key={l.url}>
-            <button type="button" className={styles.inlink} onClick={() => onGo(l.url)}>{l.name}</button>
-          </li>
-        ))}
-      </ul>
+
+      <div className={styles.portalGrid}>
+        {/* Module 2 — Now Playing / Recently Played */}
+        <PortalModule title="now playing">
+          <div className={styles.nowPlaying}>
+            <span className={styles.npMark}>▶</span>
+            <span><b>moldmouth</b> — untitled (side B)</span>
+          </div>
+          <div className={styles.moduleSub}>recently played</div>
+          <ul className={styles.tightList}>
+            {recently.map((n) => <li key={n}>{n}</li>)}
+          </ul>
+          <div className={styles.moduleSub}>labels</div>
+          <div className={styles.chips}>{labels.map((l) => <span key={l} className={styles.chip}>{l}</span>)}</div>
+        </PortalModule>
+
+        {/* Module 3 — Downloads (nods to the BitTorrent app) */}
+        <PortalModule title="downloads">
+          <DownloadRow name="basement_noise_comp_vol3_[V0].rar" pct={73} />
+          <DownloadRow name="Midnight_Cassette_(1987).DVDRip-PHANTOM" pct={100} seeding />
+          <DownloadRow name="Dead_Snakes-live_at_the_basement_[FLAC].zip" pct={100} seeding />
+          <DownloadRow name="[StaticVoid]_Spectral_Corridor_01.mkv" pct={41} />
+          <div className={styles.moduleFoot}>ratio 0.19 · seeding 2 · dl 1</div>
+        </PortalModule>
+
+        {/* Module 4 — Headlines / what I'm reading */}
+        <PortalModule title="what i'm reading">
+          <ul className={styles.headlines}>
+            {HEADLINES.map((h) => (
+              <li key={h.url}>
+                <button type="button" className={styles.inlink} onClick={() => onGo(h.url)}>{h.blurb}</button>
+              </li>
+            ))}
+          </ul>
+        </PortalModule>
+
+        {/* Module 5 — Quick Links */}
+        <PortalModule title="quick links">
+          <div className={styles.tiles}>
+            {QUICK_LINKS.map((l) => (
+              <button key={l.url} type="button" className={styles.tile} onClick={() => onGo(l.url)} title={l.url}>
+                <Favicon url={l.url} />
+                <span>{l.name}</span>
+              </button>
+            ))}
+          </div>
+        </PortalModule>
+
+        {/* Module 6 — Furniture: date + weather + transmission of the day */}
+        <PortalModule title="today" className={styles.moduleWide}>
+          <div className={styles.weather}>
+            <span className={styles.weatherTemp}>61°F</span>
+            <span className={styles.weatherDesc}>overcast · basement</span>
+          </div>
+          <div className={styles.transmission}>“{transmission}”</div>
+        </PortalModule>
+      </div>
+    </div>
+  )
+}
+
+function DownloadRow({ name, pct, seeding }: { name: string; pct: number; seeding?: boolean }) {
+  return (
+    <div className={styles.dl}>
+      <div className={styles.dlName} title={name}>{name}</div>
+      <div className={styles.dlBar}><span style={{ width: `${pct}%` }} className={seeding ? styles.dlFillSeed : styles.dlFill} /></div>
+      <div className={styles.dlPct}>{seeding ? 'seed' : `${pct}%`}</div>
     </div>
   )
 }
@@ -350,20 +515,6 @@ function HomePage({ ring }: { ring: ReactNode }) {
         (it's in the buddy info). don't email my mom's account again.
       </p>
       {ring}
-      <div className={styles.gbHead}>~ sign my guestbook ~</div>
-      <div className={styles.gbForm}>
-        <label>handle: <span className={styles.field} /></label>
-        <label className={styles.msgLabel}>message:<span className={`${styles.field} ${styles.fieldBig}`} /></label>
-        <span className={styles.signBtn}>Sign It</span>
-      </div>
-      <div className={styles.gbList}>
-        {GUESTBOOK.map((e, i) => (
-          <div key={i} className={styles.gbEntry}>
-            <div className={styles.gbMeta}><b>{e.name}</b> <span className={styles.gbDate}>— {e.date}</span></div>
-            <div className={styles.gbMsg}>{e.msg}</div>
-          </div>
-        ))}
-      </div>
       <div className={styles.counter}>
         You are visitor <span className={styles.odometer}>0&nbsp;4&nbsp;1&nbsp;2&nbsp;7</span>
       </div>
